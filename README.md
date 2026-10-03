@@ -30,6 +30,9 @@ current directory until it reaches `code/config.yaml`.
 
 ## Setup (local, Windows)
 
+Shortcut: open `code/notebook_local.ipynb` on a Python 3.11 kernel and run cell **L0.0**. It installs whatever in `requirements.txt` is
+missing or at the wrong version, installs the package in editable mode, and checks that torch supports the P1000. By hand:
+
 ```
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
