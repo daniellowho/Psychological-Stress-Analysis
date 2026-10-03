@@ -1,0 +1,51 @@
+# Target interpreter: Python 3.11 (local). Python 3.14 (currently installed) is NOT supported by
+# torch 2.5.x / pyspark 3.5.x wheels. See STEP 0 notes for compatibility checks.
+# Versions marked (UNSURE) have not been checked against each other in this environment.
+#
+# Local GPU (Quadro P1000, sm_61): CUDA 12.1 wheels. Verify after install with
+#   python -c "import torch; print(torch.cuda.get_arch_list())"   -> must include 'sm_61'
+# On Colab: do NOT install torch from this file; use Colab's preinstalled torch.
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+# core
+PyYAML==6.0.2
+numpy==1.26.4
+pandas==2.2.3
+pyarrow==17.0.0          # (UNSURE) pyspark 3.5 needs pyarrow>=4; pandas 2.2 OK
+scipy==1.14.1
+scikit-learn==1.5.2      # metrics/calibration only; no sklearn model is trained by the assistant
+tqdm==4.67.1
+python-dotenv==1.0.1
+
+# NLP
+torch==2.5.1             # (UNSURE) cu121 build; confirm sm_61 in arch list
+transformers==4.46.3     # (UNSURE) uses `eval_strategy` (old name `evaluation_strategy` deprecated)
+tokenizers==0.20.3       # (UNSURE) must match transformers' pin; pip will report a conflict if not
+datasets==3.1.0          # (UNSURE)
+accelerate==1.1.1        # (UNSURE) required by Trainer
+huggingface_hub==0.26.2  # (UNSURE)
+
+# preprocessing (Step 2)
+lingua-language-detector==2.1.1   # language ID (deterministic, offline models in the wheel)
+simplemma==2.0.0                  # lemmatiser for the lexical path (no model download)
+datasketch==2.0.0                 # OPTIONAL near-duplicate MinHash-LSH (off by default)
+
+# data files
+openpyxl==3.1.5          # SAD / SenticNet .xlsx
+zstandard==0.23.0        # Reddit .zst dumps
+kaggle==1.6.17           # (UNSURE) GoEmotions Kaggle download
+
+# big data / storage / app
+pyspark==3.5.3           # needs Java 17 (or 11) + JAVA_HOME
+psycopg[binary]==3.2.3
+SQLAlchemy==2.0.36
+streamlit==1.40.1        # (UNSURE)
+matplotlib==3.9.2
+
+# notebook
+ipykernel==6.29.5
+nbformat==5.10.4
+
+# dev / tests (merged from requirements-dev.txt)
+pytest==8.3.3
+nbclient==0.10.0          # executes notebook cells in tests/CI

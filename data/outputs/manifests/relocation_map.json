@@ -1,0 +1,54 @@
+{
+  "created_utc": "2026-10-03T04:52:19+00:00",
+  "note": "Layout change only. Files were MOVED (renamed on the same drive), not regenerated. Earlier manifests keep their original path keys; map them with this table. Paths are relative to the project root.",
+  "moves": {
+    "config/config.yaml": "code/config.yaml",
+    "src/stress_signals/": "code/stress_signals/",
+    "tests/": "code/tests/",
+    "notebooks/stress_signals_pipeline.ipynb": "code/notebook.ipynb",
+    "pyproject.toml": "code/pyproject.toml",
+    "docker-compose.yml": "code/_deferred/docker-compose.yml",
+    ".env.example": "code/_deferred/.env.example",
+    "artifacts/manifests/": "data/outputs/manifests/",
+    "artifacts/reports/": "data/outputs/reports/",
+    "artifacts/logs/": "data/outputs/logs/",
+    "data/interim/": "data/processed/_cache/",
+    "datasets/SAD_v1/": "data/raw/SAD_v1/",
+    "datasets/SAD_v1.zip": "data/raw/SAD_v1.zip",
+    "datasets/mendeley/": "data/raw/mendeley/",
+    "datasets/sentic/": "data/raw/sentic/",
+    "datasets/zenodo/": "data/raw/zenodo/",
+    "requirements-dev.txt": "merged into requirements.txt"
+  },
+  "unchanged": [
+    "data/raw/{_metadata,goemotions_official,sad,tensistrength}/",
+    "data/processed/*.parquet",
+    "data/processed/splits/*.json",
+    "requirements.txt"
+  ],
+  "removed_empty": [
+    "app/",
+    "sql/",
+    "taxonomy/",
+    "data/gold/",
+    "data/lake/",
+    "artifacts/models/",
+    "notebooks/",
+    "config/",
+    "datasets/",
+    "src/ (incl. regenerable stress_signals.egg-info)",
+    "0-byte .gitkeep files"
+  ],
+  "config_paths_remapped": {
+    "interim": "data/processed/_cache",
+    "lake": "data/processed/lake",
+    "gold": "data/outputs/gold",
+    "artifacts": "data/outputs",
+    "models": "data/outputs/models",
+    "reports": "data/outputs/reports",
+    "logs": "data/outputs/logs",
+    "manifests": "data/outputs/manifests",
+    "taxonomy": "data/outputs/taxonomy",
+    "user_downloads": "data/raw"
+  }
+}

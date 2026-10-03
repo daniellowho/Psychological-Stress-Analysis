@@ -1,0 +1,321 @@
+# Early Detection of Collective Psychological Pressure: single source of configuration.
+# All paths are relative to the PROJECT ROOT (the folder that contains code/ and data/) unless absolute. Values marked UNVERIFIED are
+# placeholders awaiting user confirmation; do not treat them as facts.
+
+project:
+  name: stress_signals
+  config_version: 1
+  ethics_banner: "Aggregate, population-level language signals only. No diagnosis. No individual-level analysis."
+
+paths:
+  data_root: data
+  raw: data/raw
+  interim: data/processed/_cache          # audits, hand-check sheet, per-file caches (was data/interim)
+  processed: data/processed
+  lake: data/processed/lake               # Parquet data lake (created in Step 8)
+  gold: data/outputs/gold                 # aggregate tables / gold sets (created when first needed)
+  splits: data/processed/splits
+  artifacts: data/outputs
+  models: trained_models                  # <project root>/trained_models/: runs, predictions, bundles v<YYYYMMDD>/ and the
+                                          # HANDOFF log, from BOTH kernels (local disk; never Google Drive)
+  reports: data/outputs/reports
+  logs: data/outputs/logs
+  manifests: data/outputs/manifests
+  taxonomy: data/outputs/taxonomy         # stressor taxonomy (created in Step 5)
+  # User-downloaded files (SAD_v1, mendeley, sentic, zenodo) now live directly under data/raw/.
+  user_downloads: data/raw
+
+storage:
+  # MODEL STORAGE (user decision): no Google Drive. Model artefacts (runs, predictions, baseline, LOSO runs, final bundles)
+  # and the handoff log go to paths.models (<project root>/trained_models) on whichever kernel runs the step:
+  # local kernel -> E:/.../TA-BDA/trained_models; Colab kernel -> /content/TA-BDA/trained_models (server disk, TEMPORARY).
+  # Colab results reach the PC as ONE zip (notebook cell 3G -> /content/colab_results.zip -> download -> cell 3.0d imports).
+  # Nothing in this code base deletes files. Training CHECKPOINTS stay outside trained_models: the HF Trainer rotates
+  # (deletes) old checkpoints, and they would bloat colab_results.zip.
+  colab_results_zip: colab_results.zip                          # written to /content/ on Colab; looked for in the project root and data/outputs/ locally
+  colab_checkpoint_root: /content/stress_signals_checkpoints    # Colab server disk; lost if the server is recycled
+  local_checkpoint_root: data/outputs/checkpoints               # relative to the project root
+
+seeds: [42, 13, 2024]
+primary_seed: 42
+deterministic: true
+
+privacy:
+  k_min: 50                       # suppress any aggregate cell with n < k_min
+  drop_fields:                    # dropped at ingestion if present (case-insensitive)
+    - author
+    - author_fullname
+    - author_flair_text
+    - author_flair_css_class
+    - username
+    - user
+    - user_id
+    - screen_name
+  scrub:
+    urls: true
+    emails: true
+    phone_numbers: true
+    user_mentions: true           # @handle and u/handle, /u/handle
+  url_token: "<URL>"
+  email_token: "<EMAIL>"
+  phone_token: "<PHONE>"
+  mention_token: "<USER>"
+  max_error_examples_in_notebook: 20   # small, local-only error-analysis views
+
+sources:
+  dreaddit:
+    hf_id: andreagasparini/dreaddit
+    text_column: text             # verified by user; train on text only
+    label_column: label
+    group_column: post_id         # segments share post_id -> group-aware splits
+    core_columns: [subreddit, post_id, sentence_range, text, id, label, confidence, social_timestamp]
+  goemotions:
+    kaggle_id: debarshichanda/goemotions          # UNVERIFIED contents
+    hf_fallback_id: google-research-datasets/go_emotions
+    hf_fallback_config: simplified                # Step 1: identical to the official files (100% ids/texts/labels)
+    use_kaggle: false                             # user decision (Step 1): official files only, Kaggle copy dropped
+    num_labels: 28
+    official_base_url: https://raw.githubusercontent.com/google-research/google-research/master/goemotions/data
+    official_files: [train.tsv, dev.tsv, test.tsv, emotions.txt, ekman_mapping.json, sentiment_mapping.json]
+    official_split_sizes: {train: 43410, dev: 5426, test: 5427}   # user-stated; checked in Step 1
+    official_dir: data/raw/goemotions_official
+    kaggle_dir: data/raw/goemotions_kaggle
+  mendeley_stress_indicators:
+    doi: 10.17632/2gsjv8m7ch
+    local_path: "data/raw/mendeley/Stress Indicators Dataset for Mental Health Classi/Stress Indicators Dataset for Mental Health Classification.csv"
+    role: taxonomy_only
+    api_url: https://data.mendeley.com/public-api/datasets/2gsjv8m7ch
+  sad:
+    local_path: data/raw/SAD_v1/SAD_v1.xlsx
+    schema_path: data/raw/SAD_v1/Schema.txt
+    licence: MIT                  # per user; confirm LICENSE text in Step 1
+    repo: PervasiveWellbeingTech/Stress-Annotated-Dataset-SAD
+    zip_url: https://raw.githubusercontent.com/PervasiveWellbeingTech/Stress-Annotated-Dataset-SAD/main/SAD_v1.zip
+    raw_dir: data/raw/sad
+  senticnet:
+    local_dir: data/raw/sentic/stress-detection-main
+    files: [Reddit_Title.xlsx, Reddit_Combi.xlsx, Twitter_Full.xlsx, Twitter_Non-Advert.xlsx]
+    role: agreement_check_only    # automated labels, never ground truth
+    repo: SenticNet/stress-detection
+    handcheck_n: 50
+  tensistrength:
+    enabled: true                 # user confirmed academic (university) use; README: "free for academic use, £1000 for commercial use"
+    local_dir: data/raw/tensistrength
+    jar_name: TensiStrengthMain.jar
+    resource_zip: TensiStrength_Data.zip
+    repo: MikeThelwall/SentiStrength
+    base_url: https://raw.githubusercontent.com/MikeThelwall/SentiStrength/main
+    files: [TensiStrengthMain.jar, TensiStrength_Data.zip, SentiStrengthJavaManual.doc, README.md]
+  zenodo_pilot:
+    record_id: 3941387
+    api_url: https://zenodo.org/api/records/3941387
+    local_dir: data/raw/zenodo
+    file_pattern: "{subreddit}_{window}_features_tfidf_256.csv"
+    # Subreddits/windows observed on disk (Step 0); text column `post` verified in Step 1. `author` is never loaded.
+    subreddits: [anxiety, divorce, parenting, personalfinance, relationships, teaching, COVID19_support]
+    windows: [pre, post]
+    text_column: post
+    date_column: date             # format YYYY/MM/DD (day resolution only), verified Step 2 inspection
+    load_columns: [subreddit, date, post]   # whitelist: feature columns and `author` are never read
+    # Observed in Step 1 (the record's "Dec 2018 to Dec 2019" is wrong): use these, not the window names.
+    window_dates: {pre: ["2018-11-01", "2019-11-01"], post: ["2020-01-01", "2020-04-20"]}
+    dedupe_overlapping_windows: true
+  main_corpus:
+    source: arctic_shift          # user decision (Step 1). Tool download options UNVERIFIED until Step 8
+    local_dir: data/raw/reddit_submissions
+    # user decision (Step 1): pilot communities (comparable) + legaladvice, unemployment. suicidewatch excluded.
+    subreddits: [anxiety, personalfinance, relationships, parenting, divorce, teaching, legaladvice, unemployment]
+    excluded_subreddits: [suicidewatch]
+    start: "2019-01"
+    end: "2022-12"
+    kind: submissions
+
+models:
+  # Base checkpoints are PLACEHOLDERS; change freely. Fine-tuning happens on Colab only.
+  stress:                         # kept in sync with stress_model.* below (Step 3 reads stress_model.*)
+    base_model: roberta-base
+    max_length: 256
+    num_labels: 2
+  emotion:
+    base_model: roberta-base
+    max_length: 128
+    num_labels: 28
+    problem_type: multi_label_classification
+  stressor:
+    base_model: distilroberta-base
+    max_length: 128
+
+stress_model:                     # Step 3. Training cells are USER-RUN on a Colab GPU; nothing here is run by the assistant.
+  # Dreaddit label meaning comes from the Dreaddit paper; the HF card only says `label: int64`.
+  # UNVERIFIED until you confirm it with notebook cell 3.0b.
+  label_map: {0: not_stress, 1: stress}
+  positive_label: 1
+  model_choice: roberta-base      # roberta-base | distilroberta-base | deberta-v3-base
+  model_options:
+    roberta-base: {hf_id: roberta-base}
+    distilroberta-base: {hf_id: distilroberta-base}            # fast; candidate for Spark/CPU inference
+    deberta-v3-base: {hf_id: microsoft/deberta-v3-base}         # heavier; needs sentencepiece; fp16 may overflow -> bf16/fp32
+  max_length: 256                 # Dreaddit p99 = 223 roberta tokens (Step 1 audit), so truncation is rare
+  learning_rate: 2.0e-5
+  train_batch_size: 16
+  eval_batch_size: 32
+  gradient_accumulation_steps: 1
+  epochs: 4
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  mixed_precision: auto           # auto: fp16 if CUDA (bf16 for deberta if the GPU supports it), else fp32 | fp16 | bf16 | no
+  early_stopping_patience: 2      # epochs without validation f1_stress improvement
+  metric_for_best_model: f1_stress
+  seeds: [42, 13, 2024]           # separate runs -> mean +/- std
+  save_total_limit: 2             # best + latest checkpoint are always kept (needed for resume)
+  dataloader_num_workers: 2
+  confidence_weights:             # Dreaddit `confidence` = annotator agreement share (0..1)
+    enabled: false
+    floor: 0.5                    # weight = max(confidence, floor), renormalised to mean 1 over train
+  high_confidence_threshold: 0.8  # subset analysis: confidence >= this (our choice; = Step 1 median)
+  final_seed_rule: best_val_f1_stress   # deployable model = the seed with the best VALIDATION f1_stress
+  eval:
+    bootstrap_resamples: 1000
+    bootstrap_cluster: post_id    # resample whole posts (segments of one post are not independent)
+    ci_level: 0.95
+  calibration:
+    ece_bins: 15
+    threshold_criterion: max_f1_stress  # on VALIDATION calibrated probabilities; ties -> closest to 0.5
+    threshold_grid: [0.40, 0.60, 0.01]  # user decision: search only 0.40-0.60 (start, stop, step)
+    # Apply the tuned threshold ONLY if the validation gain over 0.5 is clear (user decision); otherwise keep 0.5.
+    # "Clear" = gain in F1(stress) >= min_gain AND the paired cluster-bootstrap CI of the gain lies above 0.
+    # Both tests use the same validation data that chose the threshold, so they are optimistic; min_gain is the margin.
+    apply_rule: {min_gain: 0.01, require_ci_above_zero: true, bootstrap_resamples: 1000}
+  baseline:
+    word_ngrams: [1, 2]
+    char_ngrams: [2, 5]           # char_wb n-grams
+    min_df: 2
+    max_features_word: 50000
+    max_features_char: 100000
+    C_grid: [0.1, 0.3, 1.0, 3.0, 10.0]  # chosen on validation f1_stress
+    max_iter: 2000
+    top_k_ngrams: 30
+  shortcut:
+    # Our choice of topic/community terms (edit freely). "stress"/"stressed" are deliberately NOT masked:
+    # they are the target signal, not a topic cue. Subreddit names are also masked in r/<name> form.
+    subreddit_names: [domesticviolence, survivorsofabuse, anxiety, stress, almosthomeless, assistance, food_pantry, homeless, ptsd, relationships]
+    domain_terms: [abuse, abused, abuser, abusive, "domestic violence", violence, anxiety, anxious, panic, homeless, homelessness,
+                   shelter, rent, food, pantry, "food stamps", money, ptsd, trauma, traumatic, flashback, flashbacks,
+                   relationship, relationships, boyfriend, girlfriend, husband, wife, partner]
+    random_control_seed: 42       # control: mask the SAME number of random other words per text
+    random_control_draws: 5       # user decision: 5 random draws (seeds random_control_seed + 0..4); mean, sd, range reported
+    loso_model: distilroberta-base
+    loso_epochs: 3
+    loso_seed: 42
+
+training:                         # generic defaults for later components (emotion/stressor); Step 3 uses stress_model.*
+  epochs: 4
+  learning_rate: 2.0e-5
+  train_batch_size: 16
+  eval_batch_size: 32
+  weight_decay: 0.01
+  warmup_ratio: 0.06
+  fp16_on_colab: true
+  save_every_epoch: true
+  resume_from_checkpoint: true
+
+inference:
+  device: auto                    # auto | cpu | cuda
+  half_precision: false           # keep false on Pascal (Quadro P1000)
+  batch_size: 8
+  max_vram_gb: 4.0
+  num_threads_cpu: 4
+
+chunking:                         # long posts -> sentence-aligned overlapping token windows (preprocess.chunk_text)
+  enabled: true
+  max_tokens: 256                 # incl. special tokens; per-component override = models.<component>.max_length
+  stride: 64                      # tokens of OVERLAP between consecutive chunks (HF semantics), 25% of the window
+  max_chunks_per_doc: 8           # more -> evenly spaced subset (first + last kept); count recorded per record
+  aggregation: mean               # mean | weighted_mean | max  (mean of calibrated chunk probabilities)
+
+preprocess:
+  version: 1
+  lang_id:
+    library: lingua               # lingua-language-detector (deterministic, offline, pip wheels for Windows/Linux)
+    min_confidence: 0.5           # English kept if P(en) >= this among all lingua languages
+    max_chars: 1000               # only the first N chars are used for language ID (speed)
+    low_accuracy_mode: false
+  min_tokens: 5                   # unlabelled corpora: drop texts with fewer regex word tokens after cleaning
+  filter_labelled_benchmarks: false   # Dreaddit/GoEmotions/SAD official test rows are NEVER dropped by lang/length
+  bot_patterns:                   # regexes (case-insensitive); a text matching any is dropped as bot/moderator text
+    - "i am a bot"
+    - "this action was performed automatically"
+    - 'contact the moderators of this subreddit'
+    - '^(?:your )?(?:post|submission) has been (?:automatically )?removed'
+  removed_markers: ["[removed]", "[deleted]", "[removed by reddit]"]
+  dedupe:
+    exact: true                   # sha1 of lowercased, whitespace-collapsed text_clean
+    near_duplicate_minhash: false # optional, documented: datasketch MinHash-LSH on word shingles
+    minhash_num_perm: 128
+    minhash_threshold: 0.9
+    minhash_shingle_n: 5
+  lexical:
+    keep_negations: true          # keep no/not/never/nor even though sklearn lists them as stop words
+    extra_stopwords: [im, ive, dont, didnt, doesnt, cant, wont, isnt, youre, thats, really, just, like, get, got, know]
+    min_token_len: 2
+  senticnet_validation:
+    drop_dreaddit_contained: true # user decision: the Dreaddit segments contained in Reddit_Combi leak
+    drop_conflicting_duplicate_groups: true
+    # user decision (Step 2 final): Twitter_Non-Advert is NOT kept as a separate set; Twitter_Full rows whose text hash
+    # matches a Non-Advert text get is_non_advert=True (False otherwise; null for Reddit files).
+    non_advert_as_flag_on_twitter_full: true
+
+splits:
+  version: 1
+  dreaddit:
+    val_fraction: 0.15            # approx.; StratifiedGroupKFold with n_splits = round(1/val_fraction), fold 0
+    group_column: post_id
+    final_test: official_test
+  goemotions: official            # train/dev/test as published (user decision, Step 2 final)
+  # Cross-split shared texts are kept; flags in data/processed/goemotions_overlap_flags.parquet drive a test
+  # sensitivity check (with vs without test rows whose text also occurs in train or validation).
+  # Gold stressor set (Step 5) is sampled later and stored separately under data/outputs/gold/.
+
+temporal:
+  granularity: week               # day | week | month
+  timezone: UTC
+
+change_detection:
+  baseline_window: 12             # periods used to fit the rolling baseline
+  min_periods: 8
+  ewma:
+    lambda: 0.3
+    L: 3.0                        # control-limit width in sigma
+  cusum:
+    k: 0.5                        # slack, in sigma units
+    h: 5.0                        # decision threshold, in sigma units
+  persistence: 3                  # consecutive flagged periods before a signal is raised
+
+spark:
+  master: "local[4]"
+  app_name: stress_signals
+  driver_memory: 12g
+  executor_memory: 4g
+  shuffle_partitions: 64
+  max_partition_bytes: 67108864   # 64 MB
+  arrow_enabled: true
+  arrow_max_records_per_batch: 256
+
+postgres:                         # environment-variable NAMES only; values live in .env
+  host_env: PG_HOST
+  port_env: PG_PORT
+  db_env: PG_DB
+  user_env: PG_USER
+  password_env: PG_PASSWORD
+  schema: stress_signals
+  sslmode: prefer
+
+audit:
+  token_sample_size: 20000        # max texts per split/file for token-length stats (chars use all rows)
+  token_thresholds: [128, 256, 512]
+  shingle_n: 8                    # word n-gram size for near-duplicate / overlap checks
+  overlap_threshold: 0.8          # share of a text's shingles found in the other corpus
+  metadata_dir: data/raw/_metadata
+
+logging:
+  level: INFO

@@ -1,0 +1,1544 @@
+{
+  "artifacts": {
+    "data/processed/dreaddit.parquet": {
+      "bytes": 1185007,
+      "sha256": "1eddd5d80029d36ec223dd9543ca119c6013fe8d7072240548e32145f35d5c6e",
+      "type": "file"
+    },
+    "data/processed/goemotions.parquet": {
+      "bytes": 4155972,
+      "sha256": "8ec7e37ecb72694c59f4b5451095be7a86064dbfea23dee184d0c63f12384d6d",
+      "type": "file"
+    },
+    "data/processed/goemotions_overlap_flags.parquet": {
+      "bytes": 1231538,
+      "sha256": "3a516c2d24cf8d32d622c70c6986a43eea2b23094a4364d562f3893a75c91f0f",
+      "type": "file"
+    },
+    "data/processed/sad.parquet": {
+      "bytes": 508739,
+      "sha256": "d507653c192a5d941c9e0406c178be7d49b68cb765956e92e76198f865415a66",
+      "type": "file"
+    },
+    "data/processed/senticnet_validation.parquet": {
+      "bytes": 3578714,
+      "sha256": "32dfa7a11bf366e813be8741cb72b74d34c0e9af688ea679b88906fa4ee4859a",
+      "type": "file"
+    },
+    "data/processed/splits/dreaddit_split_v1.json": {
+      "bytes": 109911,
+      "sha256": "1bbc01478d80385dda228bd135401ba096ec2eafe904846f94b6af3aaaeff8ce",
+      "type": "file"
+    },
+    "data/processed/splits/goemotions_split_v1.json": {
+      "bytes": 1683118,
+      "sha256": "be3c104d39acb010ec172629fd977629bba072ebfab7e88d53b78d8fbb848d35",
+      "type": "file"
+    },
+    "data/processed/zenodo_pilot.parquet": {
+      "bytes": 121433842,
+      "sha256": "24334115d61f2b577a487b73091b603e210ecc1cf78049c9ce463b498321fb4d",
+      "type": "file"
+    }
+  },
+  "created_utc": "2026-10-03T05:26:30+00:00",
+  "dataset_versions": {
+    "dreaddit": {
+      "hf_id": "andreagasparini/dreaddit",
+      "last_modified": "2025-09-23 16:12:47+00:00",
+      "revision_sha": "f6ef6d27b23bee7d8be1d2e63a9df9f354da950a"
+    },
+    "goemotions": {
+      "audit_sha256": "b37c593340c0a8ba2a6524112151e3641a6288f527aee4f32622abcb8c2e496a"
+    },
+    "sad": {
+      "commit_date": "2021-04-22T13:55:57Z",
+      "commit_sha": "1d6aa672c4eeb82e0bbc6533b75e0694da80ae20",
+      "default_branch": "main",
+      "licence_spdx": "MIT",
+      "repo": "PervasiveWellbeingTech/Stress-Annotated-Dataset-SAD"
+    },
+    "senticnet": {
+      "commit_date": "2022-05-08T11:43:35Z",
+      "commit_sha": "d984dcdbb0a10c335901d8341f7d3e55256ea9cd",
+      "default_branch": "main",
+      "licence_spdx": "Apache-2.0",
+      "repo": "SenticNet/stress-detection"
+    },
+    "zenodo_pilot": {
+      "doi": "10.17605/OSF.IO/7PEYQ",
+      "files_in_record": 108,
+      "licence": "odc-pddl",
+      "licence_quote": "License This dataset is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: http://www.opendatacommons.org/licenses/pddl/1.0/ It was downloaded using pushshift API. Re-use of this data is subject to Reddit API terms. Reddit Mental Health Dataset Contains posts",
+      "publication_date": "2020-07-13",
+      "title": "Reddit Mental Health Dataset",
+      "version": "01"
+    }
+  },
+  "extra": {
+    "chunking_config": {
+      "aggregation": "mean",
+      "enabled": true,
+      "max_chunks_per_doc": 8,
+      "max_tokens": 256,
+      "stride": 64
+    },
+    "datasets": {
+      "dreaddit": {
+        "clean_edits": {
+          "html_unescape": 55,
+          "md_bullet": 22,
+          "md_em": 87,
+          "md_escape": 137,
+          "md_heading": 1,
+          "md_link": 2,
+          "md_quote": 4,
+          "md_strong": 210,
+          "md_superscript": 1,
+          "mention": 8,
+          "phone_removed": 4,
+          "url": 1,
+          "url_placeholder": 344,
+          "zero_width": 48
+        },
+        "columns": [
+          "record_id",
+          "source",
+          "community",
+          "created_at",
+          "text_clean",
+          "n_chars",
+          "n_tokens_est",
+          "lang",
+          "label",
+          "confidence",
+          "post_id",
+          "sentence_range",
+          "official_split",
+          "split"
+        ],
+        "final_rows": 3528,
+        "label_by_split": {
+          "test": {
+            "0": 346,
+            "1": 369
+          },
+          "train": {
+            "0": 1151,
+            "1": 1247
+          },
+          "validation": {
+            "0": 181,
+            "1": 234
+          }
+        },
+        "output": "E:/Dikshant/SEM-5/TA-BDA/data/processed/dreaddit.parquet",
+        "post_id_overlap_between_splits": {
+          "test&train": 0,
+          "test&validation": 0,
+          "train&validation": 0
+        },
+        "split_counts": {
+          "test": 715,
+          "train": 2398,
+          "validation": 415
+        },
+        "split_file": "E:/Dikshant/SEM-5/TA-BDA/data/processed/splits/dreaddit_split_v1.json",
+        "steps": [
+          {
+            "rows": 3553,
+            "step": "loaded"
+          },
+          {
+            "dropped": 0,
+            "rows": 3553,
+            "step": "drop:empty_after_cleaning"
+          },
+          {
+            "conflicting_label_groups": 3,
+            "conflicting_label_rows_dropped": 8,
+            "dropped": 22,
+            "duplicate_rows_dropped": 14,
+            "rows": 3531,
+            "step": "drop:train_exact_duplicate_text"
+          },
+          {
+            "dropped": 3,
+            "rows": 3528,
+            "step": "drop:train_text_also_in_test"
+          },
+          {
+            "step": "official_test_kept_unchanged",
+            "test_duplicate_rows": 0
+          },
+          {
+            "counts": {
+              "en": 3527,
+              "eu": 1
+            },
+            "step": "lang_computed_not_filtered"
+          }
+        ]
+      },
+      "goemotions": {
+        "clean_edits": {
+          "html_unescape": 2,
+          "md_bullet": 14,
+          "md_code": 2,
+          "md_em": 694,
+          "md_escape": 1,
+          "md_heading": 8,
+          "md_link": 2,
+          "md_quote": 639,
+          "md_strong": 203,
+          "md_superscript": 347,
+          "mention": 77,
+          "phone_removed": 2,
+          "removed_marker": 1,
+          "url": 6,
+          "url_placeholder": 8,
+          "zero_width": 62
+        },
+        "columns": [
+          "record_id",
+          "source",
+          "community",
+          "created_at",
+          "text_clean",
+          "n_chars",
+          "n_tokens_est",
+          "lang",
+          "labels",
+          "official_split",
+          "split"
+        ],
+        "final_rows": 54263,
+        "label_names": [
+          "admiration",
+          "amusement",
+          "anger",
+          "annoyance",
+          "approval",
+          "caring",
+          "confusion",
+          "curiosity",
+          "desire",
+          "disappointment",
+          "disapproval",
+          "disgust",
+          "embarrassment",
+          "excitement",
+          "fear",
+          "gratitude",
+          "grief",
+          "joy",
+          "love",
+          "nervousness",
+          "optimism",
+          "pride",
+          "realization",
+          "relief",
+          "remorse",
+          "sadness",
+          "surprise",
+          "neutral"
+        ],
+        "output": "E:/Dikshant/SEM-5/TA-BDA/data/processed/goemotions.parquet",
+        "overlap_flags": {
+          "shared_texts": {
+            "train&test": 37,
+            "train&validation": 47,
+            "validation&test": 11
+          },
+          "source_sha256": "8ec7e37ecb72694c59f4b5451095be7a86064dbfea23dee184d0c63f12384d6d",
+          "test_rows_excluded_in_sensitivity_check": 48,
+          "test_rows_text_in_train": 42,
+          "test_rows_text_in_validation": 14,
+          "test_rows_total": 5427,
+          "validation_rows_text_in_train": 50
+        },
+        "split_counts": {
+          "test": 5427,
+          "train": 43410,
+          "validation": 5426
+        },
+        "split_file": "E:/Dikshant/SEM-5/TA-BDA/data/processed/splits/goemotions_split_v1.json",
+        "steps": [
+          {
+            "rows": 54263,
+            "step": "loaded"
+          },
+          {
+            "dropped": 0,
+            "rows": 54263,
+            "step": "drop:empty_after_cleaning"
+          },
+          {
+            "counts": {
+              "af": 81,
+              "cy": 91,
+              "en": 52289,
+              "fr": 80,
+              "it": 59,
+              "la": 142,
+              "nl": 114,
+              "st": 112,
+              "tl": 192,
+              "tn": 84
+            },
+            "step": "lang_computed_not_filtered"
+          },
+          {
+            "cross_split_shared_texts": {
+              "train&test": 37,
+              "train&validation": 47,
+              "validation&test": 11
+            },
+            "step": "official_splits_kept_unchanged",
+            "within_train_duplicate_rows": 223
+          }
+        ]
+      },
+      "sad": {
+        "clean_edits": {
+          "md_code": 1,
+          "md_em": 1,
+          "url": 1,
+          "url_placeholder": 1
+        },
+        "columns": [
+          "record_id",
+          "source",
+          "community",
+          "created_at",
+          "text_clean",
+          "n_chars",
+          "n_tokens_est",
+          "lang",
+          "sID",
+          "is_stressor",
+          "is_stressor_conf",
+          "is_covid",
+          "top_label",
+          "second_label",
+          "avg_severity",
+          "sad_source"
+        ],
+        "final_rows": 6843,
+        "output": "E:/Dikshant/SEM-5/TA-BDA/data/processed/sad.parquet",
+        "steps": [
+          {
+            "rows": 6850,
+            "step": "loaded"
+          },
+          {
+            "dropped": 0,
+            "rows": 6850,
+            "step": "drop:empty_after_cleaning"
+          },
+          {
+            "conflicting_label_groups": 0,
+            "conflicting_label_rows_dropped": 0,
+            "dropped": 7,
+            "duplicate_rows_dropped": 7,
+            "rows": 6843,
+            "step": "drop:exact_duplicate_text"
+          },
+          {
+            "counts": {
+              "cy": 3,
+              "en": 6761,
+              "fr": 8,
+              "it": 2,
+              "la": 19,
+              "nl": 3,
+              "ro": 3,
+              "sn": 3,
+              "st": 8,
+              "tl": 6
+            },
+            "step": "lang_computed_not_filtered"
+          }
+        ],
+        "xlsx": "SAD_v1.xlsx"
+      },
+      "senticnet": {
+        "clean_edits": {
+          "html_unescape": 2,
+          "md_bullet": 3,
+          "md_em": 150,
+          "md_escape": 39,
+          "md_quote": 2,
+          "md_strong": 97,
+          "md_superscript": 11,
+          "mention": 8,
+          "phone_removed": 154,
+          "url": 63,
+          "url_placeholder": 63,
+          "zero_width": 248
+        },
+        "columns": [
+          "record_id",
+          "source",
+          "community",
+          "created_at",
+          "text_clean",
+          "n_chars",
+          "n_tokens_est",
+          "lang",
+          "label_auto",
+          "platform",
+          "is_non_advert"
+        ],
+        "files": {
+          "Reddit_Combi": [
+            {
+              "rows": 3123,
+              "step": "loaded"
+            },
+            {
+              "dropped": 0,
+              "rows": 3123,
+              "step": "drop:empty_text_or_invalid_label"
+            },
+            {
+              "conflicting_label_groups": 0,
+              "conflicting_label_rows_dropped": 0,
+              "dropped": 0,
+              "duplicate_rows_dropped": 0,
+              "rows": 3123,
+              "step": "drop:within_file_duplicates"
+            },
+            {
+              "dropped": 0,
+              "rows": 3123,
+              "step": "drop:exact_dreaddit_text"
+            },
+            {
+              "dropped": 5,
+              "rows": 3118,
+              "step": "drop:contains_dreaddit_segment_ge_80%"
+            }
+          ],
+          "Reddit_Title": [
+            {
+              "rows": 5556,
+              "step": "loaded"
+            },
+            {
+              "dropped": 0,
+              "rows": 5556,
+              "step": "drop:empty_text_or_invalid_label"
+            },
+            {
+              "conflicting_label_groups": 10,
+              "conflicting_label_rows_dropped": 20,
+              "dropped": 53,
+              "duplicate_rows_dropped": 33,
+              "rows": 5503,
+              "step": "drop:within_file_duplicates"
+            },
+            {
+              "dropped": 0,
+              "rows": 5503,
+              "step": "drop:exact_dreaddit_text"
+            },
+            {
+              "dropped": 0,
+              "rows": 5503,
+              "step": "drop:contains_dreaddit_segment_ge_80%"
+            }
+          ],
+          "Twitter_Full": [
+            {
+              "rows": 8900,
+              "step": "loaded"
+            },
+            {
+              "dropped": 0,
+              "rows": 8900,
+              "step": "drop:empty_text_or_invalid_label"
+            },
+            {
+              "conflicting_label_groups": 0,
+              "conflicting_label_rows_dropped": 0,
+              "dropped": 485,
+              "duplicate_rows_dropped": 485,
+              "rows": 8415,
+              "step": "drop:within_file_duplicates"
+            },
+            {
+              "dropped": 0,
+              "rows": 8415,
+              "step": "drop:exact_dreaddit_text"
+            },
+            {
+              "non_advert_texts": 1967,
+              "non_advert_texts_without_match_in_full": 0,
+              "rows_flagged": 1967,
+              "step": "is_non_advert_flag_added"
+            }
+          ],
+          "Twitter_Non-Advert": [
+            {
+              "rows": 2051,
+              "step": "loaded"
+            },
+            {
+              "dropped": 0,
+              "rows": 2051,
+              "step": "drop:empty_text_or_invalid_label"
+            },
+            {
+              "conflicting_label_groups": 0,
+              "conflicting_label_rows_dropped": 0,
+              "dropped": 84,
+              "duplicate_rows_dropped": 84,
+              "rows": 1967,
+              "step": "drop:within_file_duplicates"
+            },
+            {
+              "dropped": 0,
+              "rows": 1967,
+              "step": "drop:exact_dreaddit_text"
+            },
+            {
+              "dropped": 1967,
+              "rows": 0,
+              "step": "drop:not_kept_as_separate_set"
+            }
+          ]
+        },
+        "final_rows": 17036,
+        "label_auto_by_file": {
+          "Reddit_Combi": {
+            "0": 378,
+            "1": 2740
+          },
+          "Reddit_Title": {
+            "0": 2801,
+            "1": 2702
+          },
+          "Twitter_Full": {
+            "0": 4117,
+            "1": 4298
+          }
+        },
+        "label_provenance": "automated DNN-based labels (SenticNet README); NOT human ground truth",
+        "lang_counts": {
+          "af": 15,
+          "cy": 8,
+          "en": 16786,
+          "fr": 8,
+          "it": 9,
+          "la": 25,
+          "sv": 6,
+          "tl": 90,
+          "tn": 10,
+          "yo": 11
+        },
+        "output": "E:/Dikshant/SEM-5/TA-BDA/data/processed/senticnet_validation.parquet"
+      },
+      "zenodo": {
+        "clean_edits": {
+          "email_removed": 142,
+          "html_unescape": 28848,
+          "md_bullet": 18126,
+          "md_code": 77,
+          "md_em": 10739,
+          "md_escape": 19339,
+          "md_heading": 369,
+          "md_link": 5897,
+          "md_quote": 1265,
+          "md_rule": 863,
+          "md_strong": 12839,
+          "md_superscript": 485,
+          "mention": 189,
+          "phone_removed": 111,
+          "url": 5146,
+          "url_placeholder": 11237,
+          "zero_width": 29206
+        },
+        "columns": [
+          "record_id",
+          "source",
+          "community",
+          "created_at",
+          "text_clean",
+          "n_chars",
+          "n_tokens_est",
+          "lang",
+          "window"
+        ],
+        "date_range": {
+          "max": "2020-04-20T00:00:00+00:00",
+          "min": "2018-11-01T00:00:00+00:00"
+        },
+        "final_rows": 170199,
+        "global_steps": [
+          {
+            "rows": 170249,
+            "step": "loaded"
+          },
+          {
+            "conflicting_label_groups": 0,
+            "conflicting_label_rows_dropped": 0,
+            "dropped": 50,
+            "duplicate_rows_dropped": 50,
+            "rows": 170199,
+            "step": "drop:exact_duplicate_text_global"
+          }
+        ],
+        "note": "created_at has DAY resolution (source `date` column); time of day is not available",
+        "output": "E:/Dikshant/SEM-5/TA-BDA/data/processed/zenodo_pilot.parquet",
+        "per_file": {
+          "COVID19_support_post_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 1,
+              "html_unescape": 145,
+              "md_bullet": 165,
+              "md_em": 68,
+              "md_escape": 155,
+              "md_heading": 1,
+              "md_link": 208,
+              "md_quote": 67,
+              "md_rule": 2,
+              "md_strong": 112,
+              "md_superscript": 27,
+              "mention": 1,
+              "phone_removed": 1,
+              "url": 117,
+              "url_placeholder": 325,
+              "zero_width": 110
+            },
+            "steps": [
+              {
+                "rows": 981,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 981,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 981,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 981,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 1,
+                "rows": 980,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 980,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 980
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "anxiety_post_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 3,
+              "html_unescape": 1023,
+              "md_bullet": 561,
+              "md_code": 2,
+              "md_em": 590,
+              "md_escape": 428,
+              "md_heading": 32,
+              "md_link": 332,
+              "md_quote": 142,
+              "md_rule": 15,
+              "md_strong": 361,
+              "md_superscript": 23,
+              "mention": 13,
+              "phone_removed": 3,
+              "url": 304,
+              "url_placeholder": 639,
+              "zero_width": 544
+            },
+            "steps": [
+              {
+                "rows": 15896,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 15896,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 15896,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 15896,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 15896,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 1,
+                "rows": 15895,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 15895,
+                  "tl": 1
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "anxiety_pre_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 6,
+              "html_unescape": 2148,
+              "md_bullet": 546,
+              "md_em": 855,
+              "md_escape": 781,
+              "md_heading": 30,
+              "md_link": 348,
+              "md_quote": 38,
+              "md_rule": 18,
+              "md_strong": 377,
+              "md_superscript": 21,
+              "mention": 14,
+              "phone_removed": 3,
+              "url": 327,
+              "url_placeholder": 684,
+              "zero_width": 2117
+            },
+            "steps": [
+              {
+                "rows": 19976,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 19976,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 19976,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 19976,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 19976,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 3,
+                "rows": 19973,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 19973,
+                  "nl": 1,
+                  "st": 1,
+                  "yo": 1
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "divorce_post_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 6,
+              "html_unescape": 217,
+              "md_bullet": 121,
+              "md_em": 95,
+              "md_escape": 106,
+              "md_heading": 4,
+              "md_link": 47,
+              "md_quote": 9,
+              "md_rule": 2,
+              "md_strong": 70,
+              "phone_removed": 5,
+              "url": 44,
+              "url_placeholder": 91,
+              "zero_width": 150
+            },
+            "steps": [
+              {
+                "rows": 2747,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 2747,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 2747,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 2747,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 1,
+                "rows": 2746,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 2746,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 2746
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "divorce_pre_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 10,
+              "html_unescape": 1059,
+              "md_bullet": 523,
+              "md_em": 289,
+              "md_escape": 483,
+              "md_heading": 2,
+              "md_link": 164,
+              "md_quote": 5,
+              "md_rule": 4,
+              "md_strong": 162,
+              "md_superscript": 5,
+              "mention": 2,
+              "phone_removed": 13,
+              "url": 148,
+              "url_placeholder": 315,
+              "zero_width": 1324
+            },
+            "steps": [
+              {
+                "rows": 6419,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 6419,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 6419,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 6419,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 6419,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 6419,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 6419
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "parenting_post_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 10,
+              "html_unescape": 563,
+              "md_bullet": 415,
+              "md_code": 5,
+              "md_em": 322,
+              "md_escape": 324,
+              "md_heading": 9,
+              "md_link": 379,
+              "md_quote": 12,
+              "md_rule": 15,
+              "md_strong": 354,
+              "md_superscript": 70,
+              "mention": 8,
+              "phone_removed": 5,
+              "url": 342,
+              "url_placeholder": 735,
+              "zero_width": 289
+            },
+            "steps": [
+              {
+                "rows": 7045,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 7045,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 7045,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 7045,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 7045,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 7045,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 7045
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "parenting_pre_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 25,
+              "html_unescape": 2692,
+              "md_bullet": 1002,
+              "md_code": 1,
+              "md_em": 980,
+              "md_escape": 872,
+              "md_heading": 74,
+              "md_link": 1168,
+              "md_quote": 94,
+              "md_rule": 22,
+              "md_strong": 853,
+              "md_superscript": 17,
+              "mention": 17,
+              "phone_removed": 20,
+              "url": 982,
+              "url_placeholder": 2158,
+              "zero_width": 2571
+            },
+            "steps": [
+              {
+                "rows": 17371,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 17371,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 17371,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 17371,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 17371,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 17371,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 17371
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "personalfinance_post_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 28,
+              "html_unescape": 5525,
+              "md_bullet": 6837,
+              "md_code": 19,
+              "md_em": 1805,
+              "md_escape": 4946,
+              "md_heading": 39,
+              "md_link": 1496,
+              "md_quote": 362,
+              "md_rule": 92,
+              "md_strong": 3275,
+              "md_superscript": 124,
+              "mention": 45,
+              "phone_removed": 19,
+              "url": 1351,
+              "url_placeholder": 2896,
+              "zero_width": 3547
+            },
+            "steps": [
+              {
+                "rows": 37165,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 37165,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 37165,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 37165,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 37165,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 1,
+                "rows": 37164,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 37164,
+                  "la": 1
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "personalfinance_pre_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 18,
+              "html_unescape": 6327,
+              "md_bullet": 5563,
+              "md_code": 20,
+              "md_em": 1514,
+              "md_escape": 4153,
+              "md_heading": 115,
+              "md_link": 1044,
+              "md_quote": 386,
+              "md_rule": 80,
+              "md_strong": 2767,
+              "md_superscript": 149,
+              "mention": 38,
+              "phone_removed": 25,
+              "url": 926,
+              "url_placeholder": 2038,
+              "zero_width": 7591
+            },
+            "steps": [
+              {
+                "rows": 23440,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 23440,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 23440,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 23440,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 23440,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 23440,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 23440
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "relationships_post_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 6,
+              "html_unescape": 3703,
+              "md_bullet": 1264,
+              "md_code": 10,
+              "md_em": 2168,
+              "md_escape": 3416,
+              "md_heading": 8,
+              "md_link": 82,
+              "md_quote": 59,
+              "md_rule": 505,
+              "md_strong": 2221,
+              "md_superscript": 29,
+              "mention": 28,
+              "phone_removed": 4,
+              "url": 75,
+              "url_placeholder": 158,
+              "zero_width": 3612
+            },
+            "steps": [
+              {
+                "rows": 20767,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 20767,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 20767,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 20767,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 20767,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 20767,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 20767
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "relationships_pre_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 2,
+              "html_unescape": 4797,
+              "md_bullet": 905,
+              "md_code": 13,
+              "md_em": 1827,
+              "md_escape": 3222,
+              "md_heading": 25,
+              "md_link": 111,
+              "md_quote": 70,
+              "md_rule": 106,
+              "md_strong": 1755,
+              "md_superscript": 20,
+              "mention": 15,
+              "phone_removed": 3,
+              "url": 111,
+              "url_placeholder": 229,
+              "zero_width": 6800
+            },
+            "steps": [
+              {
+                "rows": 15037,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 15037,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 15037,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 15037,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 15037,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 15037,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 15037
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "teaching_post_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 9,
+              "html_unescape": 140,
+              "md_bullet": 69,
+              "md_code": 6,
+              "md_em": 109,
+              "md_escape": 188,
+              "md_heading": 13,
+              "md_link": 216,
+              "md_quote": 1,
+              "md_rule": 1,
+              "md_strong": 159,
+              "mention": 1,
+              "phone_removed": 2,
+              "url": 193,
+              "url_placeholder": 423,
+              "zero_width": 112
+            },
+            "steps": [
+              {
+                "rows": 1063,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 1063,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 1063,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 1063,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 1063,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 0,
+                "rows": 1063,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 1063
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          },
+          "teaching_pre_features_tfidf_256": {
+            "clean_edits": {
+              "email_removed": 18,
+              "html_unescape": 509,
+              "md_bullet": 155,
+              "md_code": 1,
+              "md_em": 117,
+              "md_escape": 265,
+              "md_heading": 17,
+              "md_link": 302,
+              "md_quote": 20,
+              "md_rule": 1,
+              "md_strong": 373,
+              "mention": 7,
+              "phone_removed": 8,
+              "url": 226,
+              "url_placeholder": 546,
+              "zero_width": 439
+            },
+            "steps": [
+              {
+                "rows": 2350,
+                "step": "loaded"
+              },
+              {
+                "dropped": 0,
+                "rows": 2350,
+                "step": "drop:unparseable_date"
+              },
+              {
+                "dropped": 0,
+                "rows": 2350,
+                "step": "drop:empty_or_removed_after_cleaning"
+              },
+              {
+                "dropped": 0,
+                "rows": 2350,
+                "step": "drop:bot_text"
+              },
+              {
+                "dropped": 0,
+                "rows": 2350,
+                "step": "drop:shorter_than_5_tokens"
+              },
+              {
+                "dropped": 1,
+                "rows": 2349,
+                "step": "drop:non_english",
+                "top_detected": {
+                  "en": 2349,
+                  "eo": 1
+                }
+              },
+              {
+                "n": 0,
+                "step": "outside_observed_window_kept"
+              }
+            ],
+            "subreddit_value_mismatch": 0
+          }
+        },
+        "rows_by_community_window": [
+          {
+            "community": "anxiety",
+            "n": 15892,
+            "window": "post"
+          },
+          {
+            "community": "anxiety",
+            "n": 19969,
+            "window": "pre"
+          },
+          {
+            "community": "covid19_support",
+            "n": 977,
+            "window": "post"
+          },
+          {
+            "community": "divorce",
+            "n": 2744,
+            "window": "post"
+          },
+          {
+            "community": "divorce",
+            "n": 6418,
+            "window": "pre"
+          },
+          {
+            "community": "parenting",
+            "n": 7043,
+            "window": "post"
+          },
+          {
+            "community": "parenting",
+            "n": 17365,
+            "window": "pre"
+          },
+          {
+            "community": "personalfinance",
+            "n": 37159,
+            "window": "post"
+          },
+          {
+            "community": "personalfinance",
+            "n": 23438,
+            "window": "pre"
+          },
+          {
+            "community": "relationships",
+            "n": 20758,
+            "window": "post"
+          },
+          {
+            "community": "relationships",
+            "n": 15025,
+            "window": "pre"
+          },
+          {
+            "community": "teaching",
+            "n": 1063,
+            "window": "post"
+          },
+          {
+            "community": "teaching",
+            "n": 2348,
+            "window": "pre"
+          }
+        ]
+      }
+    },
+    "lang_id": {
+      "library": "lingua-language-detector",
+      "version": "2.1.1"
+    },
+    "lemmatizer": {
+      "library": "simplemma",
+      "version": "2.0.0"
+    },
+    "preprocess_config": {
+      "bot_patterns": [
+        "i am a bot",
+        "this action was performed automatically",
+        "contact the moderators of this subreddit",
+        "^(?:your )?(?:post|submission) has been (?:automatically )?removed"
+      ],
+      "dedupe": {
+        "exact": true,
+        "minhash_num_perm": 128,
+        "minhash_shingle_n": 5,
+        "minhash_threshold": 0.9,
+        "near_duplicate_minhash": false
+      },
+      "filter_labelled_benchmarks": false,
+      "lang_id": {
+        "library": "lingua",
+        "low_accuracy_mode": false,
+        "max_chars": 1000,
+        "min_confidence": 0.5
+      },
+      "lexical": {
+        "extra_stopwords": [
+          "im",
+          "ive",
+          "dont",
+          "didnt",
+          "doesnt",
+          "cant",
+          "wont",
+          "isnt",
+          "youre",
+          "thats",
+          "really",
+          "just",
+          "like",
+          "get",
+          "got",
+          "know"
+        ],
+        "keep_negations": true,
+        "min_token_len": 2
+      },
+      "min_tokens": 5,
+      "removed_markers": [
+        "[removed]",
+        "[deleted]",
+        "[removed by reddit]"
+      ],
+      "senticnet_validation": {
+        "drop_conflicting_duplicate_groups": true,
+        "drop_dreaddit_contained": true,
+        "non_advert_as_flag_on_twitter_full": true
+      },
+      "version": 1
+    },
+    "splits_config": {
+      "dreaddit": {
+        "final_test": "official_test",
+        "group_column": "post_id",
+        "val_fraction": 0.15
+      },
+      "goemotions": "official",
+      "version": 1
+    },
+    "step": 2
+  },
+  "is_colab": false,
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.0",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "platform": {
+    "machine": "AMD64",
+    "release": "10",
+    "system": "Windows"
+  },
+  "seeds": [
+    42
+  ]
+}

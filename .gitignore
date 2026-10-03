@@ -1,0 +1,44 @@
+# Data, caches, outputs and model weights never go to version control:
+#  - size: GitHub rejects files > 100 MB (SAD_v1.zip 186 MB, zenodo_pilot.parquet 121 MB, each model ~500 MB)
+#  - privacy: raw/ and processed/ hold real Reddit post text (raw Zenodo files still have `author`)
+#  - licences: some sources may not be redistributed (TensiStrength academic-only, Dreaddit licence UNVERIFIED)
+#  - all of it is rebuildable: Step 1 downloads raw/, Step 2 rebuilds processed/ (manifests hold SHA-256), Step 3 trains
+# EXCEPTIONS: small, text-free files needed for reproducibility and for the record of what ran.
+# (`dir/**` + `!dir/**/` keeps the folders traversable so the `!` exceptions below can take effect.)
+data/**
+!data/**/
+!data/processed/splits/*.json
+!data/outputs/manifests/*.json
+!data/outputs/reports/*.md
+
+trained_models/**
+!trained_models/**/
+!trained_models/HANDOFF.md
+!trained_models/handoff.json
+!trained_models/**/metrics.json
+!trained_models/**/model_card.md
+!trained_models/**/stress_config.json
+!trained_models/**/manifest.json
+!trained_models/**/train_summary.json
+!trained_models/**/evaluation*.json
+!trained_models/**/calibration.json
+!trained_models/**/FINAL_TEST_REPORT.json
+!trained_models/**/shortcut_masking.json
+!trained_models/**/loso_summary.json
+.env
+code/_deferred/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.venv-1/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log

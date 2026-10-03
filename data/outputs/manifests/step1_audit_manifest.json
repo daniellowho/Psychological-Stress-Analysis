@@ -1,0 +1,125 @@
+{
+  "artifacts": {
+    "artifacts/reports/data_audit.md": {
+      "bytes": 40185,
+      "sha256": "fb823e5252e7b6d40a43f26fb2157535f56e19117068d2778f22b52fe02cb1fa",
+      "type": "file"
+    },
+    "data/interim/audit_dreaddit.json": {
+      "bytes": 13206,
+      "sha256": "4c7c45ad31a75e9de301e4022965cfaf7c798fb962af007bddbc150ab5440964",
+      "type": "file"
+    },
+    "data/interim/audit_goemotions.json": {
+      "bytes": 25967,
+      "sha256": "b37c593340c0a8ba2a6524112151e3641a6288f527aee4f32622abcb8c2e496a",
+      "type": "file"
+    },
+    "data/interim/audit_mendeley.json": {
+      "bytes": 7988,
+      "sha256": "cdcfacb722cf528648365eaf8aa1c59026148611251cd92a1206fd9bd0b0ab5d",
+      "type": "file"
+    },
+    "data/interim/audit_sad.json": {
+      "bytes": 16926,
+      "sha256": "c945065eab31f899e54ba36b5e9741f131cfce4f3d72f09d4976fa3a716f587a",
+      "type": "file"
+    },
+    "data/interim/audit_senticnet.json": {
+      "bytes": 9652,
+      "sha256": "e50f2ee8397e25a66d78d78cc45fe7b66dac0f2c1b466523cb1a5f637ff851bf",
+      "type": "file"
+    },
+    "data/interim/audit_tensistrength.json": {
+      "bytes": 5771,
+      "sha256": "05d6376613f69d8ab824661dcaaa9a9d2f082ee135e1154e12b9b5179c19108f",
+      "type": "file"
+    },
+    "data/interim/audit_zenodo_pilot.json": {
+      "bytes": 36106,
+      "sha256": "a789128e79d6379f8e2a831360565a541bac64c79f958f1114ebc9f977394608",
+      "type": "file"
+    }
+  },
+  "created_utc": "2026-10-02T20:24:29+00:00",
+  "dataset_versions": {
+    "dreaddit": {
+      "hf_id": "andreagasparini/dreaddit",
+      "last_modified": "2025-09-23 16:12:47+00:00",
+      "revision_sha": "f6ef6d27b23bee7d8be1d2e63a9df9f354da950a"
+    },
+    "goemotions": {
+      "commit_date": "2026-09-30T21:03:33Z",
+      "commit_sha": "e49bbfe381c9c0e564b937f1c4e163a2273c65cc",
+      "default_branch": "master",
+      "licence_spdx": "Apache-2.0",
+      "repo": "google-research/google-research"
+    },
+    "mendeley": {
+      "doi": "10.17632/2gsjv8m7ch.2",
+      "publish_date": "2025-09-15T14:56:43.634Z",
+      "version": 2
+    },
+    "sad": {
+      "commit_date": "2021-04-22T13:55:57Z",
+      "commit_sha": "1d6aa672c4eeb82e0bbc6533b75e0694da80ae20",
+      "default_branch": "main",
+      "licence_spdx": "MIT",
+      "repo": "PervasiveWellbeingTech/Stress-Annotated-Dataset-SAD"
+    },
+    "senticnet": {
+      "commit_date": "2022-05-08T11:43:35Z",
+      "commit_sha": "d984dcdbb0a10c335901d8341f7d3e55256ea9cd",
+      "default_branch": "main",
+      "licence_spdx": "Apache-2.0",
+      "repo": "SenticNet/stress-detection"
+    },
+    "tensistrength": {
+      "commit_date": "2024-05-31T17:44:19Z",
+      "commit_sha": "6d49fb6e4cb002722fd6f80ba9899816c33f28f5",
+      "default_branch": "main",
+      "licence_spdx": null,
+      "repo": "MikeThelwall/SentiStrength"
+    },
+    "zenodo_pilot": {
+      "doi": "10.17605/OSF.IO/7PEYQ",
+      "files_in_record": 108,
+      "licence": "odc-pddl",
+      "licence_quote": "License This dataset is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: http://www.opendatacommons.org/licenses/pddl/1.0/ It was downloaded using pushshift API. Re-use of this data is subject to Reddit API terms. Reddit Mental Health Dataset Contains posts",
+      "publication_date": "2020-07-13",
+      "title": "Reddit Mental Health Dataset",
+      "version": "01"
+    }
+  },
+  "extra": {
+    "step": 1
+  },
+  "is_colab": false,
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.0",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "platform": {
+    "machine": "AMD64",
+    "release": "10",
+    "system": "Windows"
+  },
+  "seeds": [
+    42,
+    13,
+    2024
+  ]
+}

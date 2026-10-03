@@ -1,0 +1,748 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+<style>.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 8px;margin-left:8px;border-radius:10px;vertical-align:middle;border:1px solid var(--md-rule-strong);background:var(--md-fill-strong)}.tag.local{background:hsl(30 90% 50%/.18);border-color:hsl(30 90% 45%)}.tag.colab{background:hsl(210 90% 50%/.15);border-color:hsl(210 90% 45%)}</style></head><body>
+<h1>Collective Psychological Pressure: Step-by-Step Prompt Pack</h1>
+<p>A set of copy-paste prompts for building the full pipeline (models, Spark, change detection, PostgreSQL, Streamlit) <strong>one step at a time</strong>. Every prompt tells the assistant <strong>not to train anything</strong>. You run all training yourself.</p>
+<hr>
+<h2>0. How to use this pack</h2>
+<ol>
+<li>Open a new chat or coding-assistant session. Paste the <strong>MASTER PROMPT</strong> (Section 3) first. It carries the project context and the hard rules.</li>
+<li>Paste <strong>Step 0</strong>. Review the output. Paste <strong>Step 1</strong>, and so on. Never paste the next step before the current one is accepted.</li>
+<li>After each step, paste the <strong>Self-Audit Prompt</strong> (Section 5) to catch mistakes before moving on.</li>
+<li>When a step produces training code, <strong>you</strong> run it, then paste the printed metrics back and say &quot;proceed&quot;.</li>
+<li>Section 2 is already filled in with the decisions we made (pilot corpus, main corpus, hardware split). Change it only if your situation differs.</li>
+<li>Section 2b is the <strong>download checklist</strong>. Do those downloads before Step 1.</li>
+</ol>
+<hr>
+<h2>1. What I changed from your architecture, and why</h2>
+<p>Your architecture is kept. These are only the changes with a technical or scientific reason:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Change</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Mendeley dataset is used for the stressor taxonomy only, not as text training data.</strong></td>
+<td>I checked it. It is a 2,000-row <strong>tabular student survey</strong> (26 numeric columns, partly &quot;expanded&quot;), not text. Several columns are <em>symptoms</em> (anxiety, irritability, sleep problems), not <em>stressors</em> (causes). The taxonomy step must separate these.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Stressor identification uses weak supervision plus a small hand-labelled gold set.</strong></td>
+<td>None of your datasets has gold stressor labels for text. Without a gold set, stressor accuracy cannot be measured.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Added Step 7: a unified inference package.</strong></td>
+<td>Spark workers and Streamlit both need importable code with identical preprocessing. Notebook cells can't be shipped to executors.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Group-aware splits by <code>post_id</code>, plus shortcut-learning checks.</strong></td>
+<td>Dreaddit segments come from posts in mental-health subreddits. A model can learn the subreddit instead of stress, and segments from one post can leak across splits.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Calibration, confidence intervals, and community-composition adjustment.</strong></td>
+<td>Aggregate rates inherit classifier error. If the community mix shifts, the overall rate can move without any real change (Simpson's paradox).</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Change-detection validation (synthetic injection and known-event backtest).</strong></td>
+<td>Without it, &quot;alerts&quot; can't be shown to be better than noise.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>TensiStrength is an optional auxiliary lexicon signal, with no labelled data to validate against.</strong></td>
+<td>Checked on GitHub: <code>TensiStrength_Data.zip</code> holds the resource files the Java tool runs on, not a labelled dataset. The tool is free for academic use and £1000 for commercial use. Running a Java process on every record at scale is impractical, so use it on samples.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Source adapters for the large-scale corpus.</strong></td>
+<td>Dreaddit has about 3.5k labelled segments. That is not big data, and the unlabelled corpus is not in your list. You must choose it (see Section 2).</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Topic model is fit on a sample, then applied at scale.</strong></td>
+<td>BERTopic is not distributed. Fitting on a sample and batch-assigning in Spark is the practical approach.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Privacy controls are coded, not just stated.</strong></td>
+<td>Minimum cell-size suppression, no author fields, and no raw text in any exported or dashboard table.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>SenticNet is treated as a model-agreement check, not as ground truth.</strong></td>
+<td>Its README says the labels were produced by an automated DNN-based strategy, not by human annotators. Agreement with it is weaker evidence than accuracy on human labels.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Dreaddit is trained on the <code>text</code> column only.</strong></td>
+<td>The HF version ships precomputed LIWC, DAL and social-metadata features. LIWC is proprietary and can't be recomputed on your large corpus, and social metadata won't exist there either.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Stressor labels: SAD as the main labelled source, plus a small hand-labelled Reddit gold set.</strong></td>
+<td>SAD (6,850 crowd-labelled sentences, 9 stressor categories, MIT licence) gives real supervision. It is short SMS-like text, so accuracy on Reddit posts must be measured on Reddit. CAMS is not used: I could not verify access, and its categories (medication, alienation) are less about everyday stressors.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Pilot first, then the main corpus.</strong></td>
+<td>The pilot is the Zenodo Reddit Mental Health Dataset (public-domain licence, includes the COVID onset). It lets you debug the whole pipeline in minutes. The main corpus is Reddit submissions for 2019 to 2022.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Compute split: Colab for training, your PC for everything else.</strong></td>
+<td>Your P1000 has 4 GB of VRAM. Training a base-size transformer there is impractical. Inference with a distilled model in fp32 is feasible. Emotion and stressor models run only on stress-flagged posts plus a weighted random sample of the rest, to cut compute.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>PostgreSQL is optional.</strong></td>
+<td>Dashboard tables are small aggregates. Parquet is the source of truth; Postgres is a serving layer you can add locally in Docker.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>1b. What I verified on the real pages</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Verified</th>
+<th>Not verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dreaddit (HF)</strong></td>
+<td>3,553 rows (train 2,838, test 715). Columns include <code>subreddit</code>, <code>post_id</code>, <code>sentence_range</code>, <code>text</code>, <code>id</code>, <code>label</code> (0/1), <code>confidence</code> (0.43 to 1), <code>social_timestamp</code>, plus about 100 precomputed LIWC/DAL/syntax/social columns. 10 subreddits. Labels come from Mechanical Turk on about 3.5k segments from about 3k posts, so several segments share a post. Text contains <code>&amp;#x200B;</code> and <code>&lt;url&gt;</code> placeholders. Timestamps are from roughly late 2016 to late 2018.</td>
+<td>Licence terms.</td>
+</tr>
+<tr>
+<td><strong>GoEmotions</strong></td>
+<td>58,009 Reddit comments, 27 emotions plus neutral. The official filtered split is 43,410 / 5,426 / 5,427. In the original release the TSV files have <strong>no header row</strong>.</td>
+<td>The Kaggle page is rendered by JavaScript and I could not read its contents. I can't confirm the Kaggle copy matches the official files.</td>
+</tr>
+<tr>
+<td><strong>SenticNet</strong></td>
+<td>Four <code>.xlsx</code> files: <code>Reddit_Title</code>, <code>Reddit_Combi</code>, <code>Twitter_Full</code>, <code>Twitter_Non-Advert</code>. Binary labels (1 = stress positive). <strong>Labels were produced by an automated DNN-based strategy.</strong> Apache-2.0 licence. The repo is a fork of <code>aryan-r22/Stress-Detection_Social-Media-Articles</code>.</td>
+<td>Row counts, how Reddit and Twitter texts were sourced, label noise rate.</td>
+</tr>
+<tr>
+<td><strong>TensiStrength</strong></td>
+<td>The repo holds <code>TensiStrengthMain.jar</code> and <code>TensiStrength_Data.zip</code>. The README says to use the jar with files extracted from the zip, so the zip is the tool's resource data. Free for academic use, £1000 for commercial use. The README calls the jar <code>TensiStrength.jar</code> but the file is named <code>TensiStrengthMain.jar</code>.</td>
+<td>The exact output scale of the tool, and whether the zip contains any labelled text.</td>
+</tr>
+<tr>
+<td><strong>Mendeley</strong></td>
+<td>Tabular survey of 2,000 students (checked earlier).</td>
+<td>How much of it is synthetic expansion.</td>
+</tr>
+<tr>
+<td><strong>SAD</strong></td>
+<td><code>SAD_v1.zip</code> on GitHub holds an XLSX, a schema TXT and a label-distribution PNG. MIT licence. 6,850 SMS-like sentences, 9 stressor categories (work, school, financial problem, family issues, social relationships, health/fatigue/physical pain, emotional turmoil, everyday decision making, other). Crowd-labelled on Mechanical Turk with severity ratings and a COVID flag (per a third-party paper).</td>
+<td>Exact column names. Papers disagree on per-category counts, so use the file.</td>
+</tr>
+<tr>
+<td><strong>Zenodo Reddit Mental Health Dataset</strong></td>
+<td>3.1 GB total across CSV files named <code>&lt;subreddit&gt;_&lt;window&gt;_features_tfidf_256.csv</code>. Windows: <code>pre</code> (Dec 2018 to Dec 2019), <code>post</code> (Jan 1 to Apr 20 2020), <code>2019</code> (Jan 1 to Apr 20 2019, a seasonal control that <strong>overlaps <code>pre</code></strong>), <code>2018</code> (Jan 1 to Apr 20 2018). 28 subreddits. Licence: ODC Public Domain Dedication, but reuse is subject to Reddit API terms.</td>
+<td><strong>Whether the CSVs contain the full post text.</strong> The description says &quot;posts and text features&quot; but the filenames say &quot;features_tfidf&quot;. Check one small file first. Also whether an author column exists (drop it if so).</td>
+</tr>
+<tr>
+<td><strong>Reddit dumps (main corpus)</strong></td>
+<td>Per-subreddit zstandard-compressed ndjson files on Academic Torrents (2005 to 2024), and an Arctic Shift download tool for a subreddit's posts and comments. Pushshift's public access was revoked in May 2023.</td>
+<td>Exact file names and sizes (check in your torrent client), and whether the Arctic Shift tool offers date filtering.</td>
+</tr>
+<tr>
+<td><strong>CAMS</strong></td>
+<td>Not used.</td>
+<td>Access and licence.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>2. CONFIG (pre-filled with our decisions)</h2>
+<pre><code>PROJECT_NAME        = stress-signals
+COMPUTE_TRAINING    = Google Colab (GPU runtime; Steps 3, 4, 5 training)
+COMPUTE_LOCAL       = i7 8th gen, Quadro P1000 (4 GB VRAM, Pascal), 32 GB RAM
+                      (ingestion, Spark, inference, aggregation, Postgres, Streamlit)
+STORAGE             = Google Drive for Colab checkpoints; local disk for data lake and artifacts
+PILOT_CORPUS        = Zenodo Reddit Mental Health Dataset (subset, see Section 2b)
+                      -&gt; used only if its CSVs contain full post text (Step 1 checks this)
+MAIN_CORPUS         = Reddit SUBMISSIONS (posts, not comments), 2019-01 to 2022-12,
+                      via Arctic Shift download tool or Academic Torrents per-subreddit files
+DATE_RANGE          = 2019-01 to 2022-12 (pre-COVID baseline + March 2020 onset as a backtest event)
+COMMUNITIES         = personalfinance (money), relationships, Parenting, jobs, careerguidance (work),
+                      college, GradSchool (academic), Anxiety, insomnia (health/sleep),
+                      CasualConversation (neutral control)
+                      -&gt; VERIFY names and file sizes in the torrent listing. Do NOT include suicide-related communities.
+POSTGRES            = optional; local Docker if used (Parquet is the source of truth)
+CODING_ASSISTANT    = [chat only (can&#39;t run code) / has code execution]    &lt;- fill in
+LANGUAGE            = English only
+</code></pre>
+<hr>
+<h2>2b. DOWNLOAD CHECKLIST (do this before Step 1)</h2>
+<p><strong>Accounts and software</strong></p>
+<ul>
+<li>Google account (Colab + Drive). Optional: Hugging Face account, Kaggle account (only if you insist on the Kaggle GoEmotions copy).</li>
+<li>Python 3.10 to 3.12, git, and <strong>JDK 17</strong> (works with PySpark 3.5 and 4.x). If you are on Windows, use <strong>WSL2</strong> for Spark; native Windows needs extra setup.</li>
+<li>Optional: Docker Desktop (only for local Postgres). Later: qBittorrent (only if you use the Academic Torrents route for the main corpus).</li>
+</ul>
+<p><strong>Datasets to download now</strong></p>
+<ol>
+<li><strong>Dreaddit:</strong> nothing to download. It loads from Hugging Face in code.</li>
+<li><strong>GoEmotions:</strong> nothing to download. Use the Hugging Face copy (<code>google-research-datasets/go_emotions</code>) as the default.</li>
+<li><strong>SAD:</strong> <code>SAD_v1.zip</code> from github.com/PervasiveWellbeingTech/Stress-Annotated-Dataset-SAD.</li>
+<li><strong>Mendeley stress indicators:</strong> <code>Stress_Dataset_Polished_Encoded.csv</code> from data.mendeley.com/datasets/2gsjv8m7ch.</li>
+<li><strong>SenticNet:</strong> <code>Reddit_Title.xlsx</code>, <code>Reddit_Combi.xlsx</code>, <code>Twitter_Full.xlsx</code>, <code>Twitter_Non-Advert.xlsx</code> from github.com/SenticNet/stress-detection.</li>
+<li><strong>TensiStrength (optional):</strong> <code>TensiStrengthMain.jar</code>, <code>TensiStrength_Data.zip</code> and <code>SentiStrengthJavaManual.doc</code> from github.com/MikeThelwall/SentiStrength. On GitHub, open each file's page and use its download button; the listing page doesn't download directly.</li>
+<li><strong>Pilot corpus (Zenodo, record 3941387):</strong> do NOT download all 3.1 GB. First download only <code>teaching_post_features_tfidf_256.csv</code> (2.7 MB) and open it: does it have a full-text column? If yes, download this pilot set (about 530 MB): <code>teaching_pre</code>, <code>teaching_post</code>, <code>parenting_pre</code>, <code>parenting_post</code>, <code>divorce_pre</code>, <code>divorce_post</code>, <code>anxiety_pre</code>, <code>anxiety_post</code>, <code>personalfinance_pre</code>, <code>personalfinance_post</code>, <code>relationships_pre</code>, <code>relationships_post</code> and <code>COVID19_support_post</code> (all named <code>&lt;name&gt;_features_tfidf_256.csv</code>). Skip every <code>suicidewatch</code> file and the <code>2018</code> and <code>2019</code> control files.</li>
+</ol>
+<p><strong>Download later (after the pilot works)</strong>
+8. <strong>Main corpus:</strong> Reddit submissions for the communities in CONFIG, 2019-01 to 2022-12. Check the file size in the torrent listing before you tick a subreddit.</p>
+<p><strong>Downloads that happen automatically on first run</strong> (need internet; roughly 1 to 2 GB total): <code>roberta-base</code>, <code>distilroberta-base</code>, a sentence-transformers model such as <code>all-MiniLM-L6-v2</code>, and the Dreaddit and GoEmotions data.</p>
+<p><strong>Not needed:</strong> CAMS, Kaggle GoEmotions, the Zenodo <code>2018</code> and <code>2019</code> files, anything from <code>suicidewatch</code>.</p>
+<hr>
+<h2>2c. What can ONLY be done locally (not on Colab)</h2>
+<p>Colab is used for <strong>training only</strong> (Steps 3, 4, 5). Everything below must run on your own PC (i7 8th gen, Quadro P1000, 32 GB RAM) because it needs persistent storage, a local server, or software Colab cannot keep running. Steps carry a <span class="tag local">LOCAL ONLY</span> or <span class="tag colab">Train on Colab</span> tag in Section 4.</p>
+<table>
+<thead><tr><th>Part</th><th>Steps</th><th>Why it is local only</th></tr></thead>
+<tbody>
+<tr><td>Large-scale ingestion and the Parquet data lake</td><td>8</td><td>The 2019 to 2022 Reddit dumps are large. Colab storage is wiped when the session ends, and Drive is too slow for big Parquet jobs. Keep the lake on local disk.</td></tr>
+<tr><td>PySpark distributed inference</td><td>9</td><td>Runs in Spark local mode on the 32 GB machine with JDK 17 (WSL2 on Windows). Inference uses the local P1000 in fp32, one GPU task at a time.</td></tr>
+<tr><td>Spark analytics (temporal, emotions, stressors, topics)</td><td>10</td><td>Reads the local Parquet data lake and the Step 9 output.</td></tr>
+<tr><td>Baseline and change detection</td><td>11</td><td>Works on the local aggregated tables.</td></tr>
+<tr><td>PostgreSQL (optional)</td><td>12</td><td>Local Docker with a volume. It would not persist on Colab. Never run it there.</td></tr>
+<tr><td>Streamlit dashboard</td><td>13</td><td>A local web app that reads local Postgres or Parquet. Colab sessions are temporary and not meant to host a dashboard.</td></tr>
+<tr><td>Kafka + Spark Structured Streaming (optional)</td><td>15</td><td>Docker-based, needs services that stay running.</td></tr>
+<tr><td>TensiStrength validation</td><td>6</td><td>A Java tool run on samples. Runs best with local JDK 17.</td></tr>
+<tr><td>Software that lives on your PC</td><td>0</td><td>JDK 17, WSL2, Docker Desktop and qBittorrent (for the main corpus torrents).</td></tr>
+</tbody></table>
+<p><strong>Colab only (training):</strong> fine-tuning the stress, emotion and stressor models. The 4 GB P1000 is too small to fine-tune a base-size transformer. Save checkpoints to Google Drive every epoch, then copy the final models to your PC for local inference.</p>
+<p><strong>Can run either place:</strong> Steps 1, 2 and 14, and the cheap TF-IDF / embedding baselines. Local is simpler because the data already lives there.</p>
+<h2>3. MASTER PROMPT (paste first, once per session)</h2>
+<pre><code>You are a senior ML/data engineer and NLP researcher. You will help me build a research-grade,
+privacy-conscious system called &#34;Early Detection of Collective Psychological Pressure&#34;.
+We work in STEPS. I will paste one step prompt at a time. Implement ONLY the current step.
+
+RESEARCH QUESTION
+Can large-scale social-media text be analyzed using Text Analytics, NLP, Machine Learning and
+Big Data technologies to identify stress-related language, associated emotions and stressors,
+and changes in collective psychological pressure over time?
+
+WHAT THE SYSTEM IS / IS NOT
+- It detects stress-related LINGUISTIC SIGNALS and AGGREGATE population-level patterns in public online text.
+- It must NOT diagnose mental illness, assess any individual&#39;s clinical/psychological condition,
+  profile, track, rank, or re-identify any individual. No individual-level outputs, ever.
+
+HARD RULES
+1. NEVER TRAIN OR FINE-TUNE ANY MODEL YOURSELF. This includes baselines (e.g. TF-IDF + logistic
+   regression), hyperparameter searches, and &#34;quick smoke tests&#34; that update weights. Write complete,
+   correct, resumable training code and mark every training cell with the banner:
+   &#34;# &gt;&gt;&gt; USER RUNS THIS CELL. DO NOT EXECUTE. &lt;&lt;&lt;&#34;
+   Inference, data loading, data inspection and unit tests that do not update model weights are allowed
+   only if you have code execution. If you cannot execute code, write the cells and I will run them and
+   paste the output back.
+2. NEVER ASSUME SCHEMAS, COLUMN NAMES, LABEL MEANINGS, LICENCES OR DATASET SIZES. Write inspection code,
+   look at the real output, then proceed. Anything I haven&#39;t confirmed must be labelled &#34;UNVERIFIED&#34;.
+3. NEVER FABRICATE results, metrics, citations, URLs, library APIs or file contents. Every number in any
+   report must come from an artifact file I produced. If you are unsure of an API, say so and tell me
+   how to check the installed version (e.g. `transformers` renamed `evaluation_strategy` to
+   `eval_strategy`; check the installed version before writing Trainer arguments).
+4. ONE STEP AT A TIME. At the end of each step print:
+   (a) &#34;STEP N COMPLETE&#34;, (b) files created, (c) exactly what I must run and in what order,
+   (d) what output to paste back, (e) acceptance criteria and whether each is met, (f) open questions.
+   Then STOP and wait for me. Do not start the next step.
+5. If you need information to avoid a guess, ask me (max 3 questions, most important first).
+   Otherwise state your assumption in one line and continue.
+6. CODE QUALITY: reusable code goes in a `src/stress_signals/` package (the notebook imports from it, and
+   Spark workers and Streamlit will import from it too). Use a single `config/config.yaml`, no hard-coded
+   paths, global seed utility, logging, type hints, short docstrings, idempotent and resumable cells.
+   The notebook `notebooks/stress_signals_pipeline.ipynb` has one section per step.
+7. REPRODUCIBILITY: save fixed split indices to disk, record library versions, seeds, dataset versions
+   and SHA-256 hashes of saved artifacts in a manifest JSON.
+8. PRIVACY BY DESIGN (enforced in code): drop author/username fields at ingestion; scrub URLs, emails,
+   phone numbers, @/u/ mentions; store no raw text in any gold/aggregate/Postgres/dashboard table;
+   suppress any aggregate cell with n &lt; K_MIN (default 50, configurable); never print or export
+   verbatim user text except small local error-analysis views inside the notebook.
+9. MODEL SAVING: all models go under `artifacts/models/&lt;component&gt;/v&lt;YYYYMMDD&gt;/` with weights, tokenizer,
+   config JSON (label map, max length, thresholds, calibration parameters), metrics JSON, a short model
+   card, and a manifest. Training must save checkpoints every epoch to STORAGE and be resumable,
+   because Colab sessions disconnect.
+10. SCIENTIFIC HONESTY: state limitations plainly. Never describe outputs as &#34;population became
+    stressed&#34;; say &#34;stress-related language in the sampled communities shifted&#34;.
+
+ENVIRONMENT (hardware-aware code)
+- Training runs on Google Colab (GPU). Everything else runs locally: i7 8th gen, Quadro P1000 (4 GB VRAM,
+  Pascal architecture, no tensor cores), 32 GB RAM. Therefore: never assume a base-size transformer can be
+  FINE-TUNED on the local GPU; local inference uses fp32 by default (half precision is a config flag, off for
+  Pascal), small batches, max length from config, and must stay under 4 GB VRAM. Before choosing a PyTorch build,
+  tell me to run `torch.cuda.get_arch_list()` and confirm it includes sm_61.
+- Spark runs in local mode on the 32 GB machine. Keep partitions small enough to fit memory.
+- All code must run in a CPU-only fallback.
+
+DATASET ROLES (locked unless I approve a change)
+- Dreaddit (HF: andreagasparini/dreaddit): binary stress classifier. Verified: 3,553 rows (train 2,838,
+  test 715); columns subreddit, post_id, sentence_range, text, id, label (0/1), confidence, social_timestamp,
+  plus ~100 precomputed LIWC/DAL/syntax/social columns. Train on `text` ONLY; do not use the precomputed
+  feature columns (they cannot be reproduced on new data). Several segments share a post_id.
+- GoEmotions (Kaggle debarshichanda/goemotions; HF fallback google-research-datasets/go_emotions):
+  independent multi-label emotion model (27 emotions + neutral = 28 labels; official split 43,410 / 5,426 /
+  5,427). The Kaggle page content is UNVERIFIED; confirm it matches the official files. Not every negative
+  emotion is stress.
+- Mendeley &#34;Stress Indicators Dataset for Mental Health Classification&#34; (DOI 10.17632/2gsjv8m7ch):
+  TABULAR student survey, not text. Used ONLY to derive the stressor taxonomy (separate stressors
+  from symptoms). Do not use it for prevalence estimates.
+- TensiStrength (GitHub MikeThelwall/SentiStrength): the repo holds TensiStrengthMain.jar and
+  TensiStrength_Data.zip, which is the tool&#39;s resource data, NOT a labelled dataset. Optional auxiliary
+  lexicon signal on samples only. Free for academic use, GBP 1000 for commercial use. There is no labelled
+  data in it to validate against.
+- SenticNet stress-detection (GitHub SenticNet/stress-detection): four .xlsx files (Reddit_Title,
+  Reddit_Combi, Twitter_Full, Twitter_Non-Advert) with binary labels produced by an AUTOMATED DNN-based
+  strategy, not human annotators. Use as a cross-platform agreement check, never as ground truth.
+- SAD (GitHub PervasiveWellbeingTech/Stress-Annotated-Dataset-SAD, SAD_v1.zip, MIT licence): 6,850 SMS-like
+  sentences with 9 stressor categories. PRIMARY labelled source for the stressor classifier. Short messages, so it
+  must be evaluated on Reddit text.
+- Pilot corpus: Zenodo Reddit Mental Health Dataset (record 3941387), subset in CONFIG. CSVs are named
+  &lt;subreddit&gt;_&lt;window&gt;_features_tfidf_256.csv; whether they contain the full post text is UNVERIFIED. The `2019`
+  windows overlap the `pre` window, so deduplicate. Reuse is subject to Reddit API terms.
+- Main corpus: Reddit submissions (posts) 2019-01 to 2022-12 for the communities in CONFIG, from per-subreddit
+  dump files or the Arctic Shift download tool. Used for Spark inference and temporal analysis.
+- CAMS is NOT used.
+
+TARGET ARCHITECTURE
+Validated components (stress, emotion, stressor, tension lexicon) -&gt; unified inference package -&gt;
+data lake (Parquet) -&gt; PySpark distributed inference -&gt; enriched records -&gt; Spark analytics
+(temporal, topics, stressors) -&gt; baseline/change detection -&gt; collective pressure signals -&gt;
+PostgreSQL (aggregates only) -&gt; Streamlit dashboard. Optional: Kafka + Spark Structured Streaming.
+
+Acknowledge these rules in 5 lines or fewer, list the CONFIG values you still need from me,
+and wait for &#34;Step 0&#34;.
+</code></pre>
+<hr>
+<h2>4. STEP PROMPTS</h2>
+<h3>Step 0: Scaffold, config, environment<span class="tag either">Local + Colab check</span></h3>
+<pre><code>STEP 0: Project scaffold. Follow the MASTER rules. Do NOT train anything.
+
+Create:
+1. The repo tree: config/, taxonomy/, data/{raw,interim,processed,lake,gold}/, artifacts/{models,reports}/,
+   src/stress_signals/, notebooks/, app/, sql/, tests/, docker-compose.yml (placeholder), .gitignore
+   (data/, artifacts/, .env), .env.example (Postgres credentials via env vars).
+2. config/config.yaml with: paths, seeds [42, 13, 2024], K_MIN=50, model names (placeholders I can change),
+   max sequence lengths, chunking parameters, change-detection parameters (window, EWMA, CUSUM, persistence),
+   Spark settings, Postgres settings (env-var based).
+3. src/stress_signals/config.py (loader + validation), utils.py (seed, logging, hashing, manifest writer,
+   environment detection incl. Colab + Drive mount).
+4. requirements.txt with versions. Tell me which versions you are unsure about and how to check
+   compatibility (torch / transformers / datasets / pyspark / pandas / pyarrow). Separate
+   requirements-dev.txt (pytest).
+5. The notebook skeleton with a markdown section per step (Steps 1-14), a first cell that imports the
+   package, loads config, sets seeds, prints versions, and displays an ethics banner:
+   &#34;Aggregate, population-level language signals only. No diagnosis. No individual-level analysis.&#34;
+6. An environment-check cell: prints Python, torch, CUDA availability, `torch.cuda.get_arch_list()`, GPU name and free VRAM,
+   Java version, and warns if sm_61 is missing or VRAM &lt; 6 GB (so I know training must happen on Colab).
+Acceptance: the first notebook cells run without error; config loads and validates.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 1: Dataset acquisition and audit</h3>
+<pre><code>STEP 1: Acquire and audit all datasets. Follow the MASTER rules. Do NOT train anything.
+
+Write inspection code (and run it only if you can execute code; otherwise I will run it) that, for EACH dataset,
+prints and saves to artifacts/reports/data_audit.md plus data/interim/audit_&lt;name&gt;.json:
+size, columns and dtypes, label distribution, missing values, exact-duplicate texts, text length in
+characters and tokens (use the tokenizer I will train with), timestamp range if present, licence/terms
+(quote where found; write &#34;UNVERIFIED&#34; if not found).
+
+Dataset-specific checks:
+- Dreaddit: load via datasets.load_dataset(&#34;andreagasparini/dreaddit&#34;). Confirm 3,553 rows (train 2,838,
+  test 715) and the columns subreddit, post_id, sentence_range, text, id, label, confidence, social_timestamp.
+  List the precomputed LIWC/DAL/syntax/social columns and confirm we will not use them. Count segments per
+  post_id. Check whether any post_id appears in BOTH train and test (leakage). Table of subreddit x label and
+  subreddit -&gt; domain (abuse, anxiety, financial, PTSD, social). Distribution of `confidence`. Convert
+  social_timestamp (Unix seconds) to dates and report the range. Count texts containing `&amp;#x200B;` or `&lt;url&gt;`.
+- GoEmotions: load from the Kaggle copy (explain credential setup) and show the HF fallback
+  google-research-datasets/go_emotions. The Kaggle page content is UNVERIFIED, so compare it with the
+  official files: confirm the same label set and split sizes (43,410 / 5,426 / 5,427), whether the files have
+  a header row (the official TSVs do not), multi-label rate, label co-occurrence, per-label counts. Locate the
+  official Ekman mapping and say where it came from.
+- SAD: unzip SAD_v1.zip; list the XLSX columns, the schema TXT contents, the label distribution (use the file&#39;s own
+  counts, since papers disagree), the severity column, any COVID flag, the data-source column, duplicates, and text length.
+  Confirm the MIT licence.
+- Zenodo pilot: first open ONLY `teaching_post_features_tfidf_256.csv` and report its columns. State clearly whether it contains
+  full post text, an author column, a date column and a post id. If there is no usable text column, say so and recommend
+  piloting on one small subreddit from the main corpus instead. If it does, audit the pilot files I downloaded: rows per
+  subreddit and window, date range, duplicates between windows, and confirm no suicidewatch file is present.
+- Mendeley: confirm it is TABULAR. List columns grouped into: stressors (causes), symptoms/emotional
+  responses, health indicators, demographics, target. Report class balance of stress_type. Add a clear note that
+  the file was described by its authors as expanded from an original survey, so it is not suitable for
+  prevalence estimation.
+- TensiStrength: download TensiStrengthMain.jar and TensiStrength_Data.zip, unzip the data, list the files,
+  and say whether it is resource/lexicon data or contains any labelled text. Document the tool&#39;s command-line
+  usage and output scale from SentiStrengthJavaManual.doc, check that Java runs in my environment, and
+  restate the licence (free for academic use, GBP 1000 commercial).
+- SenticNet: download Reddit_Title.xlsx, Reddit_Combi.xlsx, Twitter_Full.xlsx, Twitter_Non-Advert.xlsx. Report
+  rows, columns, label balance, duplicates, text length, overlap with Dreaddit texts, and sample a few
+  rows for me to eyeball. The README says labels came from an automated DNN-based strategy, so estimate how
+  noisy they are by hand-checking about 50 rows.
+
+Final output: a &#34;Dataset usage decision&#34; table (dataset -&gt; intended role -&gt; risks -&gt; confirmed? yes/no).
+Flag every mismatch between the planned role and what the data actually contains, and ask me to approve
+before Step 2. Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 2: Preprocessing, unified schema, splits</h3>
+<pre><code>STEP 2: Preprocessing, unified schema, splits. Follow the MASTER rules. Do NOT train anything.
+
+Implement in src/stress_signals/preprocess.py (+ tests/test_preprocess.py):
+1. Unified record schema: record_id (stable hash of source+native id), source, community, created_at (UTC),
+   text_clean, n_chars, n_tokens_est, lang. NO author, username or URL fields.
+2. `clean_text()` for the transformer path: normalise HTML entities and markdown (Dreaddit contains `&amp;#x200B;` and `&lt;url&gt;` placeholders; handle both); replace URLs with &lt;URL&gt;,
+   user mentions (@x, u/x) with &lt;USER&gt;; remove emails and phone numbers; drop &#34;[removed]&#34;/&#34;[deleted]&#34;/
+   AutoModerator-style bot text; collapse whitespace. KEEP casing, punctuation and emojis (do not lowercase for
+   transformers). A separate `clean_text_lexical()` (lowercase, stopwords, lemmas) for TF-IDF, topic labelling
+   and keyword features.
+3. English-only filter (state which language-ID library and why) and a minimum length rule (configurable).
+4. Exact deduplication by hash (and optional near-duplicate MinHash as a documented option).
+5. `chunk_text()` for long posts: sentence-window chunks up to the model&#39;s max tokens with stride, plus an
+   aggregation rule from chunk scores to record score (default: mean of calibrated probabilities; justify it).
+6. Splits (save indices to data/processed/splits/ and never regenerate silently):
+   - Dreaddit: keep the official test split as FINAL TEST; create train/validation from the official train using
+     GroupShuffleSplit by post_id so no post spans two splits; stratify as far as grouping allows.
+   - GoEmotions: use the official train/validation/test splits.
+   - Gold stressor set (Step 5) will be sampled later and kept separate.
+7. Unit tests: cleaning is idempotent; no emails/URLs/mentions remain; chunking never exceeds max tokens; no
+   post_id overlap across splits.
+Outputs: data/processed/*.parquet, a manifest with row counts per step (rows dropped by reason).
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 3: Stress model (Dreaddit)<span class="tag colab">Train on Colab</span></h3>
+<pre><code>STEP 3: Stress detection model on Dreaddit. Follow the MASTER rules.
+IMPORTANT: DO NOT EXECUTE ANY TRAINING. Write complete training code; I will run it myself.
+
+Write these notebook sections (mark training cells with &#34;# &gt;&gt;&gt; USER RUNS THIS CELL. DO NOT EXECUTE. &lt;&lt;&lt;&#34;):
+
+3A. Baseline (code only, I will run it): TF-IDF (word + char n-grams) with logistic regression. Purpose: a
+    reference point to show the transformer is worth its cost.
+3B. Transformer fine-tuning code designed to run on a Colab GPU (not the local 4 GB P1000), using Hugging Face Trainer or a clean custom loop; check the installed transformers
+    version before choosing argument names:
+    - Input is the `text` column ONLY. Explicitly drop the precomputed LIWC/DAL/syntax/social columns.
+    - Model options as a config switch: roberta-base (default), distilroberta-base (fast, for Spark/CPU),
+      deberta-v3-base (optional, heavier). Do not assume gated models are available.
+    - Suggested starting hyperparameters (editable in config): max_len 256, lr 2e-5, batch 16, epochs 4, warmup
+      0.1, weight decay 0.01, fp16 only if CUDA is available, early stopping on validation F1 of the stress class,
+      seeds [42, 13, 2024] run as separate runs so I can report mean and standard deviation.
+    - Optionally use Dreaddit&#39;s `confidence` as sample weight (config switch, default off) and justify it.
+    - Checkpoint every epoch to STORAGE, resume-safe, load best model at end, log to a CSV.
+3C. Evaluation cells (I run after training): on validation and on the official test: accuracy, precision, recall,
+    F1 (stress class and macro), ROC-AUC, PR-AUC, confusion matrix; the same metrics restricted to the high-
+    confidence subset; per-subreddit error analysis; bootstrap 95% CIs (1,000 resamples); mean +/- std across seeds.
+3D. Calibration and thresholds, fitted ONLY on validation: reliability diagram, ECE, Brier score, temperature
+    scaling, and a decision threshold chosen on validation (state the criterion). Report calibrated test
+    metrics once.
+3E. Shortcut-learning checks (code only): (i) mask subreddit names and domain keywords and re-evaluate;
+    (ii) optional leave-one-subreddit-out evaluation; (iii) show the top n-grams driving the TF-IDF baseline so I
+    can see if it keys on topic words rather than stress. Explain how to read each result.
+3F. Save to artifacts/models/stress/v&lt;YYYYMMDD&gt;/: save_pretrained weights + tokenizer, stress_config.json
+    (label map, max_len, chunking rule, temperature, threshold, model name, seed), metrics.json, model_card.md
+    (intended use, NOT for diagnosis, data, limitations), manifest.json with SHA-256 hashes.
+Then print the STEP COMPLETE block (include the exact order in which I run the cells) and STOP.
+</code></pre>
+<h3>Step 4: Emotion model (GoEmotions)<span class="tag colab">Train on Colab</span></h3>
+<pre><code>STEP 4: Emotion model on GoEmotions. Follow the MASTER rules.
+IMPORTANT: DO NOT EXECUTE ANY TRAINING. Write complete code; I will run it myself.
+
+Write notebook sections (training cells marked &#34;# &gt;&gt;&gt; USER RUNS THIS CELL. DO NOT EXECUTE. &lt;&lt;&lt;&#34;):
+4A. Data: load from Kaggle (with HF fallback), confirm 28-label multi-label format, build label matrix.
+4B. Fine-tuning code for MULTI-LABEL classification, designed to run on a Colab GPU (sigmoid outputs, BCEWithLogits loss; confirm the Trainer
+    problem_type=&#34;multi_label_classification&#34; behaviour in the installed version). Suggested defaults: roberta-base,
+    max_len 128, lr 2e-5 to 5e-5, batch 32, epochs 3-4, warmup 0.1, seeds [42, 13, 2024]. Checkpoints to STORAGE,
+    resumable. Optional config switch for class weighting for rare emotions.
+4C. Evaluation (I run after training): per-label precision/recall/F1, macro and micro F1, AUC per label,
+    per-label thresholds tuned on VALIDATION only (not the global 0.5), then final test metrics with those
+    thresholds, bootstrap CIs.
+4D. Calibration per label (Platt or temperature; justify) fitted on validation.
+4E. Ekman collapse for dashboard readability (anger, disgust, fear, joy, sadness, surprise + neutral) using the
+    official mapping, with the rule for combining probabilities documented.
+4F. Domain-shift check (inference only, after training): apply the model to Dreaddit text and show the emotion
+    distribution for stress vs non-stress segments. Export a 200-row local CSV sample (no author info) so I can
+    hand-check plausibility. Add a prominent note: GoEmotions is short Reddit comments, Dreaddit is longer posts; and a
+    negative emotion is not the same as stress.
+4G. Save to artifacts/models/emotion/v&lt;YYYYMMDD&gt;/ with the same bundle as the stress model plus thresholds.json
+    and ekman_mapping.json.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 5: Stressor taxonomy and stressor classifier<span class="tag colab">Train on Colab; baseline can run locally</span></h3>
+<pre><code>STEP 5: Stressor taxonomy and stressor classifier. Follow the MASTER rules.
+IMPORTANT: DO NOT EXECUTE ANY TRAINING. Write code; I will run anything that updates weights (on Colab).
+
+DATA DECISION (locked): SAD is the primary labelled source for the stressor classifier. A small hand-labelled Reddit gold
+set is used for evaluation. Mendeley provides taxonomy structure only. CAMS is NOT used.
+
+5A. Taxonomy v1 -&gt; taxonomy/stressors_v1.yaml.
+    - Mendeley: separate STRESSORS (causes) from SYMPTOMS/emotional responses (not stressors); explain each decision.
+    - Map SAD&#39;s 9 categories onto my target categories and show the mapping table:
+      work -&gt; workplace pressure; school -&gt; academic workload; financial problem -&gt; financial concerns;
+      family issues + social relationships -&gt; relationship issues (keep the two as sub-categories if it helps);
+      health/fatigue/physical pain -&gt; health concerns (and sleep problems, only if SAD has enough sleep examples,
+      otherwise keep combined and say so); everyday decision making -&gt; candidate for uncertainty/overload (ask me);
+      emotional turmoil -&gt; NOT a stressor (it is an emotional response); decide whether to drop it from the stressor head or
+      keep it as a separate non-stressor label, and justify; other -&gt; other/unclear.
+    - List categories SAD does NOT cover (uncertainty, overload, societal/social problems) and say how they will be handled
+      (zero-shot embedding similarity from taxonomy descriptions, flagged as lower-confidence).
+    - For each category: id, name, definition, include/exclude rules, seed keywords, 3 paraphrase descriptions, mapped SAD labels,
+      mapped Mendeley columns, mapped Dreaddit subreddits (weak cross-check only). Do not add extra categories without my approval.
+5B. Reddit gold set (essential, because SAD is short SMS-like text): sample ~400 Reddit texts that Dreaddit&#39;s HUMAN labels mark as
+    stress-positive (label = 1, optionally confidence &gt;= 0.6), stratified by subreddit, from the Dreaddit data. If the Zenodo pilot
+    has full text, top up with ~100 posts from it later (after Step 8) and mark the source. Export a local CSV with multi-label
+    stressor columns (+ &#34;none/unclear&#34;); write a one-page annotation guideline with edge cases. Recommend double-annotating at least
+    100 and computing Cohen&#39;s kappa; if I single-annotate, record that limitation. Split gold 50/50 into dev and test, saved to disk.
+    The test half is never used for tuning. Make sure no gold text is used to train the Step 3 stress model&#39;s final evaluation
+    in a way that leaks (state how you avoided it).
+5C. Methods (code only; I run anything that trains, on Colab where needed):
+    (1) keyword/lexicon baseline;
+    (2a) frozen sentence-embedding model (suggest all-MiniLM-L6-v2 or BAAI/bge-small-en-v1.5; verify they load) + logistic
+         regression trained on SAD (cheap, can run locally);
+    (2b) fine-tuned distilroberta-base on SAD (Colab). SAD gives one label per sentence, so state whether you use softmax over
+         categories and how you turn it into multi-label output for Reddit posts (per-category thresholds tuned on gold-dev, plus a
+         &#34;none/other&#34; rule);
+    (3) zero-shot embedding similarity against taxonomy descriptions (label-free baseline, and the only option for categories SAD lacks).
+    INFERENCE UNIT: SAD is sentence-level, so for long Reddit posts split into sentence windows, classify each, then aggregate
+    (state the rule: e.g. max or mean of calibrated scores). Evaluate this on the Reddit gold-test.
+    Choose the final method by gold-test macro-F1 and per-category F1, not by intuition. Report the drop from SAD-test to Reddit
+    gold-test as the domain-shift cost. Report the weak Dreaddit-subreddit cross-check only as a sanity check, never as accuracy.
+    SAD&#39;s severity ratings are optional auxiliary information only; do not use them as stressor labels.
+5D. Save to artifacts/models/stressor/v&lt;YYYYMMDD&gt;/ (taxonomy file, embedding model name, thresholds, classifier weights, metrics,
+    model card, manifest). The model card must state that stressor labels are a research taxonomy, not a clinical assessment.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 6: TensiStrength and SenticNet validation<span class="tag local">Local (Java)</span></h3>
+<pre><code>STEP 6: TensiStrength auxiliary signal and SenticNet external validation. Follow the MASTER rules.
+DO NOT EXECUTE ANY TRAINING.
+
+6A. TensiStrength, based on the Step 1 audit:
+    - TensiStrength_Data.zip is the tool&#39;s resource data, not labelled text, so it cannot validate anything by
+      itself. Use the jar on a SAMPLE only: write a subprocess wrapper, parse its output (scale per the manual),
+      and report Spearman correlation with the calibrated Step 3 stress probability on Dreaddit test and on
+      SenticNet samples. Treat it as an independent auxiliary signal, not as a replacement for the model.
+    - Confirm Java availability and that my use is academic (free) before running it. If it is not usable,
+      skip 6A and say so; nothing else depends on it.
+    - Explain why running it on every record at scale is not recommended (process startup cost, Java dependency).
+6B. SenticNet external validation (code for me to run after Steps 3-5):
+    - SenticNet labels are binary (1 = stress positive) but were produced by an automated DNN-based strategy,
+      so report results as AGREEMENT with those labels, not accuracy. Use the hand-checked ~50 rows from Step 1 to
+      estimate label noise, and say what that implies for the ceiling on any metric.
+    - Zero-shot evaluation of the Step 3 model (no fine-tuning) on SenticNet-Reddit and SenticNet-Twitter separately:
+      F1, ROC-AUC, PR-AUC, calibration (ECE) with bootstrap CIs, and the drop versus Dreaddit test.
+    - Optional experiments as code only: Dreaddit -&gt; SenticNet and SenticNet -&gt; Dreaddit cross-training.
+    - Output a verdict table: ship / ship with caveats / retrain, with the evidence required for each.
+Save results to artifacts/reports/external_validation.json and .md. Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 7: Unified inference package<span class="tag local">Local</span></h3>
+<pre><code>STEP 7: Unified inference package and artifact bundle. Follow the MASTER rules.
+DO NOT TRAIN. Inference only.
+
+Implement src/stress_signals/inference.py:
+- `StressSignalPipeline.from_artifacts(artifacts_dir, device=&#34;auto&#34;)` loading the latest (or pinned) version of the
+  stress, emotion and stressor components; verify manifest hashes at load.
+- `.predict(texts: list[str], batch_size: int) -&gt; pandas.DataFrame` returning: stress_prob_calibrated, stress_flag,
+  28 emotion probabilities + Ekman group scores, stressor probabilities + top stressor, optional tension score (if
+  available), and model versions. Apply the SAME cleaning and chunking as training (import from preprocess.py).
+- Efficiency: sort by length for batching, torch.inference_mode, no_grad, fp32 by default (a `use_fp16` config flag, OFF by default because Pascal GPUs gain little from half precision), batch size
+  and max length from config sized for 4 GB VRAM, automatic CPU fallback, deterministic outputs.
+- Spark-safe design: lazy model loading inside a module-level cache so each Python worker loads the model once;
+  no notebook-only state; no global mutable config.
+- Edge cases: empty strings, very long text, non-English, emoji-only, None. Return NaN with a reason code instead of
+  crashing.
+- artifacts/bundle_manifest.json listing the exact component versions used together.
+- tests/test_inference.py: output shape, determinism (same input -&gt; same output), edge cases, probabilities in [0, 1].
+Show a tiny usage example with 5 hand-written neutral example sentences (no real user text).
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 8: Large-scale ingestion to the data lake<span class="tag local">LOCAL ONLY</span></h3>
+<pre><code>STEP 8: Ingestion to a Parquet data lake: PILOT first, then MAIN corpus. Follow the MASTER rules. DO NOT TRAIN.
+
+Use CONFIG: PILOT_CORPUS, MAIN_CORPUS, DATE_RANGE, COMMUNITIES. Do not scrape any platform. Only read files I have downloaded,
+and remind me to check Reddit&#39;s terms, the dataset licence and my institution&#39;s ethics requirements.
+
+Implement:
+1. A `SourceAdapter` interface yielding the unified schema (Step 2), with adapters for:
+   (a) the Zenodo pilot CSVs (map text/date/id/subreddit columns after inspecting the real header; deduplicate the `2019` windows
+       against `pre`; DROP any author/user column immediately; if there is no full-text column, STOP and tell me),
+   (b) zstandard-compressed ndjson Reddit SUBMISSION dump files, streamed in chunks (never loaded fully into memory), filtered to
+       DATE_RANGE and COMMUNITIES, using title + selftext as the text, skipping removed/deleted posts, bots and empty selftext,
+   (c) generic CSV/JSONL.
+   Drop author and username fields at ingestion in every adapter. Convert timestamps to UTC.
+2. Apply the Step 2 cleaning, language, dedup and bot/deleted filters at scale, counting dropped rows by reason.
+3. Write Parquet with an explicit schema, zstd or snappy compression, partitioned by source/year/month, with sensible file sizes
+   for a 32 GB machine, plus an ingestion manifest (rows in, rows out, per partition).
+4. Data quality report: volume per day and community, missing timestamps, duplicate rate, text length distribution. Document the
+   SAMPLING FRAME (which communities, why, what is excluded, why suicide-related communities are excluded) and the resulting selection
+   bias in artifacts/reports/sampling_frame.md.
+5. A 1-day local sample file for the Step 9 parity test.
+6. PILOT RULE: all Steps 8 to 13 must first run end to end on the pilot data. Only after the dashboard works on the pilot do we run
+   the main corpus. The code must run unchanged on both; only the config changes.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 9: PySpark distributed inference<span class="tag local">LOCAL ONLY</span></h3>
+<pre><code>STEP 9: PySpark distributed NLP inference. Follow the MASTER rules. DO NOT TRAIN.
+
+Implement src/stress_signals/spark_jobs.py and a notebook section:
+1. SparkSession builder (default local[*]; configurable memory, shuffle partitions, Arrow enabled via
+   spark.sql.execution.arrow.pyspark.enabled). Say which pyspark/Java versions are compatible and how to check.
+2. Read the data lake and run inference with `mapInPandas` (or an iterator pandas_udf) that calls
+   StressSignalPipeline once per worker via the lazy cache from Step 7. Ship the src package and artifacts to
+   workers (addPyFile / shared path) and explain the approach for local vs cluster.
+3. GPU/CPU guidance for a 4 GB Quadro P1000 and an i7 8th gen: one inference task at a time on the GPU, fp32, small batches sorted by
+   length, a distilled encoder for stress and emotion; for CPU fallback, offer an optional ONNX/int8 path with a note about the accuracy
+   check required before using it. Make no claim about speed without a benchmark, and add a cell that benchmarks 5,000 posts and
+   projects the runtime for my full corpus size.
+3b. COMPUTE-SAVING TWO-STAGE INFERENCE: run the stress model on ALL records. Run the emotion and stressor models only on stress-flagged
+   records plus a random sample of unflagged records (config, default 10 to 20%, seeded). Store a `sample_weight` column (1 for flagged,
+   1/sampling-rate for sampled unflagged, null for unsampled) so Step 10 can reweight non-stress emotion estimates. Document this design.
+4. Process by date partition so the job is restartable and skips partitions already done (idempotent). Write the
+   enriched Parquet with: record_id, created_at, date, source, community, stress_prob, stress_flag, emotion
+   probabilities (+ Ekman), stressor probabilities + top stressor, optional tension score, model versions,
+   inference timestamp. No raw text column in the enriched output unless the config flag
+   `keep_text_for_topics` is true, in which case it is written to a SEPARATE restricted path that is never loaded
+   to Postgres or the dashboard.
+5. Parity test: run the 1-day sample through both the local pipeline and the Spark job and assert outputs match
+   within a stated numerical tolerance.
+6. A throughput benchmark cell (records/second, hardware stated) so I can measure it myself.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 10: Spark analytics<span class="tag local">LOCAL ONLY</span></h3>
+<pre><code>STEP 10: Spark analytics (temporal, emotions, stressors, topics). Follow the MASTER rules. DO NOT TRAIN any
+classifier. (Fitting an unsupervised topic model is allowed ONLY as code I run; do not execute it.)
+
+Implement in src/stress_signals/analytics.py and a notebook section, reading the enriched Parquet:
+1. Aggregates by day/week/month x source x community: n_total, n_stress (flag), mean calibrated stress probability,
+   stress rate with a Wilson 95% CI. Apply K_MIN suppression to every output table.
+2. Composition-adjusted overall series: fixed-weight average across communities (weights from a reference period)
+   alongside the raw series, so a change in community mix isn&#39;t mistaken for a change in stress.
+3. Emotions: prevalence among stress-flagged vs not flagged records (use `sample_weight` for the unflagged group), lift with
+   bootstrap CIs, plus the stressor x emotion co-occurrence matrix. Note which associations may be due to domain shift.
+4. Stressors: share of each stressor among stress-flagged records over time, per community.
+5. Topics (stress-flagged records only): fit BERTopic on a sample (configurable size, e.g., 50k-200k; embeddings
+   model and UMAP/HDBSCAN settings in config; code only, I will run it), reduce outliers, then assign topics at
+   scale in batches (pandas UDF) or offer the Spark MLlib LDA alternative with its trade-offs. Label topics using
+   top keywords (c-TF-IDF); export keywords only, never verbatim texts.
+6. Emerging vs persistent topics: define precisely (growth ratio versus baseline with a minimum count and a persistence
+   rule vs share above threshold in at least X% of periods) and implement both.
+7. Write results to data/gold/*.parquet (aggregates only).
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 11: Baseline and change detection<span class="tag local">LOCAL ONLY</span></h3>
+<pre><code>STEP 11: Baseline and change detection -&gt; collective pressure signals. Follow the MASTER rules. DO NOT TRAIN.
+
+Implement src/stress_signals/changepoint.py and a notebook section operating on the aggregate series:
+1. Baseline: trailing window (default 8 weeks, configurable) EXCLUDING the current period, with day-of-week
+   adjustment; robust scale via median/MAD. Never use future data in a baseline.
+2. Detectors: robust z-score, EWMA control chart, CUSUM (parameters in config, explained in standardized
+   units). Optional retrospective change-point detection (ruptures PELT) for analysis, clearly labelled as not
+   real-time.
+3. Alert logic: require n &gt;= K_MIN, flag levels none/watch/alert, a persistence rule (k consecutive periods) and a
+   statement on multiple comparisons since many series are monitored (Benjamini-Hochberg on approximate p-values
+   or persistence-only; justify the choice).
+4. Output table `collective_pressure_signals`: date, scope (overall/community/stressor/emotion/topic), metric, value,
+   ci_low, ci_high, baseline_center, baseline_scale, z_robust, ewma, cusum, flag_level, persistence_count, n.
+5. VALIDATION (essential): (a) synthetic injection: inject known relative lifts (+5%, +10%, +20%) into a real
+   baseline period and report detection delay and recall; also false-alarm rate on un-injected data. (b) Known-event
+   backtest on a list of dated events that I will provide (ask me for it). (c) Tune parameters on an earlier
+   calibration period and evaluate on a later period, no peeking.
+6. Classifier-error sensitivity: bootstrap the signal and, as an option, a prevalence correction (e.g., Rogan-Gladen)
+   using the validation confusion matrix; show raw vs corrected.
+7. Add a &#34;claims allowed&#34; paragraph to the report: what these signals can and cannot support.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 12: PostgreSQL<span class="tag local">LOCAL ONLY</span></h3>
+<pre><code>STEP 12 (OPTIONAL): PostgreSQL storage (aggregates only). Follow the MASTER rules. DO NOT TRAIN.
+Parquet remains the source of truth. Postgres is a serving layer, run locally in Docker (never on Colab, where it would not persist).
+If I skip this step, the Streamlit dashboard must still work from Parquet alone.
+
+Implement sql/schema.sql, docker-compose.yml (local Postgres, volume, env vars from .env), and
+src/stress_signals/db.py:
+1. Tables: daily_signals (the Step 11 table), stress_rate_series, emotion_series, stressor_series, topics (id,
+   keywords, label), topic_series, alerts, model_registry (component, version, metrics JSON, manifest hash),
+   pipeline_runs (run id, date range, code/model versions, row counts). NO raw text, no author or post identifiers.
+2. Constraints and indexes (date, scope, community), a CHECK that n &gt;= K_MIN for stored aggregates, and views for the
+   dashboard.
+3. Idempotent loading (INSERT ... ON CONFLICT DO UPDATE) via SQLAlchemy/psycopg2 or Spark JDBC (state the JDBC driver
+   requirements). Credentials only from environment variables.
+4. A data dictionary (markdown) and smoke-test queries.
+5. A Parquet fallback reader so the dashboard can run in &#34;demo mode&#34; without Postgres.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 13: Streamlit dashboard<span class="tag local">LOCAL ONLY</span></h3>
+<pre><code>STEP 13: Streamlit dashboard. Follow the MASTER rules. DO NOT TRAIN.
+
+Build app/streamlit_app.py (multipage if clearer) reading from PostgreSQL (fallback: Parquet demo mode):
+1. Always-visible banner: &#34;Aggregate, population-level language signals from sampled public communities. Not
+   a diagnostic or crisis tool.&#34;
+2. Pages: Overview (KPI cards; stress-language rate time series with CI band, baseline band, alert markers);
+   Emotions (stress vs non-stress lift, over time); Stressors (share over time, per community); Topics
+   (emerging vs persistent with keyword labels); Communities (comparison, composition-adjusted vs raw);
+   Alerts (table with flag level, persistence, n); Methods &amp; Transparency (model versions, metrics, validation
+   results, sampling frame, limitations).
+3. Filters: date range, granularity (day/week/month), source, community, stressor, and a user-visible minimum
+   count that cannot go below K_MIN. Suppressed cells are shown as &#34;insufficient data&#34;.
+4. Technical: st.cache_data with TTL, Plotly charts, no raw text, no user or post IDs, graceful empty states,
+   error handling for DB downtime, a &#34;data last updated / model version&#34; footer.
+5. Provide run instructions (`streamlit run app/streamlit_app.py`), screenshots checklist, and a manual test
+   checklist (suppression works, filters work, empty data handled).
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 14: Evaluation report, ethics, documentation</h3>
+<pre><code>STEP 14: Final evaluation report, ethics and documentation. Follow the MASTER rules. DO NOT TRAIN.
+
+Produce:
+1. artifacts/reports/final_report.md assembled ONLY from artifact files: component metrics (stress, emotion,
+   stressor with CIs), calibration, cross-dataset results (SenticNet), TensiStrength correlation, change-detection
+   validation, Spark throughput, and a direct, evidence-based answer to the research question including where the
+   evidence is weak.
+2. Limitations: Reddit/platform demographic bias, English only, community selection bias, label-definition
+   differences between datasets, domain shift (posts vs comments vs tweets), temporal language drift, bots/spam,
+   classifier error propagating into aggregates, no causal claims, taxonomy is a research construct.
+3. Ethics statement: aggregate-only design, K_MIN suppression, no author data, platform terms and licences, ethical
+   review recommendation, no re-identification, not a crisis tool.
+4. README (setup, run order, config), docs/architecture.md with the final architecture diagram, model cards, a
+   Makefile or run script, a clean-run checklist (fresh environment -&gt; reproduce), and a list of everything I need
+   to cite (datasets, models, libraries).
+5. A &#34;what I would do next&#34; section (optional streaming extension, active learning for stressor labels, multilingual).
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<h3>Step 15 (optional): Streaming extension<span class="tag local">LOCAL ONLY</span></h3>
+<pre><code>STEP 15 (OPTIONAL): Kafka + Spark Structured Streaming. Follow the MASTER rules. DO NOT TRAIN.
+
+Build a REPLAY-BASED streaming demo (a producer replaying the Parquet data lake into Kafka at a configurable rate).
+Do NOT connect to any live platform unless I confirm I have the terms and access for it.
+1. docker-compose for Kafka (and Zookeeper/KRaft, state which) with topics and retention.
+2. Spark Structured Streaming job: read Kafka -&gt; clean -&gt; inference (reusing StressSignalPipeline via mapInPandas /
+   foreachBatch) -&gt; windowed aggregation with watermarks -&gt; idempotent upsert to Postgres.
+3. Checkpoint locations, restart behaviour, late data handling, and an honest note on delivery guarantees
+   (at-least-once plus idempotent upserts).
+4. Dashboard auto-refresh option and a latency measurement cell.
+Then print the STEP COMPLETE block and STOP.
+</code></pre>
+<hr>
+<h2>5. Self-Audit Prompt (paste after every step)</h2>
+<pre><code>Audit your own work for STEP &lt;N&gt; before I proceed. Do not add features. Check and report:
+1. Did you execute any training, fine-tuning or hyperparameter search? (must be NO)
+2. List every assumption you made about schemas, columns, labels, licences, library APIs or versions that I have
+   not verified. Mark each UNVERIFIED and tell me how I can check it.
+3. Data leakage risks: can any text, post, or thread appear in more than one split? Is any tuning done on the test set?
+4. Privacy: is any author field, raw text, or small-count aggregate (n &lt; K_MIN) stored or displayed anywhere?
+5. Reproducibility: seeds set, split indices saved, versions and hashes in the manifest?
+6. Walk through the code for off-by-one errors, wrong label orderings, device/dtype issues, and silent failures.
+7. List anything in your answer that I should independently verify, and any claim not backed by an artifact.
+Fix real problems and show only the diffs.
+</code></pre>
+<h2>6. Pause protocol after training</h2>
+<pre><code>I ran the training cells. Here are the printed metrics and the contents of metrics.json: &lt;paste&gt;.
+Interpret them honestly. Flag signs of overfitting, leakage, miscalibration or a weak baseline comparison. Tell me
+whether to proceed, retrain with specific changes, or revisit the data. Do not claim any number I did not paste.
+</code></pre>
+
+</body></html>
