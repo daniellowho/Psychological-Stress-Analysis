@@ -1,16 +1,16 @@
-"""Step 3: binary stress-language classifier on Dreaddit (training code is RUN BY THE USER on a Colab GPU).
+"""Step 3: binary stress-language classifier on Dreaddit (training is RUN BY THE USER on the laptop's NVIDIA GPU if it
+has one, else on the CPU; see utils.select_device).
 
 Pipeline per seed (resume-safe; every stage writes to durable storage and is skipped if its output exists):
     data guard (text only) -> fine-tune with HF Trainer (checkpoint every epoch, early stopping on validation
     f1_stress, best model reloaded at the end, CSV log) -> best_model/ -> logits for validation + test -> DONE.json
 Evaluation, calibration (temperature scaling, threshold) and shortcut checks read the saved logits, so they can
-run anywhere (Colab or the local CPU) without retraining. Final bundle: <paths.models>/stress/v<YYYYMMDD>/.
+run on any device without retraining. Final bundle: <paths.models>/stress/v<YYYYMMDD>/.
 
 Run layout: <project root>/trained_models/stress/runs/<model_choice>/seed<k>/{best_model/, train_log.csv,
-            train_summary.json, predictions_validation.parquet, predictions_test.parquet, DONE.json} on whichever kernel
-            trained it (Colab results reach the PC through colab_results.zip, see stress_signals.handoff).
-Checkpoints: <checkpoint_root>/stress/<model_choice>/seed<k>/ (Colab server disk or local data/outputs/checkpoints;
-            never inside trained_models, because the Trainer deletes old checkpoints).
+            train_summary.json, predictions_validation.parquet, predictions_test.parquet, DONE.json}.
+Checkpoints: <checkpoint_root>/stress/<model_choice>/seed<k>/ (data/outputs/checkpoints; never inside trained_models,
+            because the Trainer deletes old checkpoints).
 """
 
 from __future__ import annotations
@@ -30,8 +30,8 @@ import pandas as pd
 
 from .metrics import (METRIC_KEYS, binary_metrics, bootstrap_metrics, choose_threshold, ece, fit_temperature,
                       mean_std, metrics_by_group, paired_bootstrap_gain, plot_reliability, positive_proba)
-from .utils import (checkpoint_root, get_logger, library_versions, model_version_dir, models_root, set_seed, sha256_file,
-                    write_json, write_manifest)
+from .utils import (checkpoint_root, device_label, get_logger, library_versions, model_version_dir, models_root,
+                    select_device, set_seed, sha256_file, write_json, write_manifest)
 
 LOG = get_logger("stress_signals.stress_model")
 
@@ -130,7 +130,7 @@ def hf_compat() -> dict[str, Any]:
 
 
 def precision_flags(setting: str, hf_id: str, cuda: bool, bf16_supported: bool) -> dict[str, bool]:
-    """fp16/bf16 flags. fp16 only with CUDA. DeBERTa-v3 is known to overflow in fp16, so `auto` uses bf16 when the
+    """fp16/bf16 flags. fp16 only with CUDA (the CPU trains in fp32). DeBERTa-v3 is known to overflow in fp16, so `auto` uses bf16 when the
     GPU supports it (A100/L4) and fp32 otherwise (e.g. T4)."""
     off = {"fp16": False, "bf16": False}
     if not cuda or setting == "no":
@@ -264,11 +264,8 @@ def trainer_compute_metrics(eval_pred) -> dict[str, float]:
 
 # ================================================================ inference
 def resolve_device(cfg: dict[str, Any]) -> str:
-    import torch
-    want = cfg["inference"]["device"]
-    if want == "cpu" or not torch.cuda.is_available():
-        return "cpu"
-    return "cuda"
+    """Inference device: config inference.device, else the NVIDIA GPU if there is one, else the CPU."""
+    return select_device(cfg)
 
 
 def predict_logits(model, tokenizer, texts: Sequence[str], max_length: int, batch_size: int = 16,
@@ -299,7 +296,7 @@ def _save_predictions(df: pd.DataFrame, logits: np.ndarray, path: Path) -> None:
     os.replace(tmp, path)
 
 
-# ================================================================ training (USER RUNS on Colab)
+# ================================================================ training (USER RUNS)
 def train_stress_seed(cfg: dict[str, Any], seed: int, model_choice: str | None = None,
                       data: dict[str, pd.DataFrame] | None = None, run_dir: Path | None = None,
                       epochs: int | None = None) -> Path:
@@ -344,7 +341,7 @@ def train_stress_seed(cfg: dict[str, Any], seed: int, model_choice: str | None =
             **{compat["tokenizer_key"]: tok})
         last = get_last_checkpoint(str(ck)) if ck.is_dir() else None
         LOG.info("seed %s: training %s (%s) on %s, resume_from=%s", seed, s["model_choice"], s["hf_id"],
-                 "cuda" if cuda else "cpu", last)
+                 device_label(), last)
         result = trainer.train(resume_from_checkpoint=last)
         trainer.save_model(str(best_dir))          # load_best_model_at_end=True -> this is the best epoch
         tok.save_pretrained(str(best_dir))
@@ -356,13 +353,13 @@ def train_stress_seed(cfg: dict[str, Any], seed: int, model_choice: str | None =
             "checkpoint_dir": ck,
             "log_history": trainer.state.log_history, "transformers": compat["transformers"],
             "confidence_weights": s["confidence_weights"], "n_train": len(tr), "n_validation": len(va),
-            "device": torch.cuda.get_device_name(0) if cuda else "cpu"})
+            "device": device_label()})
         del trainer, model
         if cuda:
             torch.cuda.empty_cache()
 
     model = AutoModelForSequenceClassification.from_pretrained(str(best_dir))
-    device = "cuda" if cuda else "cpu"
+    device = select_device(cfg)
     for split in ("validation", "test"):
         out = run_dir / f"predictions_{split}.parquet"
         if out.exists() or split not in data:
@@ -400,9 +397,9 @@ def readiness(cfg: dict[str, Any], model_choice: str | None = None) -> dict[str,
     missing = [k for k in s["seeds"] if k not in done]
     return {"baseline": (runs_root(cfg) / "baseline_tfidf_lr" / "DONE.json").exists(),
             "seeds_done": sorted(done), "seeds_missing": missing, "all_seeds": not missing,
-            "why_seeds": f"needs every seed of {s['model_choice']} {s['seeds']} on this kernel; missing {missing}. "
-                         "Train them (3B.1) or import colab_results.zip.",
-            "why_baseline": "needs the baseline (3A.1) on this kernel. Train it or import colab_results.zip."}
+            "why_seeds": f"needs every seed of {s['model_choice']} {s['seeds']}; missing {missing}. "
+                         "They train in 3B.1 (a failed or interrupted seed resumes there on the next Run All).",
+            "why_baseline": "needs the baseline, which trains in 3A.1."}
 
 
 def evaluate_runs(cfg: dict[str, Any], model_choice: str | None = None, threshold: float = 0.5) -> dict[str, Any]:

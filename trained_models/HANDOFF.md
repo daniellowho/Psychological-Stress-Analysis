@@ -1,26 +1,37 @@
 # Handoff log: what has been done, where and when
 
-_Regenerated 2026-10-03T08:09:02+00:00 UTC by the local kernel. Times are UTC. Source of truth: `handoff.json`._
+_Regenerated 2026-10-03T09:37:41+00:00 UTC on DESKTOP-GH0P1UM. Times are UTC. Source of truth: `handoff.json`._
 
 ## How this works (read first)
 
-**Run All is safe. Training never starts by accident.**
+**Run All does everything that is not done yet, and nothing twice.**
 
-- **`notebook.ipynb`**: training cells (3A.1, 3B.1, 3E.2) train **only on the Colab kernel**. On the local kernel they print `NOT RUN …: notebook.ipynb trains on the Colab kernel only…`.
-- **`notebook_local.ipynb`**: nothing trains until you switch it on in cell **L0.5**:
-  `TRAIN_HERE = {"baseline": False, "seeds": [], "loso": False}` (e.g. `"seeds": [42]`). That cell also previews what Run All would do now ("done on colab at … → skip" / "WILL TRAIN HERE" / "not switched on → skip").
-- **Done always wins.** A step marked **done** below, on EITHER kernel, is skipped by both notebooks even if it is switched on. The cell says where and when it ran.
-- **Missing Colab results:** if Colab trained something that is not imported yet, the message says to import `colab_results.zip` instead of retraining.
-- **Evaluation cells** (3A.2, 3C.\*, 3D.\*, 3E.1, 3E.3, 3F) print e.g. `NOT RUN 3C.1: … missing [13, 2024]` instead of failing, so Run All carries on. They wait for **every** seed, because 3D.2 writes the final test report only once and must not pick a final seed from a partial set.
-
-**Moving results between kernels:** PC → Colab: rebuild `colab_bundle.zip` (cell 3.0c / L9), upload it, run 0.0 (it carries this log). Colab → PC: cell 3G writes `/content/colab_results.zip`; download it to the project root, `data/outputs/` or Downloads, and run 3.0d / L0.3. The import never overwrites or deletes files, and it merges the logs.
+- Every step that computes or writes something runs **once**. On later Run Alls it prints `SKIP <step>: already done on <machine> at <time>` and loads its saved result instead. Cells that only load or show things re-run (seconds).
+- **Training** (baseline 3A.1, seeds 3B.1) starts automatically for whatever is not done, on the laptop's NVIDIA GPU (CUDA) if it has one, else on the CPU. An interrupted seed resumes from its last epoch on the next Run All.
+- **Optional LOSO** (3E.2, ~10 extra trainings) runs only with `RUN_LOSO = True` in that cell.
+- **Evaluation** (3C–3F) waits until every seed is trained (`NOT RUN … missing [...]` until then), because the final test report is written only once and must not pick a final seed from a partial set.
+- **The test suite** (2.5) re-runs only after the code changed. **Re-run anything on purpose:** add its step number to `FORCE_RERUN` in cell 0.1, e.g. `FORCE_RERUN = {"3C.1"}`.
+- A step whose saved output was deleted counts as not done and runs again.
 
 ## Current state per step
 
-| step | what | state | kernel | when (UTC) | duration | note |
+| step | what | state | machine (device) | when (UTC) | duration | note |
 |---|---|---|---|---|---|---|
+| `1.2/audits` | Audit all datasets | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-03T09:36:11+00:00 |  | output found on disk (finished before it was logged) |
+| `1.5/handcheck/cb810d15f241` | Score the SenticNet hand-check | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-03T09:36:26+00:00 | 14s |  |
+| `2.2/processed/all` | Build processed datasets + splits | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-03T09:36:27+00:00 |  | output found on disk (finished before it was logged) |
+| `2.4/chunking_check` | Chunking check on the Zenodo pilot | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-03T09:36:33+00:00 | 6s |  |
+| `2.5/tests/e901d8ff11e302c0` | Unit tests for this code version | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-03T09:37:41+00:00 | 68s |  |
 
 ## Full history (oldest first)
 
-| when (UTC) | kernel | step | event | note |
+| when (UTC) | machine (device) | step | event | note |
 |---|---|---|---|---|
+| 2026-10-03T09:36:11+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `1.2/audits` | done | output found on disk (finished before it was logged) |
+| 2026-10-03T09:36:12+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `1.5/handcheck/cb810d15f241` | started |  |
+| 2026-10-03T09:36:26+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `1.5/handcheck/cb810d15f241` | done |  |
+| 2026-10-03T09:36:27+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `2.2/processed/all` | done | output found on disk (finished before it was logged) |
+| 2026-10-03T09:36:27+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `2.4/chunking_check` | started |  |
+| 2026-10-03T09:36:33+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `2.4/chunking_check` | done |  |
+| 2026-10-03T09:36:33+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `2.5/tests/e901d8ff11e302c0` | started |  |
+| 2026-10-03T09:37:41+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `2.5/tests/e901d8ff11e302c0` | done |  |

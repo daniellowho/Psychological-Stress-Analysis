@@ -44,27 +44,16 @@ def test_detect_environment_never_raises():
     assert "python" in info and isinstance(info["warnings"], list)
 
 
-def test_models_go_to_trained_models_on_both_kernels(monkeypatch):
-    """No Google Drive: models live in <project root>/trained_models on whichever kernel runs."""
+def test_models_and_checkpoints_stay_local():
+    """Models live in <project root>/trained_models; checkpoints outside it (the Trainer deletes old ones)."""
     import stress_signals.utils as U
     from stress_signals.config import load_config
     cfg = load_config()
-    for colab, root in ((True, Path("/content/TA-BDA")), (False, Path(cfg["_root"]))):
-        monkeypatch.setattr(U, "is_colab", lambda c=colab: c)
-        c = {**cfg, "_root": root}
-        assert U.models_root(c) == root / "trained_models"
-        assert U.model_version_dir(c, "stress").parent == root / "trained_models" / "stress"
-        assert "drive" not in U.models_root(c).as_posix().lower()
-
-
-def test_checkpoints_outside_trained_models(monkeypatch):
-    import stress_signals.utils as U
-    from stress_signals.config import load_config
-    cfg = load_config()
-    for colab in (True, False):
-        monkeypatch.setattr(U, "is_colab", lambda c=colab: c)
-        ck = U.checkpoint_root(cfg)
-        assert "trained_models" not in ck.parts and "drive" not in ck.as_posix().lower()
+    root = Path(cfg["_root"])
+    assert U.models_root(cfg) == root / "trained_models"
+    assert U.model_version_dir(cfg, "stress").parent == root / "trained_models" / "stress"
+    ck = U.checkpoint_root(cfg)
+    assert ck == root / "data" / "outputs" / "checkpoints" and "trained_models" not in ck.parts
 
 
 def test_config_rejects_drive_models_and_checkpoints_inside_trained_models():
@@ -72,12 +61,41 @@ def test_config_rejects_drive_models_and_checkpoints_inside_trained_models():
     from stress_signals.config import ConfigError, load_config, validate_config
     raw = {k: copy.deepcopy(v) for k, v in load_config().items() if not k.startswith("_")}
     for mutate in (lambda c: c["paths"].__setitem__("models", "G:/My Drive/TA-BDA Project/models"),
-                   lambda c: c["storage"].__setitem__("local_checkpoint_root", "trained_models/checkpoints"),
-                   lambda c: c["storage"].__setitem__("colab_checkpoint_root", "/content/drive/MyDrive/ck")):
+                   lambda c: c["storage"].__setitem__("checkpoint_root", "trained_models/checkpoints"),
+                   lambda c: c["inference"].__setitem__("device", "mps")):
         bad = copy.deepcopy(raw)
         mutate(bad)
         with pytest.raises(ConfigError):
             validate_config(bad)
+
+
+def test_select_device_prefers_nvidia_gpu_and_honours_config(monkeypatch):
+    import torch
+    from stress_signals.utils import device_label, select_device
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    assert select_device() == "cuda" and select_device({"inference": {"device": "cuda"}}) == "cuda"
+    assert select_device({"inference": {"device": "cpu"}}) == "cpu"            # config can force the CPU
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    assert select_device() == "cpu"
+    assert select_device({"inference": {"device": "cuda"}}) == "cpu"           # forced GPU missing -> CPU, no crash
+    assert device_label("cpu") == "cpu"
+
+
+def test_raw_data_status_and_code_fingerprint(tmp_path):
+    from stress_signals.config import load_config
+    from stress_signals.utils import code_fingerprint, raw_data_status
+    cfg = load_config()
+    empty = {**cfg, "_root": tmp_path}
+    assert raw_data_status(empty) == {k: False for k in ("sad", "mendeley", "senticnet", "zenodo_pilot")}
+    (tmp_path / "code" / "stress_signals").mkdir(parents=True)
+    (tmp_path / "code" / "tests").mkdir()
+    (tmp_path / "code" / "config.yaml").write_text("a: 1")
+    f = tmp_path / "code" / "stress_signals" / "x.py"
+    f.write_text("x = 1")
+    before = code_fingerprint(tmp_path)
+    assert code_fingerprint(tmp_path) == before                               # stable
+    f.write_text("x = 2")
+    assert code_fingerprint(tmp_path) != before                               # any code change -> tests re-run
 
 
 def test_package_never_deletes_files():
@@ -90,17 +108,11 @@ def test_package_never_deletes_files():
     assert hits == [], hits
 
 
-def test_colab_bundle_contains_code_and_training_data(tmp_path):
-    import zipfile
-    from stress_signals.config import load_config
-    from stress_signals.utils import COLAB_BUNDLE_DATA, build_colab_bundle
-    cfg = load_config()
-    if not all((Path(cfg["_root"]) / r).is_file() for r in COLAB_BUNDLE_DATA):
-        pytest.skip("processed Dreaddit not built")
-    c = {**cfg, "_paths": {**cfg["_paths"], "artifacts": tmp_path}}
-    out = build_colab_bundle(c)
-    names = set(zipfile.ZipFile(out).namelist())
-    assert "code/config.yaml" in names and "code/stress_signals/stress_model.py" in names and "code/notebook.ipynb" in names
-    assert set(COLAB_BUNDLE_DATA) <= names
-    assert not any("__pycache__" in n or n.startswith("data/raw") for n in names)
-    assert out.stat().st_size < 5e6
+def test_gpu_supported_by_build_follows_cuda_compatibility():
+    from stress_signals.utils import gpu_supported_by_build
+    cu121 = ["sm_50", "sm_60", "sm_61", "sm_70", "sm_75", "sm_80", "sm_86", "sm_90"]   # torch 2.5.1+cu121
+    assert gpu_supported_by_build(6, 1, cu121)          # Quadro P1000
+    assert gpu_supported_by_build(8, 9, cu121)          # RTX 40-series runs sm_86 code
+    assert not gpu_supported_by_build(12, 0, cu121)     # RTX 50-series needs newer wheels
+    assert gpu_supported_by_build(12, 0, cu121 + ["compute_90"])   # ... unless PTX can be JIT-compiled
+    assert not gpu_supported_by_build(3, 5, cu121)

@@ -1,10 +1,9 @@
-# Target interpreter: Python 3.11 (local). Python 3.14 (currently installed) is NOT supported by
+# Target interpreter: Python 3.11 (local). Python 3.13+ is NOT supported by
 # torch 2.5.x / pyspark 3.5.x wheels. See STEP 0 notes for compatibility checks.
 # Versions marked (UNSURE) have not been checked against each other in this environment.
 #
-# Local GPU (Quadro P1000, sm_61): CUDA 12.1 wheels. Verify after install with
-#   python -c "import torch; print(torch.cuda.get_arch_list())"   -> must include 'sm_61'
-# On Colab: do NOT install torch from this file; use Colab's preinstalled torch.
+# torch: notebook cell 0.0 installs the right build for each Windows laptop (CUDA 12.1 / 11.8 / 12.8 for its NVIDIA GPU,
+# or CPU) and skips the torch line below. Installing this file by hand gives the CUDA 12.1 build.
 --extra-index-url https://download.pytorch.org/whl/cu121
 
 # core

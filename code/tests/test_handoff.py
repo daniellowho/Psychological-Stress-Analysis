@@ -1,14 +1,12 @@
-"""Handoff log, run-once guard and Colab <-> PC transfer. No training: steps are tiny lambdas; writes only under tmp_path."""
+"""Handoff log + run-once guard. No training: steps are tiny lambdas; writes only under tmp_path."""
 
 import json
-import zipfile
 from pathlib import Path
 
 import pytest
 
 import stress_signals.handoff as H
 from stress_signals.config import load_config
-from stress_signals.utils import BUNDLE_HANDOFF_ARCNAME
 
 
 @pytest.fixture(scope="module")
@@ -21,42 +19,59 @@ def make_cfg(base, root: Path):
     return {**base, "_root": root, "_paths": {**base["_paths"], "artifacts": root / "data" / "outputs"}}
 
 
-def on_kernel(monkeypatch, colab: bool):
-    monkeypatch.setattr(H, "is_colab", lambda: colab)
-
-
-def test_step_runs_once_and_is_logged(base_cfg, tmp_path, monkeypatch):
-    on_kernel(monkeypatch, False)
+def test_step_runs_once_and_is_logged(base_cfg, tmp_path, capsys):
     cfg = make_cfg(base_cfg, tmp_path / "TA-BDA")
     calls = []
     assert H.run_step(cfg, "3A.1/x", "demo", lambda: calls.append(1) or "ran") == "ran"
     assert H.run_step(cfg, "3A.1/x", "demo", lambda: calls.append(1) or "ran", skip_result="skipped") == "skipped"
     assert calls == [1]
-    statuses = [e["status"] for e in H.load(cfg)["events"]]
-    assert statuses == ["started", "done", "skipped"]
+    assert "SKIP 3A.1/x: already done on" in capsys.readouterr().out
+    assert [e["status"] for e in H.load(cfg)["events"]] == ["started", "done"]     # skips are not logged (no clutter)
     ev = H.done_event(cfg, "3A.1/x")
-    assert ev["kernel"] == "local" and ev["utc"].endswith("+00:00") and ev["duration_s"] is not None
+    assert ev["utc"].endswith("+00:00") and ev["duration_s"] is not None and ev["host"] and ev["device"]
     md = (H.models_root(cfg) / "HANDOFF.md").read_text(encoding="utf-8")
-    assert "`3A.1/x`" in md and "**done**" in md
-    assert md.index("## How this works") < md.index("## Current state per step") and "TRAIN_HERE" in md
+    assert "`3A.1/x`" in md and "**done**" in md and "machine (device)" in md
+    assert md.index("## How this works") < md.index("## Current state per step")
     assert H.status_table(cfg).set_index("step").loc["3A.1/x", "state"] == "done"
 
 
-def test_not_allowed_step_never_runs_but_done_one_still_skips(base_cfg, tmp_path, monkeypatch, capsys):
-    on_kernel(monkeypatch, False)
+def test_skip_loads_saved_result_and_force_reruns(base_cfg, tmp_path, capsys):
     cfg = make_cfg(base_cfg, tmp_path / "TA-BDA")
-    assert H.run_step(cfg, "seed13", "t", lambda: pytest.fail("Run All must not train"), allow=False,
-                      blocked_reason="switch it on", skip_result="no") == "no"
-    assert "NOT RUN seed13: switch it on" in capsys.readouterr().out
-    assert H.load(cfg)["events"] == []                                  # a blocked step leaves no trace
-    H.run_step(cfg, "seed42", "t", lambda: 1)
-    H.run_step(cfg, "seed42", "t", lambda: pytest.fail("done already"), allow=True)
-    assert "SKIP seed42" in capsys.readouterr().out
+    out = tmp_path / "evaluation.json"
+
+    def compute():
+        out.write_text(json.dumps({"f1": 0.8}))
+        return {"f1": 0.8}
+    load = lambda: json.loads(out.read_text())                                   # noqa: E731
+    assert H.run_step(cfg, "3C.1", "eval", compute, done_marker=out, skip_result=load) == {"f1": 0.8}
+    assert H.run_step(cfg, "3C.1", "eval", lambda: pytest.fail("must load, not recompute"),
+                      done_marker=out, skip_result=load) == {"f1": 0.8}
+    calls = []
+    H.run_step(cfg, "3C.1", "eval", lambda: calls.append(1), done_marker=out, force=True)
+    assert calls == [1] and "RE-RUN 3C.1" in capsys.readouterr().out
+    assert H.last_event(cfg, "3C.1", ["started"])["note"] == "forced re-run"
+
+
+def test_deleted_output_means_not_done(base_cfg, tmp_path, capsys):
+    cfg = make_cfg(base_cfg, tmp_path / "TA-BDA")
+    marker = tmp_path / "DONE.json"
+    H.run_step(cfg, "seed42", "t", lambda: marker.write_text("{}"), done_marker=marker)
+    marker.unlink()                                       # the user moved/deleted the run folder
+    calls = []
+    H.run_step(cfg, "seed42", "t", lambda: calls.append(1), done_marker=marker)
+    assert calls == [1] and "is gone, so it runs again" in capsys.readouterr().out
+
+
+def test_not_allowed_step_never_runs(base_cfg, tmp_path, capsys):
+    cfg = make_cfg(base_cfg, tmp_path / "TA-BDA")
+    assert H.run_step(cfg, "loso", "t", lambda: pytest.fail("must not run"), allow=False,
+                      blocked_reason="optional", skip_result="no") == "no"
+    assert "NOT RUN loso: optional" in capsys.readouterr().out
+    assert H.load(cfg)["events"] == []
     assert not H.ready(False, "3C.1", "needs seeds") and "NOT RUN 3C.1: needs seeds" in capsys.readouterr().out
 
 
-def test_failed_step_is_logged_and_can_rerun(base_cfg, tmp_path, monkeypatch):
-    on_kernel(monkeypatch, False)
+def test_failed_step_is_logged_and_can_rerun(base_cfg, tmp_path):
     cfg = make_cfg(base_cfg, tmp_path / "TA-BDA")
 
     def boom():
@@ -67,8 +82,7 @@ def test_failed_step_is_logged_and_can_rerun(base_cfg, tmp_path, monkeypatch):
     assert H.run_step(cfg, "s", "t", lambda: 7) == 7
 
 
-def test_existing_marker_counts_as_done(base_cfg, tmp_path, monkeypatch):
-    on_kernel(monkeypatch, False)
+def test_existing_marker_counts_as_done(base_cfg, tmp_path):
     cfg = make_cfg(base_cfg, tmp_path / "TA-BDA")
     marker = H.models_root(cfg) / "stress" / "runs" / "m" / "seed42" / "DONE.json"
     marker.parent.mkdir(parents=True)
@@ -77,86 +91,30 @@ def test_existing_marker_counts_as_done(base_cfg, tmp_path, monkeypatch):
     assert H.done_event(cfg, "seed42") is not None
 
 
-def test_colab_results_roundtrip_blocks_local_rerun(base_cfg, tmp_path, monkeypatch):
-    # --- Colab trains seed 42 and packs the results
-    on_kernel(monkeypatch, True)
-    colab = make_cfg(base_cfg, tmp_path / "content" / "TA-BDA")
-    run = H.models_root(colab) / "stress" / "runs" / "roberta-base" / "seed42"
-
-    def train():
-        (run / "best_model").mkdir(parents=True)
-        (run / "best_model" / "model.safetensors").write_bytes(b"w" * 100)
-        (run / "DONE.json").write_text("{}")
-        return run
-    step = H.train_step_id("roberta-base", 42)
-    H.run_step(colab, step, "train", train, done_marker=run / "DONE.json")
-    loso = H.models_root(colab) / "stress" / "runs" / "loso" / "distilroberta-base_ptsd"
-    (loso / "best_model").mkdir(parents=True)
-    (loso / "best_model" / "model.safetensors").write_bytes(b"x")
-    (loso / "DONE.json").write_text("{}")
-    z = H.pack_colab_results(colab)
-    assert z == tmp_path / "content" / "colab_results.zip"
-    names = set(zipfile.ZipFile(z).namelist())
-    assert "trained_models/stress/runs/roberta-base/seed42/best_model/model.safetensors" in names
-    assert "trained_models/handoff.json" in names
-    assert not any("/loso/" in n and "/best_model/" in n for n in names)        # LOSO weights left out by default
-    assert "trained_models/stress/runs/loso/distilroberta-base_ptsd/DONE.json" in names
-
-    # --- PC: a file that already exists locally must survive the import untouched
-    on_kernel(monkeypatch, False)
-    pc = make_cfg(base_cfg, tmp_path / "pc" / "TA-BDA")
-    mine = H.models_root(pc) / "stress" / "runs" / "roberta-base" / "seed42" / "DONE.json"
-    mine.parent.mkdir(parents=True)
-    mine.write_text('{"local": true}')
-    H.record(pc, "L0.1", "ran", "bootstrap")
-    res = H.import_colab_results(pc, z)
-    assert res["written"] >= 2 and res["kept_existing"] == 1 and res["events_merged"] >= 3
-    assert json.loads(mine.read_text()) == {"local": True}
-    assert (mine.parent / "best_model" / "model.safetensors").read_bytes() == b"w" * 100
-    assert H.import_colab_results(pc, z)["written"] == 0                         # same zip twice: no-op
-
-    # --- PC: the guard refuses to train seed 42 again and says it was done on Colab
-    calls = []
-    H.run_step(pc, step, "train", lambda: calls.append(1), done_marker=mine)
-    assert calls == [] and H.done_event(pc, step)["kernel"] == "colab"
-    assert H.last_event(pc, step)["status"] == "skipped" and H.last_event(pc, step)["kernel"] == "local"
+def test_notebook_training_and_heavy_steps_are_run_once(base_cfg):
+    """Single local notebook: no Colab, setup proves the NVIDIA GPU, and every heavy step goes through run_step."""
+    nb = json.loads((Path(base_cfg["_root"]) / "code" / "notebook.ipynb").read_text(encoding="utf-8"))
+    srcs = ["".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code"]
+    text = "\n".join("".join(c["source"]) for c in nb["cells"])
+    assert "colab" not in text.lower() and not (Path(base_cfg["_root"]) / "code" / "notebook_local.ipynb").exists()
+    setup = next(s for s in srcs if "Step 0.0" in s)
+    assert "nvidia-smi" in setup and "(x @ x)" in setup
+    for step in ("1.2", "1.5", "2.2", "2.4", "2.5", "3A.1", "3A.2", "3B.1", "3C.1", "3D.1", "3D.2", "3E.1", "3E.2", "3F"):
+        cell = next(s for s in srcs if f"# Step {step}" in s)
+        assert "H.run_step(" in cell, step
 
 
-def test_local_log_in_bundle_blocks_colab_rerun(base_cfg, tmp_path, monkeypatch):
-    on_kernel(monkeypatch, False)
-    pc = make_cfg(base_cfg, tmp_path / "pc" / "TA-BDA")
-    H.run_step(pc, H.BASELINE_STEP, "baseline", lambda: None)
-    # what colab_bundle.zip carries, unpacked on the server
-    on_kernel(monkeypatch, True)
-    colab = make_cfg(base_cfg, tmp_path / "content" / "TA-BDA")
-    incoming = Path(colab["_root"]) / BUNDLE_HANDOFF_ARCNAME
-    incoming.parent.mkdir(parents=True)
-    incoming.write_bytes(H.log_path(pc).read_bytes())
-    H.run_step(colab, H.BASELINE_STEP, "baseline", lambda: pytest.fail("Colab must not redo local work"))
-    assert H.done_event(colab, H.BASELINE_STEP)["kernel"] == "local"
-
-
-def test_import_ignores_files_outside_trained_models(base_cfg, tmp_path, monkeypatch):
-    on_kernel(monkeypatch, False)
-    pc = make_cfg(base_cfg, tmp_path / "pc" / "TA-BDA")
-    z = tmp_path / "colab_results.zip"
-    with zipfile.ZipFile(z, "w") as zf:
-        zf.writestr("code/stress_signals/utils.py", "evil")
-        zf.writestr("trained_models/../../escape.txt", "evil")
-        zf.writestr("trained_models/ok.txt", "ok")
-    assert H.import_colab_results(pc, z)["written"] == 1
-    assert (H.models_root(pc) / "ok.txt").read_text() == "ok"
-    assert not (Path(pc["_root"]) / "code").exists() and not (tmp_path / "pc" / "escape.txt").exists()
-
-
-def test_bundle_carries_local_handoff_log(base_cfg, tmp_path, monkeypatch):
-    from stress_signals.utils import COLAB_BUNDLE_DATA, build_colab_bundle
-    if not all((Path(base_cfg["_root"]) / r).is_file() for r in COLAB_BUNDLE_DATA):
-        pytest.skip("processed Dreaddit not built")
-    on_kernel(monkeypatch, False)
-    models = tmp_path / "trained_models"
-    c = {**base_cfg, "paths": {**base_cfg["paths"], "models": str(models)},
-         "_paths": {**base_cfg["_paths"], "artifacts": tmp_path}}
-    H.record(c, "3A.1/x", "done", "demo")
-    names = set(zipfile.ZipFile(build_colab_bundle(c)).namelist())
-    assert BUNDLE_HANDOFF_ARCNAME in names and not any(n.startswith("trained_models/") for n in names)
+def test_setup_cell_picks_the_right_torch_build(base_cfg):
+    """Cell 0.0's torch choice per Windows laptop, taken from the notebook itself (nothing is installed)."""
+    nb = json.loads((Path(base_cfg["_root"]) / "code" / "notebook.ipynb").read_text(encoding="utf-8"))
+    setup = next("".join(c["source"]) for c in nb["cells"] if "# Step 0.0" in "".join(c["source"]))
+    ns = {"PT": "https://download.pytorch.org/whl/"}
+    exec(setup[setup.index("def _torch_plan"):setup.index("_PROBE =")], ns)
+    plan = ns["_torch_plan"]
+    gpu = lambda name, cap, drv: {"name": name, "cap": cap, "vram_gb": 4.0, "driver": drv}   # noqa: E731
+    assert plan(None)[:3] == ("2.5.1", ns["PT"] + "cpu", False)                             # no NVIDIA GPU
+    assert plan(gpu("Quadro P1000", 6.1, "555.99"))[:3] == ("2.5.1", ns["PT"] + "cu121", True)
+    assert plan(gpu("RTX 4060 Laptop", 8.9, "560.94"))[:3] == ("2.5.1", ns["PT"] + "cu121", True)
+    assert plan(gpu("RTX 3050", 8.6, "472.12"))[:3] == ("2.5.1", ns["PT"] + "cu118", True)     # old driver
+    assert plan(gpu("RTX 5070 Laptop", 12.0, "576.02"))[:3] == ("2.7.1", ns["PT"] + "cu128", True)
+    assert plan(gpu("GT 730", 3.5, "475.14"))[:3] == ("2.5.1", ns["PT"] + "cpu", False)        # too old for torch

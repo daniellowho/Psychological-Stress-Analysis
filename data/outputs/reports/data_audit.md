@@ -249,7 +249,7 @@ Share of texts longer than: 128 tokens = 0.02%, 256 tokens = 0.00%, 512 tokens =
 ## SAD (Stress-Annotated Dataset)
 
 - Zip: `https://raw.githubusercontent.com/PervasiveWellbeingTech/Stress-Annotated-Dataset-SAD/main/SAD_v1.zip` sha256 `74595bc41dc3a91d…`; members: Distribution_v1.png (9837 B), SAD_v1.xlsx (900036 B), Schema.txt (2850 B)
-- XLSX used: `SAD_v1.xlsx`, sheets {'SAD_v1': 6850}; identical to local `datasets/SAD_v1` copy: True
+- XLSX used: `SAD_v1.xlsx`, sheets {'SAD_v1': 6850}; identical to local `data/raw/SAD_v1` copy: True
 - Licence: GitHub reports **MIT**; LICENSE file first line: "MIT License"
 - Repo commit: 1d6aa672c4eeb82e0bbc6533b75e0694da80ae20 (2021-04-22T13:55:57Z)
 
@@ -648,9 +648,11 @@ Columns per file: Reddit_Title: ['title', 'label']; Reddit_Combi: ['title', 'bod
 
 Shared texts between files (normalised): {'Reddit_Title∩Reddit_Combi': 0, 'Reddit_Title∩Twitter_Full': 0, 'Reddit_Title∩Twitter_Non-Advert': 0, 'Reddit_Combi∩Twitter_Full': 0, 'Reddit_Combi∩Twitter_Non-Advert': 0, 'Twitter_Full∩Twitter_Non-Advert': 1967}
 
-### Hand-check of automated labels
+### Hand-check of automated labels (user-annotated)
 
-_Pending: user fills data/interim/senticnet_handcheck.csv (see notebook Step 1)._
+| metric | value |
+|---|---|
+| n_checked | 0 |
 
 ### Text length: Reddit_Title
 
@@ -747,3 +749,14 @@ Every fact below comes from `data/interim/audit_<name>.json`. "Confirmed?" means
 5. **Dreaddit has no licence on its HF card**, and 3 texts appear in both train and test. These will be handled in Step 2.
 6. **The Kaggle GoEmotions copy could not be checked** (no Kaggle credentials). Recommendation: use the official GitHub files, which are identical to HF, and drop Kaggle.
 7. **SenticNet's `Twitter_Non-Advert` is not an independent dataset**: it overlaps almost entirely with `Twitter_Full`.
+
+### User decisions after Step 2 (final, 2026-10-03)
+
+1. **Dreaddit:** the 22 duplicate-text drops in train are accepted (14 exact duplicates, plus 8 rows from 3 groups whose copies disagree on the label), and so are the 3 train texts that also appear in test.
+2. **GoEmotions:** the published train/validation/test splits are kept unchanged. Shared texts are reported: 37 distinct train/test texts and 11 distinct validation/test texts, which cover 42 and 14 test rows (48 test rows in total). Step 4 reports test metrics with and without those 48 rows, using the flags in `data/processed/goemotions_overlap_flags.parquet`.
+3. **SenticNet:** `Twitter_Non-Advert` is no longer a separate set. All 1,967 of its texts match `Twitter_Full` rows by text hash, and those rows are flagged `is_non_advert = True`.
+
+### User decisions for Step 3
+
+- **Threshold:** searched only in 0.40–0.60 on validation. Test results are reported at both 0.5 and the tuned threshold. The tuned threshold is applied only if the validation F1(stress) gain over 0.5 is at least 0.01 and the 95% paired cluster-bootstrap CI of the gain is above 0; otherwise 0.5 is used.
+- **Masking control:** 5 random draws (seeds 42–46), reported as mean, sd and range. Topic reliance is flagged when the topic-masking drop exceeds every control draw.

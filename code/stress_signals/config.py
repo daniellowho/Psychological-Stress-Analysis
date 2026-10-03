@@ -78,7 +78,7 @@ def validate_config(cfg: dict[str, Any]) -> list[str]:
     _require(isinstance(inf.get("batch_size"), int) and inf["batch_size"] >= 1, "inference.batch_size must be int >= 1", errors)
     _require(isinstance(inf.get("half_precision"), bool), "inference.half_precision must be bool", errors)
     if inf.get("half_precision"):
-        warns.append("inference.half_precision=true: Pascal GPUs (sm_61) have slow fp16; keep false locally")
+        warns.append("inference.half_precision=true: fp16 inference is slow on older GPUs (e.g. Pascal sm_61)")
 
     ch = cfg["chunking"]
     _require(isinstance(ch.get("max_tokens"), int) and ch["max_tokens"] > 0, "chunking.max_tokens must be int > 0", errors)
@@ -115,7 +115,7 @@ def validate_config(cfg: dict[str, Any]) -> list[str]:
     models = Path(str(paths.get("models", "")))
     _require(not models.is_absolute() and "drive" not in str(models).lower(),
              "paths.models must be a project-relative local folder (no Google Drive)", errors)
-    for key in ("colab_checkpoint_root", "local_checkpoint_root"):
+    for key in ("checkpoint_root",):
         v = Path(str(st.get(key, "")))
         if "drive" in v.as_posix().lower():
             errors.append(f"storage.{key} must NOT be on Google Drive")

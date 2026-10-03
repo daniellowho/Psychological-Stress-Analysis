@@ -10,6 +10,7 @@ import logging
 import os
 import platform
 import random
+import re
 import shutil
 import subprocess
 import sys
@@ -145,7 +146,7 @@ def write_manifest(
     manifest = {
         "created_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "platform": {"system": platform.system(), "release": platform.release(), "machine": platform.machine()},
-        "is_colab": is_colab(),
+        "device": device_label(),
         "library_versions": library_versions(),
         "seeds": list(seeds) if seeds is not None else None,
         "dataset_versions": dataset_versions or {},
@@ -156,16 +157,9 @@ def write_manifest(
     return manifest
 
 
-# ---------------------------------------------------------------- environment
-def is_colab() -> bool:
-    """True when running inside Google Colab."""
-    return "google.colab" in sys.modules or "COLAB_RELEASE_TAG" in os.environ or "COLAB_GPU" in os.environ
-
-
+# ---------------------------------------------------------------- storage
 def storage_root(cfg: dict[str, Any]) -> Path:
-    """Root that paths.models is joined to: the project root on BOTH kernels (no Google Drive). Locally that is the PC
-    (E:/.../TA-BDA); on Colab it is /content/TA-BDA on the server's own disk, which is temporary, so cell 3G packs
-    trained_models/ into colab_results.zip for the PC (stress_signals.handoff.pack_colab_results)."""
+    """Root that paths.models is joined to: the project root on whatever laptop runs the notebook."""
     return Path(cfg["_root"])
 
 
@@ -174,58 +168,68 @@ def models_root(cfg: dict[str, Any]) -> Path:
     return storage_root(cfg) / cfg["paths"]["models"]
 
 
-class LocalKernelOnly(RuntimeError):
-    """Raised by notebook cells that must run on the local kernel (they need data that stays on the PC)."""
+def checkpoint_root(cfg: dict[str, Any]) -> Path:
+    """Where Trainer checkpoints go: outside trained_models, because the Trainer deletes (rotates) old checkpoints."""
+    p = Path(cfg.get("storage", {}).get("checkpoint_root", "data/outputs/checkpoints"))
+    return p if p.is_absolute() else Path(cfg["_root"]) / p
 
 
-def require_local_kernel(what: str) -> None:
-    """Stop a notebook cell with a clear message when it is run on a Colab kernel. Steps 0-2 (raw data, audits,
-    preprocessing) and building the Colab bundle run locally; the Colab kernel only trains (Step 3)."""
-    if is_colab():
-        raise LocalKernelOnly(f"{what} runs on the LOCAL kernel only (its data stays on your PC). On the Colab kernel run "
-                              "only 0.0 -> 0.1 -> 3.0a -> 3.1 -> 3A.1 -> 3B.1 (optional 3E.2) -> 3G, then switch back to local.")
+# User-downloaded raw datasets (Step 1 audits / Step 2 builds need them; Step 3 needs only Dreaddit from Hugging Face).
+RAW_USER_DOWNLOADS = {"sad": ("sad", "local_path"), "mendeley": ("mendeley_stress_indicators", "local_path"),
+                      "senticnet": ("senticnet", "local_dir"), "zenodo_pilot": ("zenodo_pilot", "local_dir")}
 
 
-COLAB_BUNDLE_NAME = "colab_bundle.zip"
-COLAB_BUNDLE_DATA = ("data/processed/dreaddit.parquet", "data/processed/splits/dreaddit_split_v1.json")
-# The local handoff log travels in the bundle under this name (NOT at trained_models/handoff.json, so unpacking a bundle
-# never overwrites the Colab server's own log); stress_signals.handoff merges it, so Colab skips steps done locally.
-BUNDLE_HANDOFF_ARCNAME = "_handoff_import/handoff.json"
-
-
-def build_colab_bundle(cfg: dict[str, Any], extra_files: Iterable[str] = ()) -> Path:
-    """LOCAL: zip code/ + the files Step 3 training needs + the local handoff log into data/outputs/colab_bundle.zip
-    (~1 MB). Upload that one file to the Colab server (VS Code: right-click > Upload to Colab); cell 0.0 unpacks it on
-    the server's own disk. Nothing goes to Google Drive. Rebuild after every code change and after local training."""
-    import zipfile
+def raw_data_status(cfg: dict[str, Any]) -> dict[str, bool]:
+    """Which manually downloaded raw datasets are on this laptop (a folder counts only if it holds files)."""
     root = Path(cfg["_root"])
-    skip = {"__pycache__", ".pytest_cache", ".ipynb_checkpoints"}
-    files = [p for p in sorted((root / "code").rglob("*")) if p.is_file() and not skip & set(p.parts) and p.suffix != ".pyc"]
-    for rel in (*COLAB_BUNDLE_DATA, *extra_files):
-        if not (root / rel).is_file():
-            raise FileNotFoundError(f"{rel} missing; run Step 2 locally first")
-        files.append(root / rel)
-    out = Path(cfg["_paths"]["artifacts"]) / COLAB_BUNDLE_NAME
-    tmp = out.with_suffix(".zip.tmp")
-    with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as z:
-        for f in files:
-            z.write(f, f.relative_to(root).as_posix())
-        log = models_root(cfg) / "handoff.json"
-        if log.is_file():
-            z.write(log, BUNDLE_HANDOFF_ARCNAME)
-    os.replace(tmp, out)
+    out = {}
+    for name, (src, key) in RAW_USER_DOWNLOADS.items():
+        p = root / cfg["sources"][src][key]
+        out[name] = p.is_file() or (p.is_dir() and any(f.is_file() for f in p.rglob("*")))
     return out
 
 
-def checkpoint_root(cfg: dict[str, Any]) -> Path:
-    """Where Trainer checkpoints go: outside trained_models, because the Trainer deletes (rotates) old checkpoints and
-    they would bloat colab_results.zip. Colab: the server's own disk (lost if the server is recycled). Local:
-    data/outputs/checkpoints under the project root."""
-    st = cfg.get("storage", {})
-    if is_colab():
-        return Path(st.get("colab_checkpoint_root", "/content/stress_signals_checkpoints"))
-    p = Path(st.get("local_checkpoint_root", "data/outputs/checkpoints"))
-    return p if p.is_absolute() else Path(cfg["_root"]) / p
+def code_fingerprint(root: str | Path, parts: Iterable[str] = ("code/stress_signals", "code/tests", "code/config.yaml")) -> str:
+    """sha256 over the package, tests and config (so the test cell re-runs only after the code changed)."""
+    root = Path(root)
+    h = hashlib.sha256()
+    for part in parts:
+        base = root / part
+        files = [base] if base.is_file() else sorted(p for p in base.rglob("*.py") if "__pycache__" not in p.parts)
+        for p in files:
+            h.update(p.relative_to(root).as_posix().encode())
+            h.update(p.read_bytes())
+    return h.hexdigest()[:16]
+
+
+# ---------------------------------------------------------------- compute device
+def select_device(cfg: dict[str, Any] | None = None) -> str:
+    """Device on THIS laptop: the NVIDIA GPU ("cuda") if torch can use one, else "cpu".
+    config inference.device (auto|cuda|cpu) can force one; "cuda" without a usable GPU falls back to "cpu"."""
+    want = (cfg or {}).get("inference", {}).get("device", "auto")
+    try:
+        import torch
+    except ImportError:
+        return "cpu"
+    if want == "cpu":
+        return "cpu"
+    if torch.cuda.is_available():
+        return "cuda"
+    if want == "cuda":
+        _warn_once("inference.device='cuda' but torch sees no NVIDIA GPU on this laptop; using the CPU")
+    return "cpu"
+
+
+def device_label(device: str | None = None) -> str:
+    """Human-readable device, e.g. "Quadro P1000 (cuda)" or "cpu". Never raises."""
+    try:
+        device = device or select_device()
+        if device == "cuda":
+            import torch
+            return f"{torch.cuda.get_device_name(0)} (cuda)"
+    except Exception:  # noqa: BLE001 - a broken GPU setup must not break logging
+        pass
+    return "cpu"
 
 
 _WARNED: set[str] = set()
@@ -267,14 +271,29 @@ def check_hf_datasets_not_shadowed(project_root: str | Path | None = None) -> st
     return None
 
 
+def gpu_supported_by_build(major: int, minor: int, arch_list: Iterable[str]) -> bool:
+    """CUDA compatibility rules: sm_XY code runs on any GPU of the same major version with minor >= Y (sm_86 runs on an
+    RTX 40 / sm_89); PTX (compute_XY) is JIT-compiled for any GPU with capability >= X.Y."""
+    for a in arch_list:
+        m = re.fullmatch(r"(sm|compute)_(\d+)(\d)a?", a)
+        if not m:
+            continue
+        kind, amaj, amin = m.group(1), int(m.group(2)), int(m.group(3))
+        if kind == "sm" and amaj == major and amin <= minor:
+            return True
+        if kind == "compute" and (amaj, amin) <= (major, minor):
+            return True
+    return False
+
+
 def detect_environment() -> dict[str, Any]:
     """Collect Python/torch/CUDA/GPU/Java facts and hardware warnings. Never raises if torch is missing."""
     info: dict[str, Any] = {
         "python": platform.python_version(),
         "python_executable": sys.executable,
         "platform": platform.platform(),
-        "is_colab": is_colab(),
         "torch": None,
+        "device": "cpu",
         "torch_cuda_build": None,
         "cuda_available": False,
         "arch_list": [],
@@ -299,16 +318,18 @@ def detect_environment() -> dict[str, Any]:
             free, total = torch.cuda.mem_get_info(0)
             info["vram_free_gb"] = round(free / 1024**3, 2)
             info["vram_total_gb"] = round(total / 1024**3, 2)
-            if info["gpu_capability"] not in info["arch_list"] and f"compute_{major}{minor}" not in info["arch_list"]:
+            if not gpu_supported_by_build(major, minor, info["arch_list"]):
                 w.append(f"{info['gpu_capability']} is NOT in torch.cuda.get_arch_list() -> this torch build "
                          "cannot run kernels on this GPU. Install a build that lists it (or use CPU).")
             if info["gpu_capability"] == "sm_61" and "sm_61" not in info["arch_list"]:
                 w.append("sm_61 (Pascal) missing from arch list.")
             if info["vram_total_gb"] < MIN_TRAINING_VRAM_GB:
-                w.append(f"GPU VRAM {info['vram_total_gb']} GB < {MIN_TRAINING_VRAM_GB} GB: transformer training here is slow and "
-                         "may run out of memory (notebook_local.ipynb L0.4 lowers the per-step batch); Colab is faster.")
-        else:
-            w.append("CUDA not available: CPU-only fallback will be used. Transformer training is very slow on CPU; prefer Colab.")
+                w.append(f"GPU VRAM {info['vram_total_gb']} GB < {MIN_TRAINING_VRAM_GB} GB: training works but is slower; "
+                         "cell 3.0c uses a small per-step batch (same effective batch).")
+        info["device"] = select_device()
+        if info["device"] == "cpu":
+            w.append("No usable NVIDIA GPU: training runs on the CPU and takes hours per seed (cell 0.0 installs the GPU build "
+                     "of torch when the laptop has an NVIDIA GPU).")
     except ImportError:
         w.append("torch not installed: CPU-only utilities only; inference steps need torch.")
     if info["java"] is None:

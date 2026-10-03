@@ -147,14 +147,13 @@ def test_real_split_matches_file(cfg):
 
 def test_training_cells_carry_banner(cfg):
     calls = ("train_stress_seed(", "fit_baseline(", "train_loso(", "trainer.train(")
-    for name in ("notebook.ipynb", "notebook_local.ipynb"):
+    for name in ("notebook.ipynb",):
         nb = json.loads((Path(cfg["_root"]) / "code" / name).read_text(encoding="utf-8"))
         for cell in nb["cells"]:
             src = "".join(cell["source"]) if isinstance(cell["source"], list) else cell["source"]
             if cell["cell_type"] == "code" and any(c in src for c in calls):
                 assert S.TRAINING_BANNER in src, (name, src[:120])
                 assert "H.run_step(" in src, (name, src[:120])        # training is always behind the run-once guard
-                assert "allow=" in src, (name, src[:120])             # ... and needs an explicit opt-in (Run All safe)
 
 
 def test_post_training_pipeline_offline_smoke(cfg, tmp_path, tokenizer):

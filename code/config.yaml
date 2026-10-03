@@ -17,7 +17,7 @@ paths:
   splits: data/processed/splits
   artifacts: data/outputs
   models: trained_models                  # <project root>/trained_models/: runs, predictions, bundles v<YYYYMMDD>/ and the
-                                          # HANDOFF log, from BOTH kernels (local disk; never Google Drive)
+                                          # HANDOFF log (timestamped record of every step)
   reports: data/outputs/reports
   logs: data/outputs/logs
   manifests: data/outputs/manifests
@@ -26,15 +26,9 @@ paths:
   user_downloads: data/raw
 
 storage:
-  # MODEL STORAGE (user decision): no Google Drive. Model artefacts (runs, predictions, baseline, LOSO runs, final bundles)
-  # and the handoff log go to paths.models (<project root>/trained_models) on whichever kernel runs the step:
-  # local kernel -> E:/.../TA-BDA/trained_models; Colab kernel -> /content/TA-BDA/trained_models (server disk, TEMPORARY).
-  # Colab results reach the PC as ONE zip (notebook cell 3G -> /content/colab_results.zip -> download -> cell 3.0d imports).
-  # Nothing in this code base deletes files. Training CHECKPOINTS stay outside trained_models: the HF Trainer rotates
-  # (deletes) old checkpoints, and they would bloat colab_results.zip.
-  colab_results_zip: colab_results.zip                          # written to /content/ on Colab; looked for in the project root and data/outputs/ locally
-  colab_checkpoint_root: /content/stress_signals_checkpoints    # Colab server disk; lost if the server is recycled
-  local_checkpoint_root: data/outputs/checkpoints               # relative to the project root
+  # Everything stays on the laptop that runs the notebook: models + handoff log in paths.models (trained_models/).
+  # Training CHECKPOINTS live outside trained_models because the HF Trainer rotates (deletes) old checkpoints.
+  checkpoint_root: data/outputs/checkpoints     # relative to the project root
 
 seeds: [42, 13, 2024]
 primary_seed: 42
@@ -131,7 +125,7 @@ sources:
     kind: submissions
 
 models:
-  # Base checkpoints are PLACEHOLDERS; change freely. Fine-tuning happens on Colab only.
+  # Base checkpoints are PLACEHOLDERS; change freely. Fine-tuning runs locally: NVIDIA GPU (CUDA) if present, else CPU.
   stress:                         # kept in sync with stress_model.* below (Step 3 reads stress_model.*)
     base_model: roberta-base
     max_length: 256
@@ -145,7 +139,7 @@ models:
     base_model: distilroberta-base
     max_length: 128
 
-stress_model:                     # Step 3. Training cells are USER-RUN on a Colab GPU; nothing here is run by the assistant.
+stress_model:                     # Step 3. Training cells are USER-RUN (notebook Run All); nothing here is run by the assistant.
   # Dreaddit label meaning comes from the Dreaddit paper; the HF card only says `label: int64`.
   # UNVERIFIED until you confirm it with notebook cell 3.0b.
   label_map: {0: not_stress, 1: stress}
@@ -215,13 +209,13 @@ training:                         # generic defaults for later components (emoti
   eval_batch_size: 32
   weight_decay: 0.01
   warmup_ratio: 0.06
-  fp16_on_colab: true
+  fp16_on_gpu: true               # CUDA only; CPU trains in fp32
   save_every_epoch: true
   resume_from_checkpoint: true
 
 inference:
-  device: auto                    # auto | cpu | cuda
-  half_precision: false           # keep false on Pascal (Quadro P1000)
+  device: auto                    # auto (NVIDIA GPU if present, else cpu) | cuda | cpu
+  half_precision: false           # fp32 inference: fp16 is slow on old GPUs (Pascal)
   batch_size: 8
   max_vram_gb: 4.0
   num_threads_cpu: 4

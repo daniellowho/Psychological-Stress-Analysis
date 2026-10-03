@@ -1,0 +1,113 @@
+{
+  "events": [
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": null,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "5bd5d4e006914e3cb769dda4db363960",
+      "note": "output found on disk (finished before it was logged)",
+      "outputs": [
+        "data/outputs/manifests"
+      ],
+      "status": "done",
+      "step": "1.2/audits",
+      "title": "Audit all datasets",
+      "utc": "2026-10-03T09:36:11+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": null,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "9a9e27249ab648d7b90be0ef3fc054f7",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "1.5/handcheck/cb810d15f241",
+      "title": "Score the SenticNet hand-check",
+      "utc": "2026-10-03T09:36:12+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": 14.3,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "0ecf0645602e4263880e91be9943800d",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "1.5/handcheck/cb810d15f241",
+      "title": "Score the SenticNet hand-check",
+      "utc": "2026-10-03T09:36:26+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": null,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "8f1cfab3e892444fbba963910aab7587",
+      "note": "output found on disk (finished before it was logged)",
+      "outputs": [
+        "data/outputs/manifests"
+      ],
+      "status": "done",
+      "step": "2.2/processed/all",
+      "title": "Build processed datasets + splits",
+      "utc": "2026-10-03T09:36:27+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": null,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "950e6d8ebb514ab281893fceace8a6f9",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.4/chunking_check",
+      "title": "Chunking check on the Zenodo pilot",
+      "utc": "2026-10-03T09:36:27+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": 6.1,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "2e12f582cf0f455e974fb0682c049142",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "2.4/chunking_check",
+      "title": "Chunking check on the Zenodo pilot",
+      "utc": "2026-10-03T09:36:33+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": null,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "d6e7880a220a4461a46bc75fb0dc81d3",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/e901d8ff11e302c0",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-03T09:36:33+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "Quadro P1000 (cuda)",
+      "duration_s": 68.0,
+      "host": "DESKTOP-GH0P1UM",
+      "id": "79deb7645d1d4e5b90861b148882f70e",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "2.5/tests/e901d8ff11e302c0",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-03T09:37:41+00:00"
+    }
+  ],
+  "version": 1
+}

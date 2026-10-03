@@ -242,25 +242,25 @@ Cleaning edits (counts of substitutions): `{"email_removed": 142, "html_unescape
 
 Final rows: **17036**
 
-### Reddit_Title
-
-| step | dropped | rows after | details |
-|---|---|---|---|
-| loaded |  | 5556 |  |
-| drop:empty_text_or_invalid_label | 0 | 5556 |  |
-| drop:within_file_duplicates | 53 | 5503 | {"duplicate_rows_dropped": 33, "conflicting_label_groups": 10, "conflicting_label_rows_dropped": 20} |
-| drop:exact_dreaddit_text | 0 | 5503 |  |
-| drop:contains_dreaddit_segment_ge_80% | 0 | 5503 |  |
-
 ### Reddit_Combi
 
 | step | dropped | rows after | details |
 |---|---|---|---|
 | loaded |  | 3123 |  |
 | drop:empty_text_or_invalid_label | 0 | 3123 |  |
-| drop:within_file_duplicates | 0 | 3123 | {"duplicate_rows_dropped": 0, "conflicting_label_groups": 0, "conflicting_label_rows_dropped": 0} |
+| drop:within_file_duplicates | 0 | 3123 | {"conflicting_label_groups": 0, "conflicting_label_rows_dropped": 0, "duplicate_rows_dropped": 0} |
 | drop:exact_dreaddit_text | 0 | 3123 |  |
 | drop:contains_dreaddit_segment_ge_80% | 5 | 3118 |  |
+
+### Reddit_Title
+
+| step | dropped | rows after | details |
+|---|---|---|---|
+| loaded |  | 5556 |  |
+| drop:empty_text_or_invalid_label | 0 | 5556 |  |
+| drop:within_file_duplicates | 53 | 5503 | {"conflicting_label_groups": 10, "conflicting_label_rows_dropped": 20, "duplicate_rows_dropped": 33} |
+| drop:exact_dreaddit_text | 0 | 5503 |  |
+| drop:contains_dreaddit_segment_ge_80% | 0 | 5503 |  |
 
 ### Twitter_Full
 
@@ -268,9 +268,9 @@ Final rows: **17036**
 |---|---|---|---|
 | loaded |  | 8900 |  |
 | drop:empty_text_or_invalid_label | 0 | 8900 |  |
-| drop:within_file_duplicates | 485 | 8415 | {"duplicate_rows_dropped": 485, "conflicting_label_groups": 0, "conflicting_label_rows_dropped": 0} |
+| drop:within_file_duplicates | 485 | 8415 | {"conflicting_label_groups": 0, "conflicting_label_rows_dropped": 0, "duplicate_rows_dropped": 485} |
 | drop:exact_dreaddit_text | 0 | 8415 |  |
-| is_non_advert_flag_added |  |  | {"rows_flagged": 1967, "non_advert_texts": 1967, "non_advert_texts_without_match_in_full": 0} |
+| is_non_advert_flag_added |  |  | {"non_advert_texts": 1967, "non_advert_texts_without_match_in_full": 0, "rows_flagged": 1967} |
 
 ### Twitter_Non-Advert
 
@@ -278,7 +278,7 @@ Final rows: **17036**
 |---|---|---|---|
 | loaded |  | 2051 |  |
 | drop:empty_text_or_invalid_label | 0 | 2051 |  |
-| drop:within_file_duplicates | 84 | 1967 | {"duplicate_rows_dropped": 84, "conflicting_label_groups": 0, "conflicting_label_rows_dropped": 0} |
+| drop:within_file_duplicates | 84 | 1967 | {"conflicting_label_groups": 0, "conflicting_label_rows_dropped": 0, "duplicate_rows_dropped": 84} |
 | drop:exact_dreaddit_text | 0 | 1967 |  |
 | drop:not_kept_as_separate_set | 1967 | 0 |  |
 
