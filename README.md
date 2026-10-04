@@ -37,7 +37,7 @@ Pick the path that matches what you want. Everything below is Windows / PowerShe
 
 ### Path A: just use the trained stress model
 
-1. Get access to the model repo [`dannyyyyellooo/stress-roberta-base`](https://huggingface.co/dannyyyyellooo/stress-roberta-base)
+1. Get access to the model repo [`Amrita-Vishwa-Ghopeetham/stress-roberta-base`](https://huggingface.co/Amrita-Vishwa-Ghopeetham/stress-roberta-base)
    (private for now; ask the owner to add you or to make it public).
 2. Create a Hugging Face account, make a **read** token at <https://huggingface.co/settings/tokens>, then:
    ```
@@ -47,7 +47,7 @@ Pick the path that matches what you want. Everything below is Windows / PowerShe
 3. Load it (downloads and caches ~480 MB on first use):
    ```python
    from transformers import AutoTokenizer, AutoModelForSequenceClassification
-   repo = "dannyyyyellooo/stress-roberta-base"
+   repo = "Amrita-Vishwa-Ghopeetham/stress-roberta-base"
    tok = AutoTokenizer.from_pretrained(repo)
    model = AutoModelForSequenceClassification.from_pretrained(repo)
    ```
@@ -134,10 +134,10 @@ anything containing Reddit text, so these must be fetched or rebuilt:
 
 | Missing from a fresh clone | Where it comes from |
 |---|---|
-| Trained stress model (`model.safetensors`, tokenizer, config; ~480 MB) | Hugging Face: [`dannyyyyellooo/stress-roberta-base`](https://huggingface.co/dannyyyyellooo/stress-roberta-base) (currently private; ask the owner for access or to make it public) |
+| Trained stress model (`model.safetensors`, tokenizer, config; ~480 MB) | Hugging Face: [`Amrita-Vishwa-Ghopeetham/stress-roberta-base`](https://huggingface.co/Amrita-Vishwa-Ghopeetham/stress-roberta-base) (currently private; ask the owner for access or to make it public) |
 | Per-seed `best_model/` weights and checkpoints (`trained_models/*/runs/*/seed*/best_model/`, `data/outputs/checkpoints/`) | Not published. Retrain by running the notebook (Step 3). |
 | Emotion model weights | Not published. Retrain by running the notebook. |
-| `data/raw/` and `data/processed/*.parquet` | Private Hugging Face dataset [`dannyyyyellooo/stress-signals-data`](https://huggingface.co/datasets/dannyyyyellooo/stress-signals-data) (see below), or rebuilt by Steps 1-2. Dreaddit and GoEmotions download automatically; SAD, Mendeley, SenticNet and Zenodo are manual downloads. |
+| `data/raw/` and `data/processed/*.parquet` | Private Hugging Face dataset [`Amrita-Vishwa-Ghopeetham/stress-signals-data`](https://huggingface.co/datasets/Amrita-Vishwa-Ghopeetham/stress-signals-data) (see below), or rebuilt by Steps 1-2. Dreaddit and GoEmotions download automatically; SAD, Mendeley, SenticNet and Zenodo are manual downloads. |
 
 ### Using the published stress model
 
@@ -147,7 +147,7 @@ itself on first use. While the repo is private, log in first with `hf auth login
 ```python
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-repo = "dannyyyyellooo/stress-roberta-base"
+repo = "Amrita-Vishwa-Ghopeetham/stress-roberta-base"
 tok = AutoTokenizer.from_pretrained(repo)
 model = AutoModelForSequenceClassification.from_pretrained(repo)
 ```
@@ -155,7 +155,7 @@ model = AutoModelForSequenceClassification.from_pretrained(repo)
 Or download the whole folder to `trained_models/stress/v20261004/`, where the project code expects it:
 
 ```
-.venv\Scripts\hf download dannyyyyellooo/stress-roberta-base --local-dir trained_models/stress/v20261004
+.venv\Scripts\hf download Amrita-Vishwa-Ghopeetham/stress-roberta-base --local-dir trained_models/stress/v20261004
 ```
 
 The repo also contains `stress_config.json` (temperature-scaling calibration and the decision threshold), `metrics.json`,
@@ -164,14 +164,14 @@ probabilities. The model is for aggregate, population-level signals only, never 
 
 ### Datasets (private)
 
-`dannyyyyellooo/stress-signals-data` is a **private** Hugging Face dataset repo holding `data/raw/` and `data/processed/`
+`Amrita-Vishwa-Ghopeetham/stress-signals-data` is a **private** Hugging Face dataset repo holding `data/raw/` and `data/processed/`
 (including `_cache/` and the fixed splits), laid out under the same `data/` paths as the project. It is private on purpose:
 the files contain real Reddit text, the raw Zenodo files still have `author`, and some source licences (TensiStrength,
 Dreaddit) are restricted or unverified. Do not make it public or redistribute it. To restore it into a fresh clone (needs
 access to the repo and `hf auth login`):
 
 ```
-.venv\Scripts\hf download dannyyyyellooo/stress-signals-data --repo-type dataset --local-dir .
+.venv\Scripts\hf download Amrita-Vishwa-Ghopeetham/stress-signals-data --repo-type dataset --local-dir .
 ```
 
 This recreates `data/raw/` and `data/processed/` in place, so Steps 1-2 are then skipped. Compare file hashes against
