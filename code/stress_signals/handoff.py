@@ -43,6 +43,21 @@ def loso_step_id(model_choice: str, subreddit: str) -> str:
     return f"3E.2/loso/{model_choice}_{subreddit}"
 
 
+EMOTION_BUNDLE_STEP = "4G/emotion_bundle"
+
+
+def emotion_train_step_id(model_choice: str, seed: int) -> str:
+    return f"4B.1/emotion/{model_choice}/seed{seed}"
+
+
+STRESSOR_LR_STEP = "5C.3/stressor_embed_lr"
+STRESSOR_BUNDLE_STEP = "5D/stressor_bundle"
+
+
+def stressor_train_step_id(model_choice: str, seed: int) -> str:
+    return f"5C.4/stressor/{model_choice}/seed{seed}"
+
+
 # ================================================================ log file
 def log_path(cfg: dict[str, Any]) -> Path:
     return models_root(cfg) / LOG_NAME
@@ -187,6 +202,10 @@ HOW_IT_WORKS = [
     "things re-run (seconds).",
     "- **Training** (baseline 3A.1, seeds 3B.1) starts automatically for whatever is not done, on the laptop's NVIDIA GPU "
     "(CUDA) if it has one, else on the CPU. An interrupted seed resumes from its last epoch on the next Run All.",
+    "- **Emotion model (Step 4)**: its seeds (4B.1) train the same way. Its evaluation (4C-4G) waits until every "
+    "emotion seed is trained; the Dreaddit domain-shift check (4F) is inference only.",
+    "- **Stressor model (Step 5)**: the SAD fits (5C.3 logistic regression, 5C.4 fine-tune seeds) train the same way. "
+    "Everything that uses the Reddit gold set (5C.6 onward) waits until annotator 1's sheet is complete.",
     "- **Optional LOSO** (3E.2, ~10 extra trainings) runs only with `RUN_LOSO = True` in that cell.",
     "- **Evaluation** (3C–3F) waits until every seed is trained (`NOT RUN … missing [...]` until then), because the final "
     "test report is written only once and must not pick a final seed from a partial set.",

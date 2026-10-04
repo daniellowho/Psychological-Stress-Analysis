@@ -130,12 +130,12 @@ models:
     base_model: roberta-base
     max_length: 256
     num_labels: 2
-  emotion:
+  emotion:                        # kept in sync with emotion_model.* below (Step 4 reads emotion_model.*)
     base_model: roberta-base
     max_length: 128
     num_labels: 28
     problem_type: multi_label_classification
-  stressor:
+  stressor:                       # kept in sync with stressor_model.finetune.* (Step 5 reads stressor_model.*)
     base_model: distilroberta-base
     max_length: 128
 
@@ -201,6 +201,115 @@ stress_model:                     # Step 3. Training cells are USER-RUN (noteboo
     loso_model: distilroberta-base
     loso_epochs: 3
     loso_seed: 42
+
+emotion_model:                    # Step 4. Training cells are USER-RUN (notebook Run All); nothing here is run by the assistant.
+  # 28 labels = 27 emotions + neutral, names/order from the official emotions.txt (checked against the split file at load time).
+  # Multi-label: one sigmoid per label, BCEWithLogits loss (problem_type stored in the model config for inference).
+  problem_type: multi_label_classification
+  model_choice: roberta-base      # roberta-base | distilroberta-base
+  model_options:
+    roberta-base: {hf_id: roberta-base}
+    distilroberta-base: {hf_id: distilroberta-base}
+  max_length: 128                 # GoEmotions p99 = 37-38 roberta tokens (Step 1 audit); 128 truncates ~0.01% of train
+  learning_rate: 3.0e-5           # within the suggested 2e-5 to 5e-5
+  train_batch_size: 32            # EFFECTIVE batch = train_batch_size x gradient_accumulation_steps (cell 4.0c keeps it 32)
+  eval_batch_size: 64
+  gradient_accumulation_steps: 1
+  epochs: 4
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  mixed_precision: auto           # auto: fp16 on CUDA, fp32 on CPU (same rule as Step 3)
+  early_stopping_patience: 2
+  # Epoch selection uses a THRESHOLD-FREE metric (macro average precision over 28 labels) because per-label thresholds
+  # are tuned later; macro-F1 at a fixed 0.5 would favour epochs that happen to suit 0.5. Macro-F1 is still logged.
+  metric_for_best_model: macro_ap
+  seeds: [42, 13, 2024]
+  save_total_limit: 2
+  dataloader_num_workers: 2
+  final_seed_rule: best_val_macro_ap      # deployable model = seed with the best VALIDATION macro AP
+  class_weighting:                # optional pos_weight in BCEWithLogits for rare emotions (OFF by default)
+    enabled: false
+    method: inverse_sqrt          # pos_weight_j = sqrt(n_neg_j / n_pos_j), from TRAIN counts only
+    max_pos_weight: 10.0          # clip so very rare labels (grief: 77 train positives) cannot dominate the loss
+  eval:
+    bootstrap_resamples: 1000     # row-level percentile bootstrap (GoEmotions has no thread id to cluster on)
+    ci_level: 0.95
+    low_support_val_positives: 30 # labels with fewer validation positives get a `low_support` flag (noisy threshold)
+  thresholds:
+    grid: [0.05, 0.95, 0.01]      # per-label search on VALIDATION calibrated probabilities, max F1; ties -> closest to 0.5
+    low_support_rule: keep_0.5    # user decision (Step 4): low-support labels keep 0.5 | tune (tuned value is still reported)
+  calibration:
+    method: platt                 # platt (a*z + b, a > 0, Platt's smoothed targets) | temperature (z / T)
+    ece_bins: 15
+  ekman:
+    mapping_file: data/raw/goemotions_official/ekman_mapping.json   # official file (Step 1 audit: covers all 27 emotions)
+    combine: max                  # max (default) | noisy_or : rule for a group probability from its member probabilities
+    keep_neutral: true            # neutral stays a 7th group
+  domain_shift:                   # 4F: inference only, on Dreaddit text (no Dreaddit label is used for anything but grouping)
+    splits: [train, validation, test]   # the emotion model never saw Dreaddit, so every split is out-of-domain for it
+    handcheck_n: 200              # 100 stress + 100 not-stress segments, seeded
+    handcheck_top_k: 3
+
+stressor_model:                   # Step 5. Every cell that fits weights is USER-RUN (banner); nothing here is run by the assistant.
+  taxonomy_file: code/taxonomy/stressors_v1.yaml   # hand-written research taxonomy (in git); copied into the bundle
+  sad:
+    split: {train: 0.70, validation: 0.15, test: 0.15}   # stratified by SAD class, seed primary_seed, saved once
+  windows:                        # INFERENCE UNIT: SAD is sentence-level, so posts are scored per sentence window
+    sentences_per_window: 1
+    min_words: 4                  # a sentence with fewer words is merged into the next one
+    max_windows: 32               # longer posts: evenly spaced subset (first and last kept)
+  aggregation: max                # post score per category = max over windows (mean | top2_mean available as sensitivity)
+  embedding:
+    model_choice: all-MiniLM-L6-v2              # all-MiniLM-L6-v2 | bge-small-en-v1.5 (both verified to load, Step 5)
+    model_options:
+      all-MiniLM-L6-v2: {hf_id: sentence-transformers/all-MiniLM-L6-v2}
+      bge-small-en-v1.5: {hf_id: BAAI/bge-small-en-v1.5}
+    batch_size: 64
+  embed_lr:                       # (2a) frozen embeddings + multinomial logistic regression on SAD-train
+    C_grid: [0.1, 0.3, 1.0, 3.0, 10.0, 30.0]   # chosen on SAD-validation macro-F1 (9 classes)
+    max_iter: 3000
+  finetune:                       # (2b) distilroberta-base, softmax over the 9 SAD classes (same conventions as Step 3)
+    model_choice: distilroberta-base
+    model_options:
+      distilroberta-base: {hf_id: distilroberta-base}
+    max_length: 128               # SAD max ~45 words; Reddit sentence windows are short too
+    learning_rate: 3.0e-5
+    train_batch_size: 32
+    eval_batch_size: 64
+    gradient_accumulation_steps: 1
+    epochs: 4
+    warmup_ratio: 0.1
+    weight_decay: 0.01
+    mixed_precision: auto
+    early_stopping_patience: 2
+    metric_for_best_model: macro_f1
+    seeds: [42, 13, 2024]
+    save_total_limit: 2
+    dataloader_num_workers: 2
+  thresholds:                     # per category, tuned on GOLD-DEV only (never gold-test)
+    probability_grid: [0.05, 0.95, 0.01]
+    cosine_grid: [0.0, 1.0, 0.01]
+    count_grid: [1, 5, 1]         # keyword baseline: number of matching windows
+    low_support_dev_positives: 10 # categories with fewer gold-dev positives are flagged (threshold unreliable)
+    low_support_rule: keep_default  # keep_default (0.5 probability / 1 window / ONE global cosine threshold) | tune
+  method_selection:
+    split: dev                    # dev (default, honest) | test (user prompt wording; makes the test number optimistic)
+    metric: f1_macro_supported    # macro-F1 over stressor categories with >= 1 gold positive
+  gold:
+    version: 1
+    n_total: 400
+    min_confidence: 0.6           # Dreaddit annotator agreement for the stress label
+    dreaddit_splits: [train, validation]   # official TEST is never sampled (keeps the Step 3 test set untouched)
+    one_segment_per_post: true
+    floor_per_subreddit: 20       # stratification: at least this many per subreddit (if available), rest proportional
+    dev_fraction: 0.5
+    annotators: 1                 # user decision: single annotator; no inter-annotator agreement (none simulated)
+  eval:
+    bootstrap_resamples: 1000     # row-level (one segment per post, so rows are independent posts)
+    ci_level: 0.95
+  crosscheck:                     # weak Dreaddit-subreddit sanity check: NOT accuracy
+    dreaddit_splits: [train, validation, test]
+    label: 1
 
 training:                         # generic defaults for later components (emotion/stressor); Step 3 uses stress_model.*
   epochs: 4

@@ -221,3 +221,212 @@ def metrics_by_group(df: pd.DataFrame, group_col: str, y_col: str = "label", p_c
         rows.append(row)
     return pd.DataFrame(rows).sort_values("n", ascending=False).reset_index(drop=True)
 
+
+# ================================================================ multi-label (Step 4: emotions)
+# Shapes: Y (n, L) in {0, 1}; P (n, L) probabilities; Z (n, L) logits. One independent sigmoid per label.
+def sigmoid(z: np.ndarray) -> np.ndarray:
+    """Numerically stable logistic function."""
+    return 0.5 * (1.0 + np.tanh(0.5 * np.asarray(z, dtype=float)))
+
+
+def _counts(Y: np.ndarray, H: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Per-label TP, FP, FN for binary matrices Y (truth) and H (predictions)."""
+    Y, H = Y.astype(bool), H.astype(bool)
+    return (Y & H).sum(0), (~Y & H).sum(0), (Y & ~H).sum(0)
+
+
+def _prf(tp: Any, fp: Any, fn: Any) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Precision, recall, F1 from counts (0 when undefined, like sklearn zero_division=0). Arrays or scalars."""
+    tp, fp, fn = (np.asarray(x, dtype=float) for x in (tp, fp, fn))
+    prec = np.divide(tp, tp + fp, out=np.zeros_like(tp), where=(tp + fp) > 0)
+    rec = np.divide(tp, tp + fn, out=np.zeros_like(tp), where=(tp + fn) > 0)
+    f1 = np.divide(2 * tp, 2 * tp + fp + fn, out=np.zeros_like(tp), where=(2 * tp + fp + fn) > 0)
+    return prec, rec, f1
+
+
+def _thr_vector(thresholds: float | Sequence[float], n_labels: int) -> np.ndarray:
+    t = np.asarray(thresholds, dtype=float)
+    return np.full(n_labels, float(t)) if t.ndim == 0 else t
+
+
+def fast_roc_auc(y: np.ndarray, s: np.ndarray) -> np.ndarray | float:
+    """ROC-AUC per column via the rank-sum (Mann-Whitney) identity, ties averaged; NaN for a column with one class.
+    y, s: (n,) or (n, L). Equals sklearn.roc_auc_score per column (checked in tests)."""
+    from scipy.stats import rankdata
+    y = np.asarray(y, dtype=bool)
+    s = np.asarray(s, dtype=float)
+    one = y.ndim == 1
+    y, s = (y[:, None], s[:, None]) if one else (y, s)
+    r = rankdata(s, axis=0)
+    npos = y.sum(0).astype(float)
+    nneg = y.shape[0] - npos
+    num = (r * y).sum(0) - npos * (npos + 1) / 2
+    auc = np.divide(num, npos * nneg, out=np.full(npos.shape, np.nan), where=(npos > 0) & (nneg > 0))
+    return float(auc[0]) if one else auc
+
+
+def multilabel_metrics(Y: np.ndarray, P: np.ndarray, thresholds: float | Sequence[float] = 0.5,
+                       label_names: Sequence[str] | None = None) -> dict[str, Any]:
+    """Per-label precision/recall/F1/ROC-AUC/average precision/Brier + macro and micro aggregates.
+    `thresholds` is one value or one per label. Macro AUC/AP average only labels with both classes present."""
+    from sklearn.metrics import average_precision_score
+    Y = np.asarray(Y).astype(int)
+    P = np.asarray(P, dtype=float)
+    n, L = Y.shape
+    names = list(label_names) if label_names is not None else [str(i) for i in range(L)]
+    thr = _thr_vector(thresholds, L)
+    H = P >= thr
+    tp, fp, fn = _counts(Y, H)
+    prec, rec, f1 = _prf(tp, fp, fn)
+    auc = fast_roc_auc(Y, P)
+    ap = np.array([average_precision_score(Y[:, j], P[:, j]) if 0 < Y[:, j].sum() < n else np.nan for j in range(L)])
+    brier = ((P - Y) ** 2).mean(0)
+    mp, mr, mf = _prf(tp.sum(), fp.sum(), fn.sum())
+    per_label = [{"label": names[j], "support": int(Y[:, j].sum()), "threshold": float(thr[j]),
+                  "precision": float(prec[j]), "recall": float(rec[j]), "f1": float(f1[j]),
+                  "roc_auc": float(auc[j]), "average_precision": float(ap[j]), "brier": float(brier[j]),
+                  "predicted_positive_rate": float(H[:, j].mean())} for j in range(L)]
+    return {
+        "n": int(n), "n_labels": int(L),
+        "f1_macro": float(f1.mean()), "precision_macro": float(prec.mean()), "recall_macro": float(rec.mean()),
+        "f1_micro": float(mf), "precision_micro": float(mp), "recall_micro": float(mr),
+        "roc_auc_macro": float(np.nanmean(auc)) if np.isfinite(auc).any() else float("nan"),
+        "roc_auc_micro": fast_roc_auc(Y.ravel(), P.ravel()),
+        "ap_macro": float(np.nanmean(ap)) if np.isfinite(ap).any() else float("nan"),
+        "subset_accuracy": float((H == Y.astype(bool)).all(1).mean()),
+        "hamming_loss": float((H != Y.astype(bool)).mean()),
+        "per_label": per_label,
+    }
+
+
+MULTILABEL_KEYS = ("f1_macro", "f1_micro", "precision_macro", "recall_macro", "roc_auc_macro", "roc_auc_micro", "ap_macro")
+
+
+def bootstrap_multilabel(Y: np.ndarray, P: np.ndarray, thresholds: float | Sequence[float] = 0.5,
+                         n_resamples: int = 1000, seed: int = 42, level: float = 0.95,
+                         label_names: Sequence[str] | None = None) -> dict[str, Any]:
+    """Row-level percentile bootstrap CIs for macro/micro F1, macro precision/recall, macro ROC-AUC and per-label F1 and
+    ROC-AUC. A resample where a label has one class only gives NaN for that label's AUC (skipped in the quantiles)."""
+    Y = np.asarray(Y).astype(bool)
+    P = np.asarray(P, dtype=float)
+    n, L = Y.shape
+    names = list(label_names) if label_names is not None else [str(i) for i in range(L)]
+    H = P >= _thr_vector(thresholds, L)
+    rng = np.random.default_rng(seed)
+    agg: dict[str, list[float]] = {k: [] for k in ("f1_macro", "f1_micro", "precision_macro", "recall_macro", "roc_auc_macro")}
+    lab_f1, lab_auc = np.empty((n_resamples, L)), np.empty((n_resamples, L))
+    for b in range(n_resamples):
+        idx = rng.integers(0, n, n)
+        tp, fp, fn = _counts(Y[idx], H[idx])
+        prec, rec, f1 = _prf(tp, fp, fn)
+        auc = fast_roc_auc(Y[idx], P[idx])
+        agg["f1_macro"].append(float(f1.mean()))
+        agg["precision_macro"].append(float(prec.mean()))
+        agg["recall_macro"].append(float(rec.mean()))
+        agg["f1_micro"].append(float(_prf(tp.sum(), fp.sum(), fn.sum())[2]))
+        agg["roc_auc_macro"].append(float(np.nanmean(auc)) if np.isfinite(auc).any() else float("nan"))
+        lab_f1[b], lab_auc[b] = f1, auc
+    point = multilabel_metrics(Y, P, thresholds, names)
+    a = (1 - level) / 2
+
+    def ci(d: Sequence[float], pt: float) -> dict[str, float]:
+        d = np.asarray(d, dtype=float)
+        d = d[~np.isnan(d)]
+        return {"point": float(pt), "lo": float(np.quantile(d, a)) if d.size else float("nan"),
+                "hi": float(np.quantile(d, 1 - a)) if d.size else float("nan"), "n_valid_resamples": int(d.size)}
+
+    return {"level": level, "n_resamples": n_resamples, "resampling": "rows",
+            **{k: ci(v, point[k]) for k, v in agg.items()},
+            "per_label": {names[j]: {"f1": ci(lab_f1[:, j], point["per_label"][j]["f1"]),
+                                     "roc_auc": ci(lab_auc[:, j], point["per_label"][j]["roc_auc"])} for j in range(L)}}
+
+
+def tune_label_thresholds(Y: np.ndarray, P: np.ndarray, grid: Sequence[float] = (0.05, 0.95, 0.01),
+                          label_names: Sequence[str] | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Per-label threshold maximising that label's F1 on the given (VALIDATION) data; ties -> the one closest to 0.5.
+    Returns (table: label, threshold, f1_at_threshold, f1_at_0.5, n_pos) and the curve (threshold, label, f1)."""
+    Y = np.asarray(Y).astype(bool)
+    P = np.asarray(P, dtype=float)
+    L = Y.shape[1]
+    names = list(label_names) if label_names is not None else [str(i) for i in range(L)]
+    start, stop, step = grid
+    ts = np.round(np.arange(start, stop + step / 2, step), 6)
+    if not np.any(np.isclose(ts, 0.5)):
+        ts = np.sort(np.append(ts, 0.5))
+    F = np.empty((len(ts), L))
+    for i, t in enumerate(ts):
+        F[i] = _prf(*_counts(Y, P >= t))[2]
+    i05 = int(np.argmin(np.abs(ts - 0.5)))
+    rows = []
+    for j in range(L):
+        cand = np.flatnonzero(np.isclose(F[:, j], F[:, j].max()))
+        k = int(cand[np.argmin(np.abs(ts[cand] - 0.5))])
+        rows.append({"label": names[j], "threshold": float(ts[k]), "f1_at_threshold": float(F[k, j]),
+                     "f1_at_0.5": float(F[i05, j]), "n_pos": int(Y[:, j].sum())})
+    curve = pd.DataFrame(F, columns=names).assign(threshold=ts).melt(id_vars="threshold", var_name="label", value_name="f1")
+    return pd.DataFrame(rows), curve
+
+
+def _binary_nll_logits(s: np.ndarray, t: np.ndarray) -> float:
+    """Mean binary cross-entropy of logits `s` against (possibly soft) targets `t`, computed stably."""
+    return float(np.mean(t * np.logaddexp(0.0, -s) + (1 - t) * np.logaddexp(0.0, s)))
+
+
+def fit_platt(z: Sequence[float], y: Sequence[int], smooth_targets: bool = True) -> dict[str, Any]:
+    """Platt scaling p = sigmoid(a*z + b) on VALIDATION logits, with a = exp(alpha) > 0 so ranking (and AUC) never change.
+    With `smooth_targets`, Platt's (1999) targets (N+ + 1)/(N+ + 2) and 1/(N- + 2) replace 1 and 0; this keeps the fit
+    finite and less over-confident for rare labels."""
+    from scipy.optimize import minimize
+    z = np.asarray(z, dtype=float)
+    y = np.asarray(y, dtype=int)
+    npos, nneg = int(y.sum()), int(len(y) - y.sum())
+    t = np.where(y == 1, (npos + 1) / (npos + 2), 1 / (nneg + 2)) if smooth_targets else y.astype(float)
+    res = minimize(lambda w: _binary_nll_logits(np.exp(w[0]) * z + w[1], t), x0=np.array([0.0, 0.0]), method="L-BFGS-B",
+                   bounds=[(np.log(0.02), np.log(50.0)), (-20.0, 20.0)])
+    return {"a": float(np.exp(res.x[0])), "b": float(res.x[1]), "converged": bool(res.success)}
+
+
+def fit_sigmoid_temperature(z: Sequence[float], y: Sequence[int], bounds: tuple[float, float] = (0.05, 20.0)) -> float:
+    """Temperature for ONE sigmoid output: T = argmin NLL(sigmoid(z / T)) on VALIDATION (keeps the 0.5 crossing at z = 0)."""
+    from scipy.optimize import minimize_scalar
+    z = np.asarray(z, dtype=float)
+    y = np.asarray(y, dtype=float)
+    res = minimize_scalar(lambda lt: _binary_nll_logits(z / np.exp(lt), y), bounds=(np.log(bounds[0]), np.log(bounds[1])),
+                          method="bounded", options={"xatol": 1e-5})
+    return float(np.exp(res.x))
+
+
+def fit_label_calibration(Z: np.ndarray, Y: np.ndarray, method: str = "platt",
+                          label_names: Sequence[str] | None = None) -> list[dict[str, Any]]:
+    """One calibrator per label, always expressed as p = sigmoid(a*z + b) so inference needs one formula.
+    temperature: a = 1/T, b = 0. platt: see fit_platt."""
+    Z = np.asarray(Z, dtype=float)
+    Y = np.asarray(Y).astype(int)
+    names = list(label_names) if label_names is not None else [str(i) for i in range(Z.shape[1])]
+    out: list[dict[str, Any]] = []
+    for j, name in enumerate(names):
+        if method == "platt":
+            f = fit_platt(Z[:, j], Y[:, j])
+            out.append({"label": name, "method": "platt", "a": f["a"], "b": f["b"], "converged": f["converged"]})
+        elif method == "temperature":
+            T = fit_sigmoid_temperature(Z[:, j], Y[:, j])
+            out.append({"label": name, "method": "temperature", "temperature": T, "a": 1.0 / T, "b": 0.0})
+        else:
+            raise ValueError(f"unknown calibration method {method!r}")
+    return out
+
+
+def apply_label_calibration(Z: np.ndarray, params: Sequence[dict[str, Any]]) -> np.ndarray:
+    """Calibrated probabilities sigmoid(a_j * z_j + b_j) for every label j (params in label order)."""
+    a = np.array([p["a"] for p in params], dtype=float)
+    b = np.array([p["b"] for p in params], dtype=float)
+    return sigmoid(np.asarray(Z, dtype=float) * a + b)
+
+
+def multilabel_ece(Y: np.ndarray, P: np.ndarray, n_bins: int = 15) -> dict[str, Any]:
+    """ECE per label, their mean, and the pooled ECE over all (row, label) pairs."""
+    Y = np.asarray(Y).astype(int)
+    P = np.asarray(P, dtype=float)
+    per = [ece(Y[:, j], P[:, j], n_bins) for j in range(Y.shape[1])]
+    return {"per_label": per, "mean_over_labels": float(np.mean(per)), "pooled": ece(Y.ravel(), P.ravel(), n_bins)}
+

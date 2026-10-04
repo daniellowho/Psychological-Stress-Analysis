@@ -1,0 +1,92 @@
+{
+  "artifacts": {
+    "config.json": {
+      "bytes": 922,
+      "sha256": "2bf3472f6c325aab15a3f6c161e354e5cae329306a005e49bb2e2fa07ea61cd6",
+      "type": "file"
+    },
+    "merges.txt": {
+      "bytes": 456318,
+      "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+      "type": "file"
+    },
+    "metrics.json": {
+      "bytes": 47803,
+      "sha256": "a30c66f5f1709a2d257a17d32314e6c1a4df1332471e0647e4e9f8f269f378d4",
+      "type": "file"
+    },
+    "model.safetensors": {
+      "bytes": 498612824,
+      "sha256": "2934cf446e444ed7ce2f01df5ab967d000f8c9f1637e01a065a189d2eabbc248",
+      "type": "file"
+    },
+    "model_card.md": {
+      "bytes": 2510,
+      "sha256": "665d0af2e2cd4f4bdfe03930bbd44778854ab15a8240f5b8e90d94a756437f6b",
+      "type": "file"
+    },
+    "special_tokens_map.json": {
+      "bytes": 1009,
+      "sha256": "b72f59af007f804a5b6514f6ed8d59b4723349105471bcc3a881591fd586e2d5",
+      "type": "file"
+    },
+    "stress_config.json": {
+      "bytes": 1961,
+      "sha256": "c3c0446f5f9875454c79dab2180628908770081a100d516c699531b48779c504",
+      "type": "file"
+    },
+    "tokenizer.json": {
+      "bytes": 3558741,
+      "sha256": "5e83fc1c71a1b085cbb5f0fc78e26f355cb3188a07f0607b9a05496c160d9475",
+      "type": "file"
+    },
+    "tokenizer_config.json": {
+      "bytes": 1385,
+      "sha256": "6488d1638391ac88859751c5cdd94c02b734dc3cbdeab2cc9c9d73a45a9942ea",
+      "type": "file"
+    },
+    "vocab.json": {
+      "bytes": 798293,
+      "sha256": "ed19656ea1707df69134c4af35c8ceda2cc9860bf2c3495026153a133670ab5e",
+      "type": "file"
+    }
+  },
+  "created_utc": "2026-10-03T20:20:04+00:00",
+  "dataset_versions": {
+    "dreaddit_parquet_sha256": "1eddd5d80029d36ec223dd9543ca119c6013fe8d7072240548e32145f35d5c6e",
+    "dreaddit_split_fingerprint": "755603a0e623ae9c1f3bfb916b9fe8dc67cc9e765f4a92460f43435785dca8e8"
+  },
+  "device": "Quadro P1000 (cuda)",
+  "extra": {
+    "component": "stress",
+    "final_seed": 2024,
+    "run_dir": "E:/Dikshant/SEM-5/TA-BDA/trained_models/stress/runs/roberta-base/seed2024"
+  },
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.0",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "platform": {
+    "machine": "AMD64",
+    "release": "10",
+    "system": "Windows"
+  },
+  "seeds": [
+    42,
+    13,
+    2024
+  ]
+}

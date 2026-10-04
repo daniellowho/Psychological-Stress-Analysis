@@ -1,0 +1,73 @@
+{
+  "base_model": "roberta-base",
+  "calibration": {
+    "fitted_on": "validation",
+    "method": "temperature_scaling",
+    "temperature": 1.372396556819023
+  },
+  "chunking": {
+    "aggregation": "mean",
+    "max_chunks_per_doc": 8,
+    "max_tokens": 256,
+    "rule": "sentence-aligned windows (preprocess.chunk_text); record score = mean of calibrated chunk P(stress)",
+    "stride": 64
+  },
+  "component": "stress",
+  "created_utc": "2026-10-03T20:20:03.280447+00:00",
+  "data": {
+    "dataset": "Dreaddit (andreagasparini/dreaddit)",
+    "split_counts": {
+      "test": 715,
+      "train": 2398,
+      "validation": 415
+    },
+    "split_file": "dreaddit_split_v1.json",
+    "split_fingerprint": "755603a0e623ae9c1f3bfb916b9fe8dc67cc9e765f4a92460f43435785dca8e8"
+  },
+  "epochs_completed": 4.0,
+  "inference_defaults": {
+    "half_precision": false,
+    "precision": "fp32"
+  },
+  "input": "text_clean produced by stress_signals.preprocess.clean_text (Step 2)",
+  "label_map": {
+    "0": "not_stress",
+    "1": "stress"
+  },
+  "max_length": 256,
+  "model_choice": "roberta-base",
+  "positive_label": 1,
+  "seed": 2024,
+  "threshold": {
+    "applied": "0.5",
+    "apply_rule": {
+      "bootstrap_resamples": 1000,
+      "min_gain": 0.01,
+      "require_ci_above_zero": true
+    },
+    "criterion": "max_f1_stress",
+    "decision_reason": "gain 0.0028 not clear (min_gain 0.01, CI [-0.0037, 0.0110]); keeping 0.5",
+    "fitted_on": "validation",
+    "search_grid": [
+      0.4,
+      0.6,
+      0.01
+    ],
+    "tuned_value": 0.47,
+    "value": 0.5
+  },
+  "training": {
+    "confidence_weights": {
+      "enabled": false,
+      "floor": 0.5
+    },
+    "early_stopping_patience": 2,
+    "epochs": 4,
+    "learning_rate": 2e-05,
+    "mixed_precision": "auto",
+    "train_batch_size": 4,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "transformers_used_for_training": "4.46.3"
+}

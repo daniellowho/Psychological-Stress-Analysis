@@ -25,6 +25,19 @@ trained_models/**
 !trained_models/**/FINAL_TEST_REPORT.json
 !trained_models/**/shortcut_masking.json
 !trained_models/**/loso_summary.json
+!trained_models/**/emotion_config.json
+!trained_models/**/thresholds.json
+!trained_models/**/ekman_mapping.json
+!trained_models/**/domain_shift_dreaddit.json
+!trained_models/**/stressor_config.json
+!trained_models/**/stressors_v*.yaml
+!trained_models/**/lr_summary.json
+!trained_models/**/seed_selection.json
+!trained_models/**/SAD_TEST_REPORT.json
+!trained_models/**/GOLD_TEST_REPORT.json
+!trained_models/**/kappa.json
+!trained_models/**/kinds.json
+!trained_models/**/dreaddit_crosscheck.json
 .env
 code/_deferred/.env
 
