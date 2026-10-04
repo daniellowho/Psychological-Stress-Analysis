@@ -74,7 +74,7 @@ Pick the path that matches what you want. Everything below is Windows / PowerShe
    - Cell 0.0 installs the libraries (and the right torch build for your GPU; restart the kernel if it asks, then Run All again).
    - Cell 0.1 **downloads whatever is missing** from Hugging Face (datasets into `data/raw/` and `data/processed/`, the stress model
      into `trained_models/stress/v20261004/`). Existing files are never overwritten.
-   - Steps 1-2 then audit and preprocess the data, Step 3 uses the downloaded stress model results or trains, Step 4 trains the
+   - Steps 1-2 then audit and preprocess the data, Step 3 trains the stress model (the downloaded bundle is the finished model for direct use; the notebook's per-seed training runs are not published, so Step 3 still trains them), Step 4 trains the
      emotion model. Already-finished steps print `SKIP ...`.
 5. If step 3 says `SKIPPED (...)` for Hugging Face, you are not logged in or have no access. The notebook still works: it
    downloads Dreaddit from Hugging Face itself and trains from scratch, but SAD, Mendeley, SenticNet and Zenodo then need manual
