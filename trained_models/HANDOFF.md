@@ -1,6 +1,6 @@
 # Handoff log: what has been done, where and when
 
-_Regenerated 2026-10-04T17:20:18+00:00 UTC on madhava_laptop. Times are UTC. Source of truth: `handoff.json`._
+_Regenerated 2026-10-04T19:46:33+00:00 UTC on madhava_laptop. Times are UTC. Source of truth: `handoff.json`._
 
 ## How this works (read first)
 
@@ -14,6 +14,8 @@ _Regenerated 2026-10-04T17:20:18+00:00 UTC on madhava_laptop. Times are UTC. Sou
 - **Evaluation** (3C–3F) waits until every seed is trained (`NOT RUN … missing [...]` until then), because the final test report is written only once and must not pick a final seed from a partial set.
 - **The test suite** (2.5) re-runs only after the code changed. **Re-run anything on purpose:** add its step number to `FORCE_RERUN` in cell 0.1, e.g. `FORCE_RERUN = {"3C.1"}`.
 - A step whose saved output was deleted counts as not done and runs again.
+- **Update (Step 7 onwards): `ALLOW_TRAINING` in cell 0.1 is False**, so no cell that fits weights starts; a training step that is not done prints `NOT RUN … ALLOW_TRAINING = False`. Set it True to train what is missing. This overrides the training bullets above.
+- **Spark inference (Step 9)** is a long job and is not part of Run All: use cell 9.6 (`RUN_SPARK_PILOT = True`) or `python -m stress_signals.spark_jobs run --corpus pilot`. It scores one UTC date at a time and writes a `_done` marker last (`data/processed/enriched/<corpus>/_done/`), so a stopped run **resumes by running the same command again**: finished dates (same model bundle and settings) are skipped. Run heavy jobs one at a time; this laptop has little free RAM.
 
 ## Current state per step
 
@@ -82,6 +84,9 @@ _Regenerated 2026-10-04T17:20:18+00:00 UTC on madhava_laptop. Times are UTC. Sou
 | `5C.8/crosscheck/finetune__distilroberta-base` | Dreaddit subreddit cross-check | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T17:02:29+00:00 |  | output found on disk (finished before it was logged) |
 | `8.2/ingest/pilot` | Ingest the pilot corpus into the Parquet lake | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T17:20:18+00:00 |  | output found on disk (finished before it was logged) |
 | `8.4/data_quality/pilot` | Data quality report (pilot) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T17:20:18+00:00 |  | output found on disk (finished before it was logged) |
+| `9.3/spark_parity` | Parity test: Spark job vs local pipeline (1-day sample, real bundle) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:46:33+00:00 |  | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). 1,024 posts (2020-01-06), 67 columns compared, max abs diff 2.1e-6 (tolerance 1e-4); record ids, stage-2 selection, weights, flags and labels identical; 630 posts sent to stage 2. |
+| `9.4/benchmark` | Throughput benchmark on 5,000 pilot posts (RTX 4060 Laptop GPU) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:46:33+00:00 |  | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). Two runs: 29.8 and 27.1 records/s (batch 8, two-stage, rate 0.15). Linear projection: pilot 1.6-1.7 h; 500k posts 4.7-5.1 h; 1M 9.3-10.2 h; 1.5M 14.0-15.4 h. Assumes similar text and flagged share (56% in the pilot) and nothing else running. |
+| `9.6/spark_pilot_run` | Spark inference over the pilot lake: PAUSED by the user, not finished | **started** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:46:33+00:00 |  | PAUSED 2026-10-05: 252 of 477 dates done (56,372 of 170,199 posts, up to 2019-07-10); no half-written files, no processes left. TO RESUME run from code/: python -m stress_signals.spark_jobs run --corpus pilot (or cell 9.6 with RUN_SPARK_PILOT = True); finished dates are skipped. Do not start other heavy jobs at the same time (about 3.7 GB RAM free on this laptop). Step 10 core tables in data/gold were produced earlier from only the first slice (14,339 posts) and must be re-run after the pilot finishes. |
 
 ## Full history (oldest first)
 
@@ -235,3 +240,6 @@ _Regenerated 2026-10-04T17:20:18+00:00 UTC on madhava_laptop. Times are UTC. Sou
 | 2026-10-04T17:02:29+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.8/crosscheck/finetune__distilroberta-base` | done | output found on disk (finished before it was logged) |
 | 2026-10-04T17:20:18+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `8.2/ingest/pilot` | done | output found on disk (finished before it was logged) |
 | 2026-10-04T17:20:18+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `8.4/data_quality/pilot` | done | output found on disk (finished before it was logged) |
+| 2026-10-04T19:46:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `9.3/spark_parity` | done | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). 1,024 posts (2020-01-06), 67 columns compared, max abs diff 2.1e-6 (tolerance 1e-4); record ids, stage-2 selection, weights, flags and labels identical; 630 posts sent to stage 2. |
+| 2026-10-04T19:46:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `9.4/benchmark` | done | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). Two runs: 29.8 and 27.1 records/s (batch 8, two-stage, rate 0.15). Linear projection: pilot 1.6-1.7 h; 500k posts 4.7-5.1 h; 1M 9.3-10.2 h; 1.5M 14.0-15.4 h. Assumes similar text and flagged share (56% in the pilot) and nothing else running. |
+| 2026-10-04T19:46:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `9.6/spark_pilot_run` | started | PAUSED 2026-10-05: 252 of 477 dates done (56,372 of 170,199 posts, up to 2019-07-10); no half-written files, no processes left. TO RESUME run from code/: python -m stress_signals.spark_jobs run --corpus pilot (or cell 9.6 with RUN_SPARK_PILOT = True); finished dates are skipped. Do not start other heavy jobs at the same time (about 3.7 GB RAM free on this laptop). Step 10 core tables in data/gold were produced earlier from only the first slice (14,339 posts) and must be re-run after the pilot finishes. |

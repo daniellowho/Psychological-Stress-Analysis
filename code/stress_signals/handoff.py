@@ -211,7 +211,13 @@ HOW_IT_WORKS = [
     "test report is written only once and must not pick a final seed from a partial set.",
     "- **The test suite** (2.5) re-runs only after the code changed. **Re-run anything on purpose:** add its step number "
     "to `FORCE_RERUN` in cell 0.1, e.g. `FORCE_RERUN = {\"3C.1\"}`.",
-    "- A step whose saved output was deleted counts as not done and runs again.", "",
+    "- A step whose saved output was deleted counts as not done and runs again.",
+    "- **Update (Step 7 onwards): `ALLOW_TRAINING` in cell 0.1 is False**, so no cell that fits weights starts; a training step that is "
+    "not done prints `NOT RUN … ALLOW_TRAINING = False`. Set it True to train what is missing. This overrides the training bullets above.",
+    "- **Spark inference (Step 9)** is a long job and is not part of Run All: use cell 9.6 (`RUN_SPARK_PILOT = True`) or "
+    "`python -m stress_signals.spark_jobs run --corpus pilot`. It scores one UTC date at a time and writes a `_done` marker last "
+    "(`data/processed/enriched/<corpus>/_done/`), so a stopped run **resumes by running the same command again**: finished dates "
+    "(same model bundle and settings) are skipped. Run heavy jobs one at a time; this laptop has little free RAM.", "",
 ]
 
 
