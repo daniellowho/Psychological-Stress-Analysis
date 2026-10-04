@@ -1,0 +1,2122 @@
+{
+  "annotation": "MACHINE-LABELLED by a zero-shot NLI model (not a human annotation); no inter-annotator agreement",
+  "annotation_limitation": "The 'gold' labels were produced by a zero-shot NLI model (machine_labeler), NOT by a person. Every gold metric is AGREEMENT WITH THAT LABELLER, not correctness, and inherits its errors; it cannot show that the stressor classifier is right on Reddit. Treat all stressor results as provisional until a human annotates the sheet.",
+  "dreaddit_crosscheck": {
+    "by_subreddit": [
+      {
+        "community": "almosthomeless",
+        "n": 33,
+        "suppressed": true
+      },
+      {
+        "community": "anxiety",
+        "n": 341,
+        "rate__academic_workload": 0.0967741935483871,
+        "rate__financial_concerns": 0.16422287390029325,
+        "rate__health_concerns": 0.9794721407624634,
+        "rate__other_unclear": 1.0,
+        "rate__overload": 0.9970674486803519,
+        "rate__relationship_issues": 1.0,
+        "rate__societal_problems": 0.9941348973607038,
+        "rate__uncertainty": 0.9970674486803519,
+        "rate__workplace_pressure": 0.9970674486803519,
+        "suppressed": false
+      },
+      {
+        "community": "assistance",
+        "n": 91,
+        "rate__academic_workload": 0.054945054945054944,
+        "rate__financial_concerns": 0.6923076923076923,
+        "rate__health_concerns": 0.9120879120879121,
+        "rate__other_unclear": 1.0,
+        "rate__overload": 1.0,
+        "rate__relationship_issues": 0.989010989010989,
+        "rate__societal_problems": 0.978021978021978,
+        "rate__uncertainty": 0.967032967032967,
+        "rate__workplace_pressure": 0.989010989010989,
+        "suppressed": false
+      },
+      {
+        "community": "domesticviolence",
+        "n": 200,
+        "rate__academic_workload": 0.01,
+        "rate__financial_concerns": 0.12,
+        "rate__health_concerns": 0.825,
+        "rate__other_unclear": 0.995,
+        "rate__overload": 0.995,
+        "rate__relationship_issues": 1.0,
+        "rate__societal_problems": 0.985,
+        "rate__uncertainty": 0.935,
+        "rate__workplace_pressure": 0.98,
+        "suppressed": false
+      },
+      {
+        "community": "food_pantry",
+        "n": 6,
+        "suppressed": true
+      },
+      {
+        "community": "homeless",
+        "n": 55,
+        "rate__academic_workload": 0.01818181818181818,
+        "rate__financial_concerns": 0.6909090909090909,
+        "rate__health_concerns": 0.9454545454545454,
+        "rate__other_unclear": 1.0,
+        "rate__overload": 1.0,
+        "rate__relationship_issues": 1.0,
+        "rate__societal_problems": 1.0,
+        "rate__uncertainty": 0.9818181818181818,
+        "rate__workplace_pressure": 1.0,
+        "suppressed": false
+      },
+      {
+        "community": "ptsd",
+        "n": 341,
+        "rate__academic_workload": 0.04105571847507331,
+        "rate__financial_concerns": 0.11730205278592376,
+        "rate__health_concerns": 0.9706744868035191,
+        "rate__other_unclear": 1.0,
+        "rate__overload": 0.9970674486803519,
+        "rate__relationship_issues": 0.9970674486803519,
+        "rate__societal_problems": 0.9970674486803519,
+        "rate__uncertainty": 0.9853372434017595,
+        "rate__workplace_pressure": 0.9970674486803519,
+        "suppressed": false
+      },
+      {
+        "community": "relationships",
+        "n": 251,
+        "rate__academic_workload": 0.02390438247011952,
+        "rate__financial_concerns": 0.12350597609561753,
+        "rate__health_concerns": 0.7689243027888446,
+        "rate__other_unclear": 0.9880478087649402,
+        "rate__overload": 1.0,
+        "rate__relationship_issues": 1.0,
+        "rate__societal_problems": 0.9760956175298805,
+        "rate__uncertainty": 0.9760956175298805,
+        "rate__workplace_pressure": 0.9880478087649402,
+        "suppressed": false
+      },
+      {
+        "community": "stress",
+        "n": 23,
+        "suppressed": true
+      },
+      {
+        "community": "survivorsofabuse",
+        "n": 109,
+        "rate__academic_workload": 0.027522935779816515,
+        "rate__financial_concerns": 0.12844036697247707,
+        "rate__health_concerns": 0.9174311926605505,
+        "rate__other_unclear": 1.0,
+        "rate__overload": 1.0,
+        "rate__relationship_issues": 1.0,
+        "rate__societal_problems": 0.9908256880733946,
+        "rate__uncertainty": 0.944954128440367,
+        "rate__workplace_pressure": 1.0,
+        "suppressed": false
+      }
+    ],
+    "checks": [
+      {
+        "category": "financial_concerns",
+        "expected": "rate_mapped > rate_other",
+        "mapped_subreddits": [
+          "almosthomeless",
+          "assistance",
+          "food_pantry",
+          "homeless"
+        ],
+        "n_mapped": 185,
+        "n_other": 1265,
+        "rate_mapped": 0.6972972972972973,
+        "rate_other": 0.13517786561264822,
+        "ratio": 5.158368895211001
+      },
+      {
+        "category": "relationship_issues",
+        "expected": "rate_mapped > rate_other",
+        "mapped_subreddits": [
+          "domesticviolence",
+          "relationships",
+          "survivorsofabuse"
+        ],
+        "n_mapped": 560,
+        "n_other": 890,
+        "rate_mapped": 1.0,
+        "rate_other": 0.9977528089887641,
+        "ratio": 1.0022522522522523
+      }
+    ],
+    "k_min": 50,
+    "method": "zero_shot",
+    "n_segments": 1450,
+    "note": "weak sanity check: subreddits are not stressor labels; NOT an accuracy estimate"
+  },
+  "gold_test_report": {
+    "annotation": "MACHINE-LABELLED by a zero-shot NLI model (not a human annotation); no inter-annotator agreement",
+    "annotation_limitation": "The 'gold' labels were produced by a zero-shot NLI model (machine_labeler), NOT by a person. Every gold metric is AGREEMENT WITH THAT LABELLER, not correctness, and inherits its errors; it cannot show that the stressor classifier is right on Reddit. Treat all stressor results as provisional until a human annotates the sheet.",
+    "created_utc": "2026-10-04T10:42:14.769437+00:00",
+    "label_source": "machine",
+    "leakage": "Gold texts come ONLY from Dreaddit's train and validation splits (stress label 1). Dreaddit's official test split, on which the Step 3 stress model was evaluated once (3D.2, written before this gold set existed), is never sampled, so that evaluation is untouched. Gold labels never train or tune the stress model. The stressor models never train on Dreaddit; gold-dev only tunes stressor thresholds and picks the method; gold-test is scored once. Caveat: the Step 3 model was TRAINED on these segments, so its stress probabilities on gold texts are in-sample and must not be evaluated on the gold set (dreaddit_split is recorded per gold row).",
+    "methods": {
+      "embed_lr": {
+        "dev": {
+          "ap_macro": 0.8386129425063018,
+          "f1_macro": 0.6865050574706537,
+          "f1_macro_sad_covered": 0.7239867495152382,
+          "f1_macro_supported": 0.7723181896544854,
+          "f1_macro_zero_shot_only": 0.917312510072227,
+          "f1_micro": 0.7813067150635209,
+          "hamming_loss": 0.2677777777777778,
+          "mean_labels_per_post": 5.545,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.0,
+            "recall": 0.0
+          },
+          "precision_macro": 0.7457992255024549,
+          "precision_micro": 0.7763751127141569,
+          "recall_macro": 0.6589559690160307,
+          "recall_micro": 0.7863013698630137,
+          "roc_auc_macro": 0.7076043646092631,
+          "roc_auc_micro": 0.661754590498397,
+          "subset_accuracy": 0.04
+        },
+        "domain_shift_cost": {
+          "categories": [
+            "workplace_pressure",
+            "academic_workload",
+            "financial_concerns",
+            "relationship_issues",
+            "health_concerns",
+            "overload",
+            "other_unclear"
+          ],
+          "caveat": "SAD-test is single-label argmax on sentences; gold-test is multi-label thresholded on posts, so the drop is an approximate measure of the domain shift, not a like-for-like difference",
+          "drop": -0.003469672451811512,
+          "gold_test_sad_covered": 0.7140690304555485,
+          "sad_test": 0.710599358003737
+        },
+        "low_support_categories": [
+          "other_unclear"
+        ],
+        "method_key": "embed_lr__all-MiniLM-L6-v2",
+        "sad_test_category_macro_f1": 0.710599358003737,
+        "support": {
+          "academic_workload": {
+            "dev": 30,
+            "test": 22
+          },
+          "financial_concerns": {
+            "dev": 77,
+            "test": 64
+          },
+          "health_concerns": {
+            "dev": 134,
+            "test": 134
+          },
+          "other_unclear": {
+            "dev": 0,
+            "test": 0
+          },
+          "overload": {
+            "dev": 129,
+            "test": 121
+          },
+          "relationship_issues": {
+            "dev": 190,
+            "test": 188
+          },
+          "societal_problems": {
+            "dev": 144,
+            "test": 144
+          },
+          "uncertainty": {
+            "dev": 198,
+            "test": 197
+          },
+          "workplace_pressure": {
+            "dev": 193,
+            "test": 187
+          }
+        },
+        "test": {
+          "ap_macro": 0.8303083041298853,
+          "f1_macro": 0.677046420463763,
+          "f1_macro_sad_covered": 0.7140690304555485,
+          "f1_macro_supported": 0.7616772230217334,
+          "f1_macro_zero_shot_only": 0.9045018007202881,
+          "f1_micro": 0.7621268656716418,
+          "hamming_loss": 0.2833333333333333,
+          "mean_labels_per_post": 5.435,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.0,
+            "recall": 0.0
+          },
+          "per_label": [
+            {
+              "average_precision": 0.963884864204578,
+              "brier": 0.6746535617723827,
+              "f1": 0.6596491228070176,
+              "label": "workplace_pressure",
+              "precision": 0.9591836734693877,
+              "predicted_positive_rate": 0.49,
+              "recall": 0.5026737967914439,
+              "roc_auc": 0.6351295763060469,
+              "support": 187,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.6838782274931289,
+              "brier": 0.055200442812897176,
+              "f1": 0.6470588235294118,
+              "label": "academic_workload",
+              "precision": 0.9166666666666666,
+              "predicted_positive_rate": 0.06,
+              "recall": 0.5,
+              "roc_auc": 0.86414708886619,
+              "support": 22,
+              "threshold": 0.5
+            },
+            {
+              "average_precision": 0.8511561864270285,
+              "brier": 0.134910201113717,
+              "f1": 0.7350427350427351,
+              "label": "financial_concerns",
+              "precision": 0.8113207547169812,
+              "predicted_positive_rate": 0.265,
+              "recall": 0.671875,
+              "roc_auc": 0.8980928308823529,
+              "support": 64,
+              "threshold": 0.11
+            },
+            {
+              "average_precision": 0.9819676376366852,
+              "brier": 0.2759914392716379,
+              "f1": 0.938337801608579,
+              "label": "relationship_issues",
+              "precision": 0.9459459459459459,
+              "predicted_positive_rate": 0.925,
+              "recall": 0.9308510638297872,
+              "roc_auc": 0.7544326241134752,
+              "support": 188,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.8594373812260805,
+              "brier": 0.38935549316352436,
+              "f1": 0.7709923664122137,
+              "label": "health_concerns",
+              "precision": 0.7890625,
+              "predicted_positive_rate": 0.64,
+              "recall": 0.753731343283582,
+              "roc_auc": 0.7620985979194934,
+              "support": 134,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.9865937309090327,
+              "brier": 0.5159211294204722,
+              "f1": 0.9795918367346939,
+              "label": "uncertainty",
+              "precision": 0.9846153846153847,
+              "predicted_positive_rate": 0.975,
+              "recall": 0.9746192893401016,
+              "roc_auc": 0.42470389170896783,
+              "support": 197,
+              "threshold": 0.11
+            },
+            {
+              "average_precision": 0.6096809221681068,
+              "brier": 0.5267522834310876,
+              "f1": 0.5333333333333333,
+              "label": "overload",
+              "precision": 0.5769230769230769,
+              "predicted_positive_rate": 0.52,
+              "recall": 0.49586776859504134,
+              "roc_auc": 0.485406423266032,
+              "support": 121,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.7058674829744418,
+              "brier": 0.42704935736326194,
+              "f1": 0.8294117647058824,
+              "label": "societal_problems",
+              "precision": 0.7193877551020408,
+              "predicted_positive_rate": 0.98,
+              "recall": 0.9791666666666666,
+              "roc_auc": 0.4556051587301587,
+              "support": 144,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": NaN,
+              "brier": 0.34937255831966085,
+              "f1": 0.0,
+              "label": "other_unclear",
+              "precision": 0.0,
+              "predicted_positive_rate": 0.58,
+              "recall": 0.0,
+              "roc_auc": NaN,
+              "support": 0,
+              "threshold": 0.5
+            }
+          ],
+          "precision_macro": 0.7447895286043872,
+          "precision_micro": 0.7516099356025759,
+          "recall_macro": 0.645420547611847,
+          "recall_micro": 0.7729422894985809,
+          "roc_auc_macro": 0.6599520239740896,
+          "roc_auc_micro": 0.6647524482683539,
+          "subset_accuracy": 0.015
+        },
+        "test_ci_supported_categories": {
+          "f1_macro": {
+            "hi": 0.7907270401580949,
+            "lo": 0.7253633954511916,
+            "n_valid_resamples": 1000,
+            "point": 0.7616772230217334
+          },
+          "f1_micro": {
+            "hi": 0.8215049704055755,
+            "lo": 0.7891064089235225,
+            "n_valid_resamples": 1000,
+            "point": 0.8057199211045365
+          },
+          "level": 0.95,
+          "n_resamples": 1000,
+          "per_label": {
+            "academic_workload": {
+              "f1": {
+                "hi": 0.8235294117647058,
+                "lo": 0.4134482758620693,
+                "n_valid_resamples": 1000,
+                "point": 0.6470588235294118
+              },
+              "roc_auc": {
+                "hi": 0.9491886283729859,
+                "lo": 0.7635095468377596,
+                "n_valid_resamples": 1000,
+                "point": 0.86414708886619
+              }
+            },
+            "financial_concerns": {
+              "f1": {
+                "hi": 0.8142053097345133,
+                "lo": 0.6421467889908258,
+                "n_valid_resamples": 1000,
+                "point": 0.7350427350427351
+              },
+              "roc_auc": {
+                "hi": 0.9475925925925925,
+                "lo": 0.8421246569170839,
+                "n_valid_resamples": 1000,
+                "point": 0.8980928308823529
+              }
+            },
+            "health_concerns": {
+              "f1": {
+                "hi": 0.8263933733087331,
+                "lo": 0.712,
+                "n_valid_resamples": 1000,
+                "point": 0.7709923664122137
+              },
+              "roc_auc": {
+                "hi": 0.8280307619047619,
+                "lo": 0.6867945407566184,
+                "n_valid_resamples": 1000,
+                "point": 0.7620985979194934
+              }
+            },
+            "overload": {
+              "f1": {
+                "hi": 0.6104417670682731,
+                "lo": 0.45159018627896413,
+                "n_valid_resamples": 1000,
+                "point": 0.5333333333333333
+              },
+              "roc_auc": {
+                "hi": 0.571737948557349,
+                "lo": 0.40286646750564453,
+                "n_valid_resamples": 1000,
+                "point": 0.485406423266032
+              }
+            },
+            "relationship_issues": {
+              "f1": {
+                "hi": 0.9610821359491571,
+                "lo": 0.9116022099447514,
+                "n_valid_resamples": 1000,
+                "point": 0.938337801608579
+              },
+              "roc_auc": {
+                "hi": 0.8423725295976604,
+                "lo": 0.6657777557494052,
+                "n_valid_resamples": 1000,
+                "point": 0.7544326241134752
+              }
+            },
+            "societal_problems": {
+              "f1": {
+                "hi": 0.8685900974025974,
+                "lo": 0.78419452887538,
+                "n_valid_resamples": 1000,
+                "point": 0.8294117647058824
+              },
+              "roc_auc": {
+                "hi": 0.555080820475588,
+                "lo": 0.3671419322409489,
+                "n_valid_resamples": 1000,
+                "point": 0.4556051587301587
+              }
+            },
+            "uncertainty": {
+              "f1": {
+                "hi": 0.9924433249370277,
+                "lo": 0.9637305699481865,
+                "n_valid_resamples": 1000,
+                "point": 0.9795918367346939
+              },
+              "roc_auc": {
+                "hi": 0.6167402669915232,
+                "lo": 0.268627903399477,
+                "n_valid_resamples": 949,
+                "point": 0.42470389170896783
+              }
+            },
+            "workplace_pressure": {
+              "f1": {
+                "hi": 0.7208060978756342,
+                "lo": 0.5934065934065934,
+                "n_valid_resamples": 1000,
+                "point": 0.6596491228070176
+              },
+              "roc_auc": {
+                "hi": 0.7791782596558899,
+                "lo": 0.4817944070285945,
+                "n_valid_resamples": 1000,
+                "point": 0.6351295763060469
+              }
+            }
+          },
+          "precision_macro": {
+            "hi": 0.8690741953532729,
+            "lo": 0.8044683401691493,
+            "n_valid_resamples": 1000,
+            "point": 0.8378882196799355
+          },
+          "recall_macro": {
+            "hi": 0.7651255621085385,
+            "lo": 0.6881260389703776,
+            "n_valid_resamples": 1000,
+            "point": 0.7260981160633279
+          },
+          "resampling": "rows",
+          "roc_auc_macro": {
+            "hi": 0.7116828987818554,
+            "lo": 0.6240988413656787,
+            "n_valid_resamples": 1000,
+            "point": 0.6599520239740896
+          }
+        },
+        "threshold_rule": {
+          "academic_workload": "tuned",
+          "financial_concerns": "tuned",
+          "health_concerns": "tuned",
+          "other_unclear": "default_0.5",
+          "overload": "tuned",
+          "relationship_issues": "tuned",
+          "societal_problems": "tuned",
+          "uncertainty": "tuned",
+          "workplace_pressure": "tuned"
+        },
+        "thresholds": {
+          "academic_workload": 0.5,
+          "financial_concerns": 0.11,
+          "health_concerns": 0.05,
+          "other_unclear": 0.5,
+          "overload": 0.05,
+          "relationship_issues": 0.05,
+          "societal_problems": 0.05,
+          "uncertainty": 0.11,
+          "workplace_pressure": 0.05
+        }
+      },
+      "finetune": {
+        "dev": {
+          "ap_macro": 0.8414401703863056,
+          "f1_macro": 0.6754415143898487,
+          "f1_macro_sad_covered": 0.7073914348940308,
+          "f1_macro_supported": 0.7598717036885798,
+          "f1_macro_zero_shot_only": 0.917312510072227,
+          "f1_micro": 0.764249886000912,
+          "hamming_loss": 0.2872222222222222,
+          "mean_labels_per_post": 5.49,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.0,
+            "recall": 0.0
+          },
+          "precision_macro": 0.7356890268449617,
+          "precision_micro": 0.7632058287795993,
+          "recall_macro": 0.6605575729894648,
+          "recall_micro": 0.765296803652968,
+          "roc_auc_macro": 0.7181432348600123,
+          "roc_auc_micro": 0.6712127983419152,
+          "subset_accuracy": 0.015
+        },
+        "domain_shift_cost": {
+          "categories": [
+            "workplace_pressure",
+            "academic_workload",
+            "financial_concerns",
+            "relationship_issues",
+            "health_concerns",
+            "overload",
+            "other_unclear"
+          ],
+          "caveat": "SAD-test is single-label argmax on sentences; gold-test is multi-label thresholded on posts, so the drop is an approximate measure of the domain shift, not a like-for-like difference",
+          "drop": 0.002585326287882661,
+          "gold_test_sad_covered": 0.7226741957741352,
+          "sad_test": 0.7252595220620178
+        },
+        "low_support_categories": [
+          "other_unclear"
+        ],
+        "method_key": "finetune__distilroberta-base",
+        "sad_test_category_macro_f1": 0.7252595220620178,
+        "support": {
+          "academic_workload": {
+            "dev": 30,
+            "test": 22
+          },
+          "financial_concerns": {
+            "dev": 77,
+            "test": 64
+          },
+          "health_concerns": {
+            "dev": 134,
+            "test": 134
+          },
+          "other_unclear": {
+            "dev": 0,
+            "test": 0
+          },
+          "overload": {
+            "dev": 129,
+            "test": 121
+          },
+          "relationship_issues": {
+            "dev": 190,
+            "test": 188
+          },
+          "societal_problems": {
+            "dev": 144,
+            "test": 144
+          },
+          "uncertainty": {
+            "dev": 198,
+            "test": 197
+          },
+          "workplace_pressure": {
+            "dev": 193,
+            "test": 187
+          }
+        },
+        "test": {
+          "ap_macro": 0.8461068825463252,
+          "f1_macro": 0.6827831973428208,
+          "f1_macro_sad_covered": 0.7226741957741352,
+          "f1_macro_supported": 0.7681310970106734,
+          "f1_macro_zero_shot_only": 0.9045018007202881,
+          "f1_micro": 0.750236518448439,
+          "hamming_loss": 0.29333333333333333,
+          "mean_labels_per_post": 5.285,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.0,
+            "recall": 0.0
+          },
+          "per_label": [
+            {
+              "average_precision": 0.9744040534811,
+              "brier": 0.6872248842497928,
+              "f1": 0.5369649805447471,
+              "label": "workplace_pressure",
+              "precision": 0.9857142857142858,
+              "predicted_positive_rate": 0.35,
+              "recall": 0.3689839572192513,
+              "roc_auc": 0.7062937062937062,
+              "support": 187,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.7785594245546515,
+              "brier": 0.0484801263637057,
+              "f1": 0.7727272727272727,
+              "label": "academic_workload",
+              "precision": 0.7727272727272727,
+              "predicted_positive_rate": 0.11,
+              "recall": 0.7727272727272727,
+              "roc_auc": 0.8991317671092952,
+              "support": 22,
+              "threshold": 0.07
+            },
+            {
+              "average_precision": 0.8311057805500446,
+              "brier": 0.13478181207094914,
+              "f1": 0.7321428571428571,
+              "label": "financial_concerns",
+              "precision": 0.8541666666666666,
+              "predicted_positive_rate": 0.24,
+              "recall": 0.640625,
+              "roc_auc": 0.8741957720588235,
+              "support": 64,
+              "threshold": 0.06
+            },
+            {
+              "average_precision": 0.9772982244282564,
+              "brier": 0.29259074833679144,
+              "f1": 0.9019607843137255,
+              "label": "relationship_issues",
+              "precision": 0.9526627218934911,
+              "predicted_positive_rate": 0.845,
+              "recall": 0.8563829787234043,
+              "roc_auc": 0.725177304964539,
+              "support": 188,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.8657940269326712,
+              "brier": 0.40230802608412686,
+              "f1": 0.7280701754385965,
+              "label": "health_concerns",
+              "precision": 0.8829787234042553,
+              "predicted_positive_rate": 0.47,
+              "recall": 0.6194029850746269,
+              "roc_auc": 0.776797829036635,
+              "support": 134,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.9865937309090327,
+              "brier": 0.5159211294204722,
+              "f1": 0.9795918367346939,
+              "label": "uncertainty",
+              "precision": 0.9846153846153847,
+              "predicted_positive_rate": 0.975,
+              "recall": 0.9746192893401016,
+              "roc_auc": 0.42470389170896783,
+              "support": 197,
+              "threshold": 0.11
+            },
+            {
+              "average_precision": 0.6492323365404037,
+              "brier": 0.4528749651418585,
+              "f1": 0.664179104477612,
+              "label": "overload",
+              "precision": 0.6054421768707483,
+              "predicted_positive_rate": 0.735,
+              "recall": 0.7355371900826446,
+              "roc_auc": 0.5247410817031071,
+              "support": 121,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.7058674829744418,
+              "brier": 0.42704935736326194,
+              "f1": 0.8294117647058824,
+              "label": "societal_problems",
+              "precision": 0.7193877551020408,
+              "predicted_positive_rate": 0.98,
+              "recall": 0.9791666666666666,
+              "roc_auc": 0.4556051587301587,
+              "support": 144,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": NaN,
+              "brier": 0.30795453813528295,
+              "f1": 0.0,
+              "label": "other_unclear",
+              "precision": 0.0,
+              "predicted_positive_rate": 0.58,
+              "recall": 0.0,
+              "roc_auc": NaN,
+              "support": 0,
+              "threshold": 0.5
+            }
+          ],
+          "precision_macro": 0.750854998554905,
+          "precision_micro": 0.750236518448439,
+          "recall_macro": 0.660827259981552,
+          "recall_micro": 0.750236518448439,
+          "roc_auc_macro": 0.6733308139506541,
+          "roc_auc_micro": 0.6807847701218945,
+          "subset_accuracy": 0.02
+        },
+        "test_ci_supported_categories": {
+          "f1_macro": {
+            "hi": 0.7944598392856854,
+            "lo": 0.7387051246872967,
+            "n_valid_resamples": 1000,
+            "point": 0.7681310970106734
+          },
+          "f1_micro": {
+            "hi": 0.8104646156130618,
+            "lo": 0.7766549217867867,
+            "n_valid_resamples": 1000,
+            "point": 0.7937937937937938
+          },
+          "level": 0.95,
+          "n_resamples": 1000,
+          "per_label": {
+            "academic_workload": {
+              "f1": {
+                "hi": 0.8888888888888888,
+                "lo": 0.6153846153846154,
+                "n_valid_resamples": 1000,
+                "point": 0.7727272727272727
+              },
+              "roc_auc": {
+                "hi": 0.986585528065975,
+                "lo": 0.7919765991642559,
+                "n_valid_resamples": 1000,
+                "point": 0.8991317671092952
+              }
+            },
+            "financial_concerns": {
+              "f1": {
+                "hi": 0.8148290598290597,
+                "lo": 0.6285714285714286,
+                "n_valid_resamples": 1000,
+                "point": 0.7321428571428571
+              },
+              "roc_auc": {
+                "hi": 0.9221388094663957,
+                "lo": 0.8154357458810474,
+                "n_valid_resamples": 1000,
+                "point": 0.8741957720588235
+              }
+            },
+            "health_concerns": {
+              "f1": {
+                "hi": 0.7886290015243902,
+                "lo": 0.6578918128654971,
+                "n_valid_resamples": 1000,
+                "point": 0.7280701754385965
+              },
+              "roc_auc": {
+                "hi": 0.8424487313173444,
+                "lo": 0.7023637594990149,
+                "n_valid_resamples": 1000,
+                "point": 0.776797829036635
+              }
+            },
+            "overload": {
+              "f1": {
+                "hi": 0.7246402060293895,
+                "lo": 0.5952220077220077,
+                "n_valid_resamples": 1000,
+                "point": 0.664179104477612
+              },
+              "roc_auc": {
+                "hi": 0.6077683997479633,
+                "lo": 0.43882385735530016,
+                "n_valid_resamples": 1000,
+                "point": 0.5247410817031071
+              }
+            },
+            "relationship_issues": {
+              "f1": {
+                "hi": 0.9322584533122958,
+                "lo": 0.8695462035745976,
+                "n_valid_resamples": 1000,
+                "point": 0.9019607843137255
+              },
+              "roc_auc": {
+                "hi": 0.85157227754884,
+                "lo": 0.6039146766262606,
+                "n_valid_resamples": 1000,
+                "point": 0.725177304964539
+              }
+            },
+            "societal_problems": {
+              "f1": {
+                "hi": 0.8685900974025974,
+                "lo": 0.78419452887538,
+                "n_valid_resamples": 1000,
+                "point": 0.8294117647058824
+              },
+              "roc_auc": {
+                "hi": 0.555080820475588,
+                "lo": 0.3671419322409489,
+                "n_valid_resamples": 1000,
+                "point": 0.4556051587301587
+              }
+            },
+            "uncertainty": {
+              "f1": {
+                "hi": 0.9924433249370277,
+                "lo": 0.9637305699481865,
+                "n_valid_resamples": 1000,
+                "point": 0.9795918367346939
+              },
+              "roc_auc": {
+                "hi": 0.6167402669915232,
+                "lo": 0.268627903399477,
+                "n_valid_resamples": 949,
+                "point": 0.42470389170896783
+              }
+            },
+            "workplace_pressure": {
+              "f1": {
+                "hi": 0.6153985507246377,
+                "lo": 0.4583035714285714,
+                "n_valid_resamples": 1000,
+                "point": 0.5369649805447471
+              },
+              "roc_auc": {
+                "hi": 0.80401321152746,
+                "lo": 0.5888739618004791,
+                "n_valid_resamples": 1000,
+                "point": 0.7062937062937062
+              }
+            }
+          },
+          "precision_macro": {
+            "hi": 0.8760589126279136,
+            "lo": 0.8128318315181801,
+            "n_valid_resamples": 1000,
+            "point": 0.8447118733742681
+          },
+          "recall_macro": {
+            "hi": 0.7764548956843068,
+            "lo": 0.7107722270253599,
+            "n_valid_resamples": 1000,
+            "point": 0.743430667479246
+          },
+          "resampling": "rows",
+          "roc_auc_macro": {
+            "hi": 0.7265714277936881,
+            "lo": 0.6343673391914345,
+            "n_valid_resamples": 1000,
+            "point": 0.6733308139506541
+          }
+        },
+        "threshold_rule": {
+          "academic_workload": "tuned",
+          "financial_concerns": "tuned",
+          "health_concerns": "tuned",
+          "other_unclear": "default_0.5",
+          "overload": "tuned",
+          "relationship_issues": "tuned",
+          "societal_problems": "tuned",
+          "uncertainty": "tuned",
+          "workplace_pressure": "tuned"
+        },
+        "thresholds": {
+          "academic_workload": 0.07,
+          "financial_concerns": 0.06,
+          "health_concerns": 0.05,
+          "other_unclear": 0.5,
+          "overload": 0.05,
+          "relationship_issues": 0.05,
+          "societal_problems": 0.05,
+          "uncertainty": 0.11,
+          "workplace_pressure": 0.05
+        }
+      },
+      "keyword": {
+        "dev": {
+          "ap_macro": 0.7723585378479313,
+          "f1_macro": 0.3964366891790835,
+          "f1_macro_sad_covered": 0.5331496574245392,
+          "f1_macro_supported": 0.44599127532646893,
+          "f1_macro_zero_shot_only": 0.18451612903225806,
+          "f1_micro": 0.4419961114711601,
+          "hamming_loss": 0.47833333333333333,
+          "mean_labels_per_post": 2.24,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.05,
+            "recall": 0.0
+          },
+          "precision_macro": 0.7363025757190518,
+          "precision_micro": 0.7611607142857143,
+          "recall_macro": 0.31513532758175766,
+          "recall_micro": 0.31141552511415527,
+          "roc_auc_macro": 0.6332433011571401,
+          "roc_auc_micro": 0.5831406457463001,
+          "subset_accuracy": 0.005
+        },
+        "domain_shift_cost": {
+          "categories": [
+            "workplace_pressure",
+            "academic_workload",
+            "financial_concerns",
+            "relationship_issues",
+            "health_concerns",
+            "overload",
+            "other_unclear"
+          ],
+          "caveat": "SAD-test is single-label argmax on sentences; gold-test is multi-label thresholded on posts, so the drop is an approximate measure of the domain shift, not a like-for-like difference",
+          "drop": -0.01455434708966663,
+          "gold_test_sad_covered": 0.5460959181257543,
+          "sad_test": 0.5315415710360877
+        },
+        "low_support_categories": [
+          "other_unclear"
+        ],
+        "method_key": "keyword__taxonomy-v1",
+        "sad_test_category_macro_f1": 0.5315415710360877,
+        "support": {
+          "academic_workload": {
+            "dev": 30,
+            "test": 22
+          },
+          "financial_concerns": {
+            "dev": 77,
+            "test": 64
+          },
+          "health_concerns": {
+            "dev": 134,
+            "test": 134
+          },
+          "other_unclear": {
+            "dev": 0,
+            "test": 0
+          },
+          "overload": {
+            "dev": 129,
+            "test": 121
+          },
+          "relationship_issues": {
+            "dev": 190,
+            "test": 188
+          },
+          "societal_problems": {
+            "dev": 144,
+            "test": 144
+          },
+          "uncertainty": {
+            "dev": 198,
+            "test": 197
+          },
+          "workplace_pressure": {
+            "dev": 193,
+            "test": 187
+          }
+        },
+        "test": {
+          "ap_macro": 0.7854274029562651,
+          "f1_macro": 0.39753226920807394,
+          "f1_macro_sad_covered": 0.5460959181257543,
+          "f1_macro_supported": 0.4472238028590832,
+          "f1_macro_zero_shot_only": 0.15060745705906997,
+          "f1_micro": 0.4236933797909408,
+          "hamming_loss": 0.45944444444444443,
+          "mean_labels_per_post": 1.89,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.15,
+            "recall": 0.0
+          },
+          "per_label": [
+            {
+              "average_precision": 0.9555080213903744,
+              "brier": 0.86,
+              "f1": 0.4796747967479675,
+              "label": "workplace_pressure",
+              "precision": 1.0,
+              "predicted_positive_rate": 0.295,
+              "recall": 0.3155080213903743,
+              "roc_auc": 0.6577540106951871,
+              "support": 187,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": 0.5879205851619644,
+              "brier": 0.18,
+              "f1": 0.7058823529411765,
+              "label": "academic_workload",
+              "precision": 0.6206896551724138,
+              "predicted_positive_rate": 0.145,
+              "recall": 0.8181818181818182,
+              "roc_auc": 0.883682328907048,
+              "support": 22,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": 0.6876420454545455,
+              "brier": 0.42,
+              "f1": 0.7155963302752294,
+              "label": "financial_concerns",
+              "precision": 0.8666666666666667,
+              "predicted_positive_rate": 0.225,
+              "recall": 0.609375,
+              "roc_auc": 0.7880859375,
+              "support": 64,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": 0.96177304964539,
+              "brier": 0.98,
+              "f1": 0.6689895470383276,
+              "label": "relationship_issues",
+              "precision": 0.9696969696969697,
+              "predicted_positive_rate": 0.495,
+              "recall": 0.5106382978723404,
+              "roc_auc": 0.6575797872340425,
+              "support": 188,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": 0.7506619539220732,
+              "brier": 0.705,
+              "f1": 0.53125,
+              "label": "health_concerns",
+              "precision": 0.8793103448275862,
+              "predicted_positive_rate": 0.29,
+              "recall": 0.3805970149253731,
+              "roc_auc": 0.6372682044323835,
+              "support": 134,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": 0.986522842639594,
+              "brier": 0.895,
+              "f1": 0.18433179723502305,
+              "label": "uncertainty",
+              "precision": 1.0,
+              "predicted_positive_rate": 0.1,
+              "recall": 0.10152284263959391,
+              "roc_auc": 0.550761421319797,
+              "support": 197,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": 0.6214462809917354,
+              "brier": 0.57,
+              "f1": 0.17518248175182483,
+              "label": "overload",
+              "precision": 0.75,
+              "predicted_positive_rate": 0.08,
+              "recall": 0.09917355371900827,
+              "roc_auc": 0.5244795480698818,
+              "support": 121,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": 0.7319444444444444,
+              "brier": 0.685,
+              "f1": 0.11688311688311688,
+              "label": "societal_problems",
+              "precision": 0.9,
+              "predicted_positive_rate": 0.05,
+              "recall": 0.0625,
+              "roc_auc": 0.5223834325396826,
+              "support": 144,
+              "threshold": 1.0
+            },
+            {
+              "average_precision": NaN,
+              "brier": 0.44,
+              "f1": 0.0,
+              "label": "other_unclear",
+              "precision": 0.0,
+              "predicted_positive_rate": 0.21,
+              "recall": 0.0,
+              "roc_auc": NaN,
+              "support": 0,
+              "threshold": 1.0
+            }
+          ],
+          "precision_macro": 0.7762626262626262,
+          "precision_micro": 0.8042328042328042,
+          "recall_macro": 0.32194406096983424,
+          "recall_micro": 0.2876064333017975,
+          "roc_auc_macro": 0.6527493338372529,
+          "roc_auc_micro": 0.5963231726960302,
+          "subset_accuracy": 0.0
+        },
+        "test_ci_supported_categories": {
+          "f1_macro": {
+            "hi": 0.4780656760428806,
+            "lo": 0.4120322479056,
+            "n_valid_resamples": 1000,
+            "point": 0.4472238028590832
+          },
+          "f1_micro": {
+            "hi": 0.4664393823800125,
+            "lo": 0.4043714488073278,
+            "n_valid_resamples": 1000,
+            "point": 0.43646805455850685
+          },
+          "level": 0.95,
+          "n_resamples": 1000,
+          "per_label": {
+            "academic_workload": {
+              "f1": {
+                "hi": 0.8205882352941175,
+                "lo": 0.5306122448979592,
+                "n_valid_resamples": 1000,
+                "point": 0.7058823529411765
+              },
+              "roc_auc": {
+                "hi": 0.9557159444260208,
+                "lo": 0.7949873304070232,
+                "n_valid_resamples": 1000,
+                "point": 0.883682328907048
+              }
+            },
+            "financial_concerns": {
+              "f1": {
+                "hi": 0.8,
+                "lo": 0.612201933404941,
+                "n_valid_resamples": 1000,
+                "point": 0.7155963302752294
+              },
+              "roc_auc": {
+                "hi": 0.8501130354431993,
+                "lo": 0.725460310933584,
+                "n_valid_resamples": 1000,
+                "point": 0.7880859375
+              }
+            },
+            "health_concerns": {
+              "f1": {
+                "hi": 0.6086956521739131,
+                "lo": 0.4392432396518504,
+                "n_valid_resamples": 1000,
+                "point": 0.53125
+              },
+              "roc_auc": {
+                "hi": 0.6887738679524712,
+                "lo": 0.5790230417687909,
+                "n_valid_resamples": 1000,
+                "point": 0.6372682044323835
+              }
+            },
+            "overload": {
+              "f1": {
+                "hi": 0.26492150233872086,
+                "lo": 0.08953565505804313,
+                "n_valid_resamples": 1000,
+                "point": 0.17518248175182483
+              },
+              "roc_auc": {
+                "hi": 0.5627218257839721,
+                "lo": 0.48664044638686427,
+                "n_valid_resamples": 1000,
+                "point": 0.5244795480698818
+              }
+            },
+            "relationship_issues": {
+              "f1": {
+                "hi": 0.7266818181818182,
+                "lo": 0.6029234091406079,
+                "n_valid_resamples": 1000,
+                "point": 0.6689895470383276
+              },
+              "roc_auc": {
+                "hi": 0.7566697191697191,
+                "lo": 0.5444968231893543,
+                "n_valid_resamples": 1000,
+                "point": 0.6575797872340425
+              }
+            },
+            "societal_problems": {
+              "f1": {
+                "hi": 0.1891891891891892,
+                "lo": 0.05160463192721258,
+                "n_valid_resamples": 1000,
+                "point": 0.11688311688311688
+              },
+              "roc_auc": {
+                "hi": 0.5479502790461694,
+                "lo": 0.4964421543368912,
+                "n_valid_resamples": 1000,
+                "point": 0.5223834325396826
+              }
+            },
+            "uncertainty": {
+              "f1": {
+                "hi": 0.2577777777777778,
+                "lo": 0.11650485436893204,
+                "n_valid_resamples": 1000,
+                "point": 0.18433179723502305
+              },
+              "roc_auc": {
+                "hi": 0.5739795918367347,
+                "lo": 0.5326633165829145,
+                "n_valid_resamples": 949,
+                "point": 0.550761421319797
+              }
+            },
+            "workplace_pressure": {
+              "f1": {
+                "hi": 0.5568816969166849,
+                "lo": 0.3983041675838286,
+                "n_valid_resamples": 1000,
+                "point": 0.4796747967479675
+              },
+              "roc_auc": {
+                "hi": 0.6929438872702824,
+                "lo": 0.6243382668382668,
+                "n_valid_resamples": 1000,
+                "point": 0.6577540106951871
+              }
+            }
+          },
+          "precision_macro": {
+            "hi": 0.9201960094148821,
+            "lo": 0.821348031522562,
+            "n_valid_resamples": 1000,
+            "point": 0.8732954545454545
+          },
+          "recall_macro": {
+            "hi": 0.3944716602330564,
+            "lo": 0.3274761473183257,
+            "n_valid_resamples": 1000,
+            "point": 0.36218706859106353
+          },
+          "resampling": "rows",
+          "roc_auc_macro": {
+            "hi": 0.6772633235099886,
+            "lo": 0.6297671769335854,
+            "n_valid_resamples": 1000,
+            "point": 0.6527493338372529
+          }
+        },
+        "threshold_rule": {
+          "academic_workload": "tuned",
+          "financial_concerns": "tuned",
+          "health_concerns": "tuned",
+          "other_unclear": "default_1_window",
+          "overload": "tuned",
+          "relationship_issues": "tuned",
+          "societal_problems": "tuned",
+          "uncertainty": "tuned",
+          "workplace_pressure": "tuned"
+        },
+        "thresholds": {
+          "academic_workload": 1.0,
+          "financial_concerns": 1.0,
+          "health_concerns": 1.0,
+          "other_unclear": 1.0,
+          "overload": 1.0,
+          "relationship_issues": 1.0,
+          "societal_problems": 1.0,
+          "uncertainty": 1.0,
+          "workplace_pressure": 1.0
+        }
+      },
+      "zero_shot": {
+        "dev": {
+          "ap_macro": 0.8290422403687552,
+          "f1_macro": 0.7552899913453557,
+          "f1_macro_sad_covered": 0.8271641503272912,
+          "f1_macro_supported": 0.8497012402635251,
+          "f1_macro_zero_shot_only": 0.917312510072227,
+          "f1_micro": 0.8254588051542366,
+          "hamming_loss": 0.24833333333333332,
+          "mean_labels_per_post": 7.33,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.0,
+            "recall": 0.0
+          },
+          "precision_macro": 0.7406595192470083,
+          "precision_micro": 0.7210095497953616,
+          "recall_macro": 0.7997250400235475,
+          "recall_micro": 0.965296803652968,
+          "roc_auc_macro": 0.6478569351358442,
+          "roc_auc_micro": 0.6580478642443084,
+          "subset_accuracy": 0.0
+        },
+        "domain_shift_cost": null,
+        "low_support_categories": [
+          "other_unclear"
+        ],
+        "method_key": "zero_shot__all-MiniLM-L6-v2",
+        "sad_test_category_macro_f1": null,
+        "support": {
+          "academic_workload": {
+            "dev": 30,
+            "test": 22
+          },
+          "financial_concerns": {
+            "dev": 77,
+            "test": 64
+          },
+          "health_concerns": {
+            "dev": 134,
+            "test": 134
+          },
+          "other_unclear": {
+            "dev": 0,
+            "test": 0
+          },
+          "overload": {
+            "dev": 129,
+            "test": 121
+          },
+          "relationship_issues": {
+            "dev": 190,
+            "test": 188
+          },
+          "societal_problems": {
+            "dev": 144,
+            "test": 144
+          },
+          "uncertainty": {
+            "dev": 198,
+            "test": 197
+          },
+          "workplace_pressure": {
+            "dev": 193,
+            "test": 187
+          }
+        },
+        "test": {
+          "ap_macro": 0.8262402929285136,
+          "f1_macro": 0.7389235813857455,
+          "f1_macro_sad_covered": 0.8068847718385223,
+          "f1_macro_supported": 0.8312890290589637,
+          "f1_macro_zero_shot_only": 0.9045018007202881,
+          "f1_micro": 0.8112832737385777,
+          "hamming_loss": 0.2638888888888889,
+          "mean_labels_per_post": 7.3,
+          "n": 200,
+          "n_labels": 9,
+          "none_unclear": {
+            "f1": 0.0,
+            "gold_rate": 0.0,
+            "precision": 0.0,
+            "predicted_rate": 0.0,
+            "recall": 0.0
+          },
+          "per_label": [
+            {
+              "average_precision": 0.9522066326031111,
+              "brier": 0.5254305133371012,
+              "f1": 0.9664082687338501,
+              "label": "workplace_pressure",
+              "precision": 0.935,
+              "predicted_positive_rate": 1.0,
+              "recall": 1.0,
+              "roc_auc": 0.5532702591526121,
+              "support": 187,
+              "threshold": 0.03
+            },
+            {
+              "average_precision": 0.717695976180571,
+              "brier": 0.0809557974650343,
+              "f1": 0.5555555555555556,
+              "label": "academic_workload",
+              "precision": 0.7142857142857143,
+              "predicted_positive_rate": 0.07,
+              "recall": 0.45454545454545453,
+              "roc_auc": 0.9333503575076609,
+              "support": 22,
+              "threshold": 0.37
+            },
+            {
+              "average_precision": 0.8567294437927488,
+              "brier": 0.1566792487420256,
+              "f1": 0.7794117647058824,
+              "label": "financial_concerns",
+              "precision": 0.7361111111111112,
+              "predicted_positive_rate": 0.36,
+              "recall": 0.828125,
+              "roc_auc": 0.9015395220588235,
+              "support": 64,
+              "threshold": 0.28
+            },
+            {
+              "average_precision": 0.967878801950724,
+              "brier": 0.4246726914306963,
+              "f1": 0.961038961038961,
+              "label": "relationship_issues",
+              "precision": 0.9390862944162437,
+              "predicted_positive_rate": 0.985,
+              "recall": 0.9840425531914894,
+              "roc_auc": 0.6312056737588653,
+              "support": 188,
+              "threshold": 0.08
+            },
+            {
+              "average_precision": 0.8308301028825135,
+              "brier": 0.3267305926695315,
+              "f1": 0.825,
+              "label": "health_concerns",
+              "precision": 0.7096774193548387,
+              "predicted_positive_rate": 0.93,
+              "recall": 0.9850746268656716,
+              "roc_auc": 0.723767526006332,
+              "support": 134,
+              "threshold": 0.14
+            },
+            {
+              "average_precision": 0.9865937309090327,
+              "brier": 0.5159211294204722,
+              "f1": 0.9795918367346939,
+              "label": "uncertainty",
+              "precision": 0.9846153846153847,
+              "predicted_positive_rate": 0.975,
+              "recall": 0.9746192893401016,
+              "roc_auc": 0.42470389170896783,
+              "support": 197,
+              "threshold": 0.11
+            },
+            {
+              "average_precision": 0.5921201721349665,
+              "brier": 0.33983510441319326,
+              "f1": 0.7538940809968847,
+              "label": "overload",
+              "precision": 0.605,
+              "predicted_positive_rate": 1.0,
+              "recall": 1.0,
+              "roc_auc": 0.4532900931059734,
+              "support": 121,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": 0.7058674829744418,
+              "brier": 0.42704935736326194,
+              "f1": 0.8294117647058824,
+              "label": "societal_problems",
+              "precision": 0.7193877551020408,
+              "predicted_positive_rate": 0.98,
+              "recall": 0.9791666666666666,
+              "roc_auc": 0.4556051587301587,
+              "support": 144,
+              "threshold": 0.05
+            },
+            {
+              "average_precision": NaN,
+              "brier": 0.08234241663903946,
+              "f1": 0.0,
+              "label": "other_unclear",
+              "precision": 0.0,
+              "predicted_positive_rate": 1.0,
+              "recall": 0.0,
+              "roc_auc": NaN,
+              "support": 0,
+              "threshold": 0.09
+            }
+          ],
+          "precision_macro": 0.7047959643205925,
+          "precision_micro": 0.6993150684931507,
+          "recall_macro": 0.800619287845487,
+          "recall_micro": 0.9659413434247871,
+          "roc_auc_macro": 0.6345915602536742,
+          "roc_auc_micro": 0.657991140267218,
+          "subset_accuracy": 0.0
+        },
+        "test_ci_supported_categories": {
+          "f1_macro": {
+            "hi": 0.8573392813932912,
+            "lo": 0.799477018081405,
+            "n_valid_resamples": 1000,
+            "point": 0.8312890290589637
+          },
+          "f1_micro": {
+            "hi": 0.8979647879430606,
+            "lo": 0.8653991002746417,
+            "n_valid_resamples": 1000,
+            "point": 0.8813120414328873
+          },
+          "level": 0.95,
+          "n_resamples": 1000,
+          "per_label": {
+            "academic_workload": {
+              "f1": {
+                "hi": 0.7428571428571429,
+                "lo": 0.3330645161290325,
+                "n_valid_resamples": 1000,
+                "point": 0.5555555555555556
+              },
+              "roc_auc": {
+                "hi": 0.9784520108986905,
+                "lo": 0.8787414311933818,
+                "n_valid_resamples": 1000,
+                "point": 0.9333503575076609
+              }
+            },
+            "financial_concerns": {
+              "f1": {
+                "hi": 0.851063829787234,
+                "lo": 0.6948977447821825,
+                "n_valid_resamples": 1000,
+                "point": 0.7794117647058824
+              },
+              "roc_auc": {
+                "hi": 0.9454355307282162,
+                "lo": 0.8507044102560531,
+                "n_valid_resamples": 1000,
+                "point": 0.9015395220588235
+              }
+            },
+            "health_concerns": {
+              "f1": {
+                "hi": 0.8695652173913043,
+                "lo": 0.7748344370860927,
+                "n_valid_resamples": 1000,
+                "point": 0.825
+              },
+              "roc_auc": {
+                "hi": 0.7936551307704746,
+                "lo": 0.6467882669758245,
+                "n_valid_resamples": 1000,
+                "point": 0.723767526006332
+              }
+            },
+            "overload": {
+              "f1": {
+                "hi": 0.8059701492537313,
+                "lo": 0.6970684039087948,
+                "n_valid_resamples": 1000,
+                "point": 0.7538940809968847
+              },
+              "roc_auc": {
+                "hi": 0.5299278847402596,
+                "lo": 0.3755409673142983,
+                "n_valid_resamples": 1000,
+                "point": 0.4532900931059734
+              }
+            },
+            "relationship_issues": {
+              "f1": {
+                "hi": 0.9795918367346939,
+                "lo": 0.9417989417989417,
+                "n_valid_resamples": 1000,
+                "point": 0.961038961038961
+              },
+              "roc_auc": {
+                "hi": 0.7548718971631206,
+                "lo": 0.4949230525146756,
+                "n_valid_resamples": 1000,
+                "point": 0.6312056737588653
+              }
+            },
+            "societal_problems": {
+              "f1": {
+                "hi": 0.8685900974025974,
+                "lo": 0.78419452887538,
+                "n_valid_resamples": 1000,
+                "point": 0.8294117647058824
+              },
+              "roc_auc": {
+                "hi": 0.555080820475588,
+                "lo": 0.3671419322409489,
+                "n_valid_resamples": 1000,
+                "point": 0.4556051587301587
+              }
+            },
+            "uncertainty": {
+              "f1": {
+                "hi": 0.9924433249370277,
+                "lo": 0.9637305699481865,
+                "n_valid_resamples": 1000,
+                "point": 0.9795918367346939
+              },
+              "roc_auc": {
+                "hi": 0.6167402669915232,
+                "lo": 0.268627903399477,
+                "n_valid_resamples": 949,
+                "point": 0.42470389170896783
+              }
+            },
+            "workplace_pressure": {
+              "f1": {
+                "hi": 0.9821882951653944,
+                "lo": 0.9473684210526315,
+                "n_valid_resamples": 1000,
+                "point": 0.9664082687338501
+              },
+              "roc_auc": {
+                "hi": 0.7008398193631353,
+                "lo": 0.39538071838071837,
+                "n_valid_resamples": 1000,
+                "point": 0.5532702591526121
+              }
+            }
+          },
+          "precision_macro": {
+            "hi": 0.8322552630187751,
+            "lo": 0.7490118698987411,
+            "n_valid_resamples": 1000,
+            "point": 0.7928954598606667
+          },
+          "recall_macro": {
+            "hi": 0.9297098193503337,
+            "lo": 0.8691031281856808,
+            "n_valid_resamples": 1000,
+            "point": 0.9006966988261729
+          },
+          "resampling": "rows",
+          "roc_auc_macro": {
+            "hi": 0.6898577924005933,
+            "lo": 0.5904223300923833,
+            "n_valid_resamples": 1000,
+            "point": 0.6345915602536742
+          }
+        },
+        "threshold_rule": {
+          "academic_workload": "tuned",
+          "financial_concerns": "tuned",
+          "health_concerns": "tuned",
+          "other_unclear": "global_cosine",
+          "overload": "tuned",
+          "relationship_issues": "tuned",
+          "societal_problems": "tuned",
+          "uncertainty": "tuned",
+          "workplace_pressure": "tuned"
+        },
+        "thresholds": {
+          "academic_workload": 0.37,
+          "financial_concerns": 0.28,
+          "health_concerns": 0.14,
+          "other_unclear": 0.09,
+          "overload": 0.05,
+          "relationship_issues": 0.08,
+          "societal_problems": 0.05,
+          "uncertainty": 0.11,
+          "workplace_pressure": 0.03
+        }
+      }
+    },
+    "ranking": [
+      "zero_shot",
+      "embed_lr",
+      "finetune",
+      "keyword"
+    ],
+    "selected_method": "zero_shot",
+    "selection": {
+      "metric": "f1_macro_supported",
+      "split": "dev"
+    },
+    "selection_rule": "max dev f1_macro_supported",
+    "test_ranking_for_reference": [
+      "zero_shot",
+      "finetune",
+      "embed_lr",
+      "keyword"
+    ]
+  },
+  "label_source": "machine",
+  "sad_test_report": null,
+  "selected": {
+    "dev": {
+      "ap_macro": 0.8290422403687552,
+      "f1_macro": 0.7552899913453557,
+      "f1_macro_sad_covered": 0.8271641503272912,
+      "f1_macro_supported": 0.8497012402635251,
+      "f1_macro_zero_shot_only": 0.917312510072227,
+      "f1_micro": 0.8254588051542366,
+      "hamming_loss": 0.24833333333333332,
+      "mean_labels_per_post": 7.33,
+      "n": 200,
+      "n_labels": 9,
+      "none_unclear": {
+        "f1": 0.0,
+        "gold_rate": 0.0,
+        "precision": 0.0,
+        "predicted_rate": 0.0,
+        "recall": 0.0
+      },
+      "precision_macro": 0.7406595192470083,
+      "precision_micro": 0.7210095497953616,
+      "recall_macro": 0.7997250400235475,
+      "recall_micro": 0.965296803652968,
+      "roc_auc_macro": 0.6478569351358442,
+      "roc_auc_micro": 0.6580478642443084,
+      "subset_accuracy": 0.0
+    },
+    "domain_shift_cost": null,
+    "low_support_categories": [
+      "other_unclear"
+    ],
+    "method_key": "zero_shot__all-MiniLM-L6-v2",
+    "sad_test_category_macro_f1": null,
+    "support": {
+      "academic_workload": {
+        "dev": 30,
+        "test": 22
+      },
+      "financial_concerns": {
+        "dev": 77,
+        "test": 64
+      },
+      "health_concerns": {
+        "dev": 134,
+        "test": 134
+      },
+      "other_unclear": {
+        "dev": 0,
+        "test": 0
+      },
+      "overload": {
+        "dev": 129,
+        "test": 121
+      },
+      "relationship_issues": {
+        "dev": 190,
+        "test": 188
+      },
+      "societal_problems": {
+        "dev": 144,
+        "test": 144
+      },
+      "uncertainty": {
+        "dev": 198,
+        "test": 197
+      },
+      "workplace_pressure": {
+        "dev": 193,
+        "test": 187
+      }
+    },
+    "test": {
+      "ap_macro": 0.8262402929285136,
+      "f1_macro": 0.7389235813857455,
+      "f1_macro_sad_covered": 0.8068847718385223,
+      "f1_macro_supported": 0.8312890290589637,
+      "f1_macro_zero_shot_only": 0.9045018007202881,
+      "f1_micro": 0.8112832737385777,
+      "hamming_loss": 0.2638888888888889,
+      "mean_labels_per_post": 7.3,
+      "n": 200,
+      "n_labels": 9,
+      "none_unclear": {
+        "f1": 0.0,
+        "gold_rate": 0.0,
+        "precision": 0.0,
+        "predicted_rate": 0.0,
+        "recall": 0.0
+      },
+      "per_label": [
+        {
+          "average_precision": 0.9522066326031111,
+          "brier": 0.5254305133371012,
+          "f1": 0.9664082687338501,
+          "label": "workplace_pressure",
+          "precision": 0.935,
+          "predicted_positive_rate": 1.0,
+          "recall": 1.0,
+          "roc_auc": 0.5532702591526121,
+          "support": 187,
+          "threshold": 0.03
+        },
+        {
+          "average_precision": 0.717695976180571,
+          "brier": 0.0809557974650343,
+          "f1": 0.5555555555555556,
+          "label": "academic_workload",
+          "precision": 0.7142857142857143,
+          "predicted_positive_rate": 0.07,
+          "recall": 0.45454545454545453,
+          "roc_auc": 0.9333503575076609,
+          "support": 22,
+          "threshold": 0.37
+        },
+        {
+          "average_precision": 0.8567294437927488,
+          "brier": 0.1566792487420256,
+          "f1": 0.7794117647058824,
+          "label": "financial_concerns",
+          "precision": 0.7361111111111112,
+          "predicted_positive_rate": 0.36,
+          "recall": 0.828125,
+          "roc_auc": 0.9015395220588235,
+          "support": 64,
+          "threshold": 0.28
+        },
+        {
+          "average_precision": 0.967878801950724,
+          "brier": 0.4246726914306963,
+          "f1": 0.961038961038961,
+          "label": "relationship_issues",
+          "precision": 0.9390862944162437,
+          "predicted_positive_rate": 0.985,
+          "recall": 0.9840425531914894,
+          "roc_auc": 0.6312056737588653,
+          "support": 188,
+          "threshold": 0.08
+        },
+        {
+          "average_precision": 0.8308301028825135,
+          "brier": 0.3267305926695315,
+          "f1": 0.825,
+          "label": "health_concerns",
+          "precision": 0.7096774193548387,
+          "predicted_positive_rate": 0.93,
+          "recall": 0.9850746268656716,
+          "roc_auc": 0.723767526006332,
+          "support": 134,
+          "threshold": 0.14
+        },
+        {
+          "average_precision": 0.9865937309090327,
+          "brier": 0.5159211294204722,
+          "f1": 0.9795918367346939,
+          "label": "uncertainty",
+          "precision": 0.9846153846153847,
+          "predicted_positive_rate": 0.975,
+          "recall": 0.9746192893401016,
+          "roc_auc": 0.42470389170896783,
+          "support": 197,
+          "threshold": 0.11
+        },
+        {
+          "average_precision": 0.5921201721349665,
+          "brier": 0.33983510441319326,
+          "f1": 0.7538940809968847,
+          "label": "overload",
+          "precision": 0.605,
+          "predicted_positive_rate": 1.0,
+          "recall": 1.0,
+          "roc_auc": 0.4532900931059734,
+          "support": 121,
+          "threshold": 0.05
+        },
+        {
+          "average_precision": 0.7058674829744418,
+          "brier": 0.42704935736326194,
+          "f1": 0.8294117647058824,
+          "label": "societal_problems",
+          "precision": 0.7193877551020408,
+          "predicted_positive_rate": 0.98,
+          "recall": 0.9791666666666666,
+          "roc_auc": 0.4556051587301587,
+          "support": 144,
+          "threshold": 0.05
+        },
+        {
+          "average_precision": NaN,
+          "brier": 0.08234241663903946,
+          "f1": 0.0,
+          "label": "other_unclear",
+          "precision": 0.0,
+          "predicted_positive_rate": 1.0,
+          "recall": 0.0,
+          "roc_auc": NaN,
+          "support": 0,
+          "threshold": 0.09
+        }
+      ],
+      "precision_macro": 0.7047959643205925,
+      "precision_micro": 0.6993150684931507,
+      "recall_macro": 0.800619287845487,
+      "recall_micro": 0.9659413434247871,
+      "roc_auc_macro": 0.6345915602536742,
+      "roc_auc_micro": 0.657991140267218,
+      "subset_accuracy": 0.0
+    },
+    "test_ci_supported_categories": {
+      "f1_macro": {
+        "hi": 0.8573392813932912,
+        "lo": 0.799477018081405,
+        "n_valid_resamples": 1000,
+        "point": 0.8312890290589637
+      },
+      "f1_micro": {
+        "hi": 0.8979647879430606,
+        "lo": 0.8653991002746417,
+        "n_valid_resamples": 1000,
+        "point": 0.8813120414328873
+      },
+      "level": 0.95,
+      "n_resamples": 1000,
+      "per_label": {
+        "academic_workload": {
+          "f1": {
+            "hi": 0.7428571428571429,
+            "lo": 0.3330645161290325,
+            "n_valid_resamples": 1000,
+            "point": 0.5555555555555556
+          },
+          "roc_auc": {
+            "hi": 0.9784520108986905,
+            "lo": 0.8787414311933818,
+            "n_valid_resamples": 1000,
+            "point": 0.9333503575076609
+          }
+        },
+        "financial_concerns": {
+          "f1": {
+            "hi": 0.851063829787234,
+            "lo": 0.6948977447821825,
+            "n_valid_resamples": 1000,
+            "point": 0.7794117647058824
+          },
+          "roc_auc": {
+            "hi": 0.9454355307282162,
+            "lo": 0.8507044102560531,
+            "n_valid_resamples": 1000,
+            "point": 0.9015395220588235
+          }
+        },
+        "health_concerns": {
+          "f1": {
+            "hi": 0.8695652173913043,
+            "lo": 0.7748344370860927,
+            "n_valid_resamples": 1000,
+            "point": 0.825
+          },
+          "roc_auc": {
+            "hi": 0.7936551307704746,
+            "lo": 0.6467882669758245,
+            "n_valid_resamples": 1000,
+            "point": 0.723767526006332
+          }
+        },
+        "overload": {
+          "f1": {
+            "hi": 0.8059701492537313,
+            "lo": 0.6970684039087948,
+            "n_valid_resamples": 1000,
+            "point": 0.7538940809968847
+          },
+          "roc_auc": {
+            "hi": 0.5299278847402596,
+            "lo": 0.3755409673142983,
+            "n_valid_resamples": 1000,
+            "point": 0.4532900931059734
+          }
+        },
+        "relationship_issues": {
+          "f1": {
+            "hi": 0.9795918367346939,
+            "lo": 0.9417989417989417,
+            "n_valid_resamples": 1000,
+            "point": 0.961038961038961
+          },
+          "roc_auc": {
+            "hi": 0.7548718971631206,
+            "lo": 0.4949230525146756,
+            "n_valid_resamples": 1000,
+            "point": 0.6312056737588653
+          }
+        },
+        "societal_problems": {
+          "f1": {
+            "hi": 0.8685900974025974,
+            "lo": 0.78419452887538,
+            "n_valid_resamples": 1000,
+            "point": 0.8294117647058824
+          },
+          "roc_auc": {
+            "hi": 0.555080820475588,
+            "lo": 0.3671419322409489,
+            "n_valid_resamples": 1000,
+            "point": 0.4556051587301587
+          }
+        },
+        "uncertainty": {
+          "f1": {
+            "hi": 0.9924433249370277,
+            "lo": 0.9637305699481865,
+            "n_valid_resamples": 1000,
+            "point": 0.9795918367346939
+          },
+          "roc_auc": {
+            "hi": 0.6167402669915232,
+            "lo": 0.268627903399477,
+            "n_valid_resamples": 949,
+            "point": 0.42470389170896783
+          }
+        },
+        "workplace_pressure": {
+          "f1": {
+            "hi": 0.9821882951653944,
+            "lo": 0.9473684210526315,
+            "n_valid_resamples": 1000,
+            "point": 0.9664082687338501
+          },
+          "roc_auc": {
+            "hi": 0.7008398193631353,
+            "lo": 0.39538071838071837,
+            "n_valid_resamples": 1000,
+            "point": 0.5532702591526121
+          }
+        }
+      },
+      "precision_macro": {
+        "hi": 0.8322552630187751,
+        "lo": 0.7490118698987411,
+        "n_valid_resamples": 1000,
+        "point": 0.7928954598606667
+      },
+      "recall_macro": {
+        "hi": 0.9297098193503337,
+        "lo": 0.8691031281856808,
+        "n_valid_resamples": 1000,
+        "point": 0.9006966988261729
+      },
+      "resampling": "rows",
+      "roc_auc_macro": {
+        "hi": 0.6898577924005933,
+        "lo": 0.5904223300923833,
+        "n_valid_resamples": 1000,
+        "point": 0.6345915602536742
+      }
+    },
+    "threshold_rule": {
+      "academic_workload": "tuned",
+      "financial_concerns": "tuned",
+      "health_concerns": "tuned",
+      "other_unclear": "global_cosine",
+      "overload": "tuned",
+      "relationship_issues": "tuned",
+      "societal_problems": "tuned",
+      "uncertainty": "tuned",
+      "workplace_pressure": "tuned"
+    },
+    "thresholds": {
+      "academic_workload": 0.37,
+      "financial_concerns": 0.28,
+      "health_concerns": 0.14,
+      "other_unclear": 0.09,
+      "overload": 0.05,
+      "relationship_issues": 0.08,
+      "societal_problems": 0.05,
+      "uncertainty": 0.11,
+      "workplace_pressure": 0.03
+    }
+  }
+}

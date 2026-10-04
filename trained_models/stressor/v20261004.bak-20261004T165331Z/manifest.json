@@ -1,0 +1,71 @@
+{
+  "artifacts": {
+    "metrics.json": {
+      "bytes": 72639,
+      "sha256": "db659d5b1163fb5290561207ff6a04875cef560cdfdcf024b4a9bd9bbbe1af4f",
+      "type": "file"
+    },
+    "model_card.md": {
+      "bytes": 3366,
+      "sha256": "c042ef1c1653241a8456739dee500f7ae4c5c4823217ad00966d67fee9ec7547",
+      "type": "file"
+    },
+    "prototypes.npy": {
+      "bytes": 13952,
+      "sha256": "6bd3d9648ddfe7a0053ab95836f6282f5fbc25a8851f031ff2bf3fb170d68ea8",
+      "type": "file"
+    },
+    "stressor_config.json": {
+      "bytes": 3409,
+      "sha256": "0443c86a94fbf0f13feb5377fa7a176f2f28a5bd2314e26fa0b9b9031093bae8",
+      "type": "file"
+    },
+    "stressors_v1.yaml": {
+      "bytes": 19119,
+      "sha256": "66bf357c4af952164e60ce66e0a9ef53cee506e7f6914bc3cf7042b1b1f8d29c",
+      "type": "file"
+    },
+    "thresholds.json": {
+      "bytes": 9938,
+      "sha256": "16146c1c4c9f409eb39788e1e88820305796514b56d8c0bca634615e02dca5e3",
+      "type": "file"
+    }
+  },
+  "created_utc": "2026-10-04T10:42:18+00:00",
+  "dataset_versions": {
+    "gold_split": "stressor_gold_split_v1.json",
+    "gold_split_sha256": "e4d4a8564aa13422e40824d8a77a92db3e24e50c268c03fa4cbdd3d647a974fb",
+    "sad_parquet_sha256": "d507653c192a5d941c9e0406c178be7d49b68cb765956e92e76198f865415a66",
+    "sad_split": "sad_split_v1.json"
+  },
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+  "extra": {
+    "component": "stressor",
+    "method": "zero_shot"
+  },
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.9",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "platform": {
+    "machine": "AMD64",
+    "release": "10",
+    "system": "Windows"
+  },
+  "seeds": [
+    42
+  ]
+}
