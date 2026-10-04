@@ -123,6 +123,96 @@ sources:
     start: "2019-01"
     end: "2022-12"
     kind: submissions
+    file_globs: ["*.zst", "*.ndjson", "*.jsonl"]   # searched under local_dir (recursively); per-subreddit or monthly dumps both work
+  generic_ingest:                 # optional third adapter (any CSV/JSONL you downloaded); only the mapped columns are read
+    local_dir: data/raw/generic
+    files: ["*.csv"]
+    format: csv                   # csv | jsonl
+    columns: {id: id, community: subreddit, created: created_utc, text: text, text2: null}   # never map an author/user column
+    created_format: epoch_s       # epoch_s | epoch_ms | iso | a strptime pattern
+    source: generic
+    default_community: unknown
+
+ingestion:                        # Step 8. Same code for pilot and main: change `active_corpus` (and the paths in sources.*) only.
+  active_corpus: pilot            # pilot | main
+  corpora:
+    pilot: {adapter: zenodo_pilot, date_range: null}                 # the pilot windows are what the CSVs hold (sources.zenodo_pilot)
+    main: {adapter: reddit_submissions, date_range: {start: "2019-01", end: "2022-12"}}   # DATE_RANGE; end month included
+  language_filter: true           # lingua, ~1 GB per process; false = keep every language
+  chunk_rows: 50000               # rows processed at a time (memory bound)
+  flush_rows: 400000              # buffered rows before a part file is written
+  compact: true                   # merge the per-input part files of a partition afterwards
+  target_rows_per_file: 500000    # about 100-250 MB per file for Reddit-length text: fine for a 32 GB machine / Spark local
+  row_group_rows: 100000
+  compression: zstd
+  bot_authors: [automoderator, autotldr]   # exact (case-insensitive) author names, matched then discarded; text patterns are in preprocess.bot_patterns
+  sample: {day: null, max_rows: 20000}   # the 1-day sample for the Step 9 parity test (null = busiest day)
+
+spark:                            # Step 9. PySpark distributed inference over the data lake (stress_signals.spark_jobs).
+  app_name: stress_signals
+  master: "local[*]"              # only used when `workers` is auto and no GPU; the thread count is set from `workers` below
+  workers: auto                   # concurrent inference tasks. auto: 1 with a CUDA GPU (one task on the 4 GB GPU at a time), else 2
+  driver_memory: 1g               # keep small on a laptop (a 32-bit Java cannot exceed about 1.4g); executors do the model work, not the driver
+  shuffle_partitions: 8
+  arrow: true                     # spark.sql.execution.arrow.pyspark.enabled
+  arrow_max_records_per_batch: 256
+  executor_memory: 1g             # only used outside local mode (cluster)
+  inference_mode: auto            # in_process: the Spark worker imports torch itself (Linux / cluster). subprocess: the worker starts ONE
+                                  # long-lived inference process and reuses it (default on Windows, where a JVM-started worker crashed on `import torch`). auto = by OS
+  dates_per_job: 14               # dates handled per Spark job; progress is saved after each date, so a stopped run resumes
+  rows_per_call: 512              # texts per pipeline call inside a task (memory bound)
+  two_stage:                      # emotion + stressor models only on stress-flagged records + a seeded random sample of the rest
+    enabled: true
+    sample_rate: 0.15             # share of UNFLAGGED records that also get stage 2 (use 0.10 to 0.20); 1.0 = score everything
+    seed: 42
+  keep_text_for_topics: false     # true: cleaned text is ALSO written to restricted_dir (never loaded to Postgres or the dashboard)
+  enriched_dir: data/processed/enriched     # <corpus>/source=<s>/date=<YYYY-MM-DD>/part-00000.parquet + _done/ markers; NO text column
+  restricted_dir: data/restricted/enriched_text   # only used when keep_text_for_topics is true; keep out of git, backups and every export
+  benchmark:
+    n_posts: 5000
+    project_rows: [500000, 1000000, 1500000]   # corpus sizes to project the runtime for (UNVERIFIED guesses until you count your files)
+  parity:
+    atol: 1.0e-4                  # tolerance on probabilities (batch composition changes padding): same as the Step 7 batch-size test
+
+analytics:                        # Step 10. Aggregates, emotions, stressors, topics (stress_signals.analytics). No classifier is trained here.
+  gold_dir: data/gold             # aggregate Parquet only (no text, no record ids). K_MIN (privacy.k_min) is applied to every table
+  granularities: [day, week, month]   # week = ISO week starting Monday (UTC)
+  composition:
+    reference: {start: null, end: null, first_n_weeks: 8}   # weights = community share of records in this window; null start/end -> first N weeks of data
+    min_coverage: 0.8             # an adjusted value needs communities covering >= this share of the reference weight (K_MIN-passing cells only)
+  emotions:
+    threshold: 0.5                # a label counts as present when emotion_p__<label> (or emotion_group__<g>) >= this. UNVERIFIED: per-label thresholds of the emotion bundle are not used
+    bootstrap: {n: 500, seed: 42, alpha: 0.05}   # Poisson bootstrap over records
+  stressors:
+    granularity: month
+  topics:                         # BERTopic is fit by a USER-RUN cell on a sample; the code here only defines it
+    granularity: week
+    sample_size: 100000           # stress-flagged records used to fit (50k-200k)
+    sample_seed: 42
+    embedding_model: sentence-transformers/all-MiniLM-L6-v2   # UNVERIFIED choice; any sentence-transformers model works
+    embed_batch_size: 64
+    umap: {n_neighbors: 15, n_components: 5, min_dist: 0.0, metric: cosine, random_state: 42}
+    hdbscan: {min_cluster_size: 100, min_samples: 10, metric: euclidean, cluster_selection_method: eom}
+    vectorizer: {stop_words: english, ngram_range: [1, 2], min_df: 10}
+    top_n_words: 10
+    reduce_frequent_words: true   # c-TF-IDF option
+    nr_topics: null               # null: keep what HDBSCAN finds; an int merges topics after fitting
+    outliers: {strategy: embeddings, threshold: 0.0}   # BERTopic.reduce_outliers on the fitted sample
+    assign: {batch_size: 2048, min_similarity: 0.0}    # nearest-centroid assignment at scale; below min_similarity -> topic -1
+    model_dir: trained_models/topics     # v<YYYYMMDD>/ : centroids.npz + topics_keywords (NO text, NO representative documents)
+    assignments_dir: data/processed/topics   # <corpus>/source=/date=/part-00000.parquet: record_id, topic_id, topic_sim (no text)
+    lda: {k: 30, max_iter: 20, vocab_size: 20000, min_df: 10, seed: 42}   # Spark MLlib alternative
+    emerging:                     # see analytics.emerging_topics docstring for the exact definition
+      baseline_periods: 8
+      recent_periods: 4
+      min_count: 50               # records of the topic in the recent window (also >= K_MIN)
+      growth_ratio: 1.5
+      persistence_k: 2            # consecutive recent periods whose own share is >= growth_ratio x baseline share
+      require_ci_above_baseline: true
+    persistent:                   # see analytics.persistent_topics
+      share_threshold: 0.02
+      min_fraction: 0.6           # share >= threshold in at least this fraction of valid periods
+      min_periods: 8
 
 models:
   # Base checkpoints are PLACEHOLDERS; change freely. Fine-tuning runs locally: NVIDIA GPU (CUDA) if present, else CPU.
@@ -291,10 +381,12 @@ stressor_model:                   # Step 5. Every cell that fits weights is USER
     cosine_grid: [0.0, 1.0, 0.01]
     count_grid: [1, 5, 1]         # keyword baseline: number of matching windows
     low_support_dev_positives: 10 # categories with fewer gold-dev positives are flagged (threshold unreliable)
+    degenerate_prevalence: 0.6    # gold-dev positive rate above this: tuning is meaningless (flag-everything optimum) -> probability 0.5 / cosine never flagged
     low_support_rule: keep_default  # keep_default (0.5 probability / 1 window / ONE global cosine threshold) | tune
   method_selection:
     split: dev                    # dev (default, honest) | test (user prompt wording; makes the test number optimistic)
     metric: f1_macro_supported    # macro-F1 over stressor categories with >= 1 gold positive
+    force_method: finetune        # null = best dev score. finetune: the only method with human-labelled evidence (SAD); machine gold favours zero-shot
   gold:
     version: 1
     n_total: 400
@@ -304,12 +396,71 @@ stressor_model:                   # Step 5. Every cell that fits weights is USER
     floor_per_subreddit: 20       # stratification: at least this many per subreddit (if available), rest proportional
     dev_fraction: 0.5
     annotators: 1                 # user decision: single annotator; no inter-annotator agreement (none simulated)
+    label_source: machine         # human = data/outputs/gold/..._annotator1.csv filled by you | machine = ..._machine.csv from
+                                  # machine_labeler (zero-shot NLI). Machine labels are NOT gold: every report says so.
   eval:
     bootstrap_resamples: 1000     # row-level (one segment per post, so rows are independent posts)
     ci_level: 0.95
   crosscheck:                     # weak Dreaddit-subreddit sanity check: NOT accuracy
     dreaddit_splits: [train, validation, test]
     label: 1
+
+external_validation:              # Step 6. Inference only, except cross_training (USER-RUN, banner, off by default).
+  out_dir: data/outputs/external_validation   # scores (ids + numbers, NO text), per-part result JSONs
+  seed: 42
+  bootstrap_resamples: 1000
+  ci_level: 0.95
+  ece_bins: 15
+  threshold: null                 # null = use the threshold stored in the stress bundle (stress_config.json)
+  english_only: true              # the stress model is English; rows with lang != en are excluded and counted
+  tensistrength:
+    # TensiStrength is free for ACADEMIC use only (GBP 1000 commercial; see data/raw/tensistrength/README.md).
+    # The code refuses to run the jar until YOU set this to true. It must reflect your real use.
+    academic_use_confirmed: true    # confirmed by the user (academic use)
+    dreaddit_split: test
+    senticnet_sample_per_platform: 1000
+    probe_texts:                  # synthetic sentences, used to check the output format and the speed of one launch
+      - "i am so stressed and worried about exams"
+      - "feeling calm and relaxed today"
+      - "the bus leaves at noon"
+    timeout_s: 600
+  handcheck:
+    label_source: machine         # human = senticnet_handcheck.csv (human_label) | machine = senticnet_handcheck_machine.csv
+    min_rows_per_platform: 20     # fewer filled rows than this: the label-noise ceiling is reported as PENDING
+    bootstrap_resamples: 1000
+  cross_training:                 # SenticNet -> Dreaddit (fine-tunes weights, so USER RUNS IT)
+    enabled: false
+    platforms: [reddit]           # which SenticNet platform to train on
+    model_choice: null            # null = same as stress_model.model_choice
+    epochs: 3
+    val_fraction: 0.1
+    seed: 42
+  verdict:
+    # PROPOSED decision rules: my choice, not taken from the literature. Review and edit them BEFORE looking at results.
+    primary_platform: reddit      # the main corpus is Reddit; Twitter is supporting evidence only
+    retrain_if_auc_ci_upper_below: 0.70
+    retrain_if_skill_ci_upper_below: 0.50     # skill = (AUC - 0.5) / (label-noise ceiling AUC - 0.5)
+    ship_min_auc_ci_lower: 0.80
+    ship_min_skill: 0.75
+    ship_max_ece: 0.10
+    ship_min_secondary_auc: 0.70              # the other platform, point estimate
+    caveat_if_auc_drop_ci_lower_above: 0.10   # drop vs Dreaddit test whose CI lies entirely above this
+
+machine_labeler:                  # labels the sheets a human was meant to fill (user decision). Inference only; texts stay local.
+  model: facebook/bart-large-mnli # UNVERIFIED availability/size (about 1.6 GB download on first use); a zero-shot NLI model
+  max_length: 512
+  threshold: 0.5                  # fixed, not tuned (no ground truth to tune on)
+  senticnet_hypothesis: "The writer is expressing stress, pressure or worry."
+  stressor_hypotheses:            # one hypothesis per taxonomy category (my wording; unvalidated)
+    workplace_pressure: "The writer is under pressure because of their job or work."
+    academic_workload: "The writer is under pressure because of school, university, exams or grades."
+    financial_concerns: "The writer is worried about money, bills, debt, rent or housing costs."
+    relationship_issues: "The writer is having problems with family, a partner, friends or other people close to them."
+    health_concerns: "The writer is dealing with illness, injury, pain or other health problems."
+    uncertainty: "The writer is stressed because they do not know what will happen in the future."
+    overload: "The writer is stressed because they have too many things to do or decide at once."
+    societal_problems: "The writer is stressed by public events or social conditions such as the pandemic, politics, war or discrimination."
+  other_generic_hypothesis: "The text names a specific cause of the writer's stress."
 
 training:                         # generic defaults for later components (emotion/stressor); Step 3 uses stress_model.*
   epochs: 4
@@ -328,6 +479,17 @@ inference:
   batch_size: 8
   max_vram_gb: 4.0
   num_threads_cpu: 4
+  # Step 7 (unified inference, stress_signals.inference). Read once when a pipeline is built; never mutated.
+  use_fp16: false                 # half precision on CUDA only; OFF by default (Pascal gains little). half_precision is the legacy name
+  max_chars: 20000                # longer texts are cut to this many characters BEFORE chunking (status ok_truncated)
+  min_alpha_chars: 3              # fewer letters than this after cleaning (emoji-only, punctuation-only) -> NaN, reason no_text
+  english_only: true              # non-English text -> NaN with reason non_english (lingua; the models are English)
+  adaptive_batch: true            # on a CUDA out-of-memory error halve the batch size and retry; at 1, fall back to CPU
+  bundle_manifest: trained_models/bundle_manifest.json   # exact component versions used together; sits next to the model bundles
+  versions: {stress: latest, emotion: latest, stressor: latest}   # or a pinned name such as v20261004
+  gate_stressors_on_stress_flag: true   # stressor flags/top only for texts with stress_flag True (zero-shot thresholds are loose); scores are kept
+  tension:                        # optional TensiStrength column; needs the Java jar (see external_validation.tensistrength)
+    enabled: false                # Spark workers should keep this false: one Java launch per call
 
 chunking:                         # long posts -> sentence-aligned overlapping token windows (preprocess.chunk_text)
   enabled: true
@@ -394,15 +556,6 @@ change_detection:
     h: 5.0                        # decision threshold, in sigma units
   persistence: 3                  # consecutive flagged periods before a signal is raised
 
-spark:
-  master: "local[4]"
-  app_name: stress_signals
-  driver_memory: 12g
-  executor_memory: 4g
-  shuffle_partitions: 64
-  max_partition_bytes: 67108864   # 64 MB
-  arrow_enabled: true
-  arrow_max_records_per_batch: 256
 
 postgres:                         # environment-variable NAMES only; values live in .env
   host_env: PG_HOST

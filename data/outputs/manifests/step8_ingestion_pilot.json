@@ -1,0 +1,323 @@
+{
+  "adapter": "zenodo_pilot",
+  "balanced": true,
+  "clean_edits": {
+    "email_removed": 142,
+    "html_unescape": 28848,
+    "md_bullet": 18126,
+    "md_code": 77,
+    "md_em": 10739,
+    "md_escape": 19339,
+    "md_heading": 369,
+    "md_link": 5897,
+    "md_quote": 1265,
+    "md_rule": 863,
+    "md_strong": 12839,
+    "md_superscript": 485,
+    "mention": 189,
+    "phone_removed": 111,
+    "url": 5146,
+    "url_placeholder": 11237,
+    "zero_width": 29206
+  },
+  "compaction": {
+    "files_after": 17,
+    "files_before": 104,
+    "partitions_compacted": 17
+  },
+  "corpus": "pilot",
+  "created_utc": "2026-10-04T17:18:57+00:00",
+  "date_range": null,
+  "drops_by_reason": {
+    "exact_duplicate_text": 50,
+    "non_english": 6,
+    "shorter_than_5_tokens": 2
+  },
+  "lake": "C:/Visual_studio/TA-BDA Project/Psychological-Stress-Analysis/data/processed/lake/pilot",
+  "language_filter": true,
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.9",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "licence_reminder": "Check Reddit's terms of use, the dataset licence and your institution's ethics requirements before use.",
+  "partitioning": "source / year / month (hive style)",
+  "partitions": {
+    "source=zenodo_pilot/year=2018/month=11": {
+      "bytes": 3385678,
+      "files": 1,
+      "rows": 6710,
+      "sha256": {
+        "compact-00000.parquet": "03ea65b0f8bf665861ae671b06210a28b0df56c7ef21dec0420aeceacfba51d4"
+      }
+    },
+    "source=zenodo_pilot/year=2018/month=12": {
+      "bytes": 3748889,
+      "files": 1,
+      "rows": 7045,
+      "sha256": {
+        "compact-00000.parquet": "f05153a7def1c1d785d486dfd27ec9925d8de9ad0e2286025e973f864c9fd1bd"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=01": {
+      "bytes": 3358598,
+      "files": 1,
+      "rows": 7148,
+      "sha256": {
+        "compact-00000.parquet": "1cdbe6f5a0037ffdc9a63ed97e040e4e1fc79e2e6dfb7abf3fee2f625e619ee5"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=02": {
+      "bytes": 3019005,
+      "files": 1,
+      "rows": 6365,
+      "sha256": {
+        "compact-00000.parquet": "3811030650dd78c882ea7710b4d85720778ab3ab4559f151f79f5ba0e3736c5d"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=03": {
+      "bytes": 3465975,
+      "files": 1,
+      "rows": 6661,
+      "sha256": {
+        "compact-00000.parquet": "f6066c3ef41012078510f214a9d833314e0c54961d541153607109be48fe0215"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=04": {
+      "bytes": 3359132,
+      "files": 1,
+      "rows": 6447,
+      "sha256": {
+        "compact-00000.parquet": "5a51c80a0cf15866d54b27d4aba4af496bdc633b5512ed84ca787e54b9db6d76"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=05": {
+      "bytes": 3254876,
+      "files": 1,
+      "rows": 6660,
+      "sha256": {
+        "compact-00000.parquet": "2f1b5ffaca9e99e4ab8c1f4be711e941d5e605870e72b573282be1b4d96e5f91"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=06": {
+      "bytes": 3852638,
+      "files": 1,
+      "rows": 7084,
+      "sha256": {
+        "compact-00000.parquet": "8852b1dd865341b021968b3d31f1d9f8873e731efc58046d4f3685761a56ea50"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=07": {
+      "bytes": 3404445,
+      "files": 1,
+      "rows": 6757,
+      "sha256": {
+        "compact-00000.parquet": "fa1bf4388e629809ae425361c472bb901ae09a773fa84b7c521a0a290c74f1b0"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=08": {
+      "bytes": 3633884,
+      "files": 1,
+      "rows": 7799,
+      "sha256": {
+        "compact-00000.parquet": "470e1ac4c2f9cd94c4ae29b78fa5cec7edd55da8c896b49c6de8ed3293aff373"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=09": {
+      "bytes": 3894423,
+      "files": 1,
+      "rows": 7928,
+      "sha256": {
+        "compact-00000.parquet": "173f4876532debfced29ebb4c50a46932ce677d228799a80406594c8dc92c5ff"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=10": {
+      "bytes": 3425974,
+      "files": 1,
+      "rows": 7524,
+      "sha256": {
+        "compact-00000.parquet": "b01d557fd3d8abcc830139dea2a37b74784ea9bf619e89404f65285379376edc"
+      }
+    },
+    "source=zenodo_pilot/year=2019/month=11": {
+      "bytes": 280302,
+      "files": 1,
+      "rows": 435,
+      "sha256": {
+        "compact-00000.parquet": "1ed0a747f54c1d06dfe11427584d9af9863a991c876e03cb2e879b15e34372dc"
+      }
+    },
+    "source=zenodo_pilot/year=2020/month=01": {
+      "bytes": 13579517,
+      "files": 1,
+      "rows": 27124,
+      "sha256": {
+        "compact-00000.parquet": "7c5d244de02cb0089ae6f5eae93b10cd723ed8cc152fbf27eefdfff07ac9233c"
+      }
+    },
+    "source=zenodo_pilot/year=2020/month=02": {
+      "bytes": 11522562,
+      "files": 1,
+      "rows": 23024,
+      "sha256": {
+        "compact-00000.parquet": "780825d062ec871d3fb117f122bbec6544770adfe8986a89b1967a0e52c960f8"
+      }
+    },
+    "source=zenodo_pilot/year=2020/month=03": {
+      "bytes": 11077056,
+      "files": 1,
+      "rows": 22962,
+      "sha256": {
+        "compact-00000.parquet": "a8bf7a0b6556f60f762e3f380006e96ead57d8e5b05f7727953800a338e780fd"
+      }
+    },
+    "source=zenodo_pilot/year=2020/month=04": {
+      "bytes": 6299198,
+      "files": 1,
+      "rows": 12526,
+      "sha256": {
+        "compact-00000.parquet": "1dcdae5e9fa81ff70f5fe3d6cd5d388c3151b021a9c0ee98ac507d2feedb132e"
+      }
+    }
+  },
+  "per_input": {
+    "COVID19_support_post_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 3,
+        "shorter_than_5_tokens": 1
+      },
+      "rows_in": 981,
+      "rows_out": 977
+    },
+    "anxiety_post_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 3,
+        "non_english": 1
+      },
+      "rows_in": 15896,
+      "rows_out": 15892
+    },
+    "anxiety_pre_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 4,
+        "non_english": 3
+      },
+      "rows_in": 19976,
+      "rows_out": 19969
+    },
+    "divorce_post_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 2,
+        "shorter_than_5_tokens": 1
+      },
+      "rows_in": 2747,
+      "rows_out": 2744
+    },
+    "divorce_pre_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 1
+      },
+      "rows_in": 6419,
+      "rows_out": 6418
+    },
+    "parenting_post_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 2
+      },
+      "rows_in": 7045,
+      "rows_out": 7043
+    },
+    "parenting_pre_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 6
+      },
+      "rows_in": 17371,
+      "rows_out": 17365
+    },
+    "personalfinance_post_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 5,
+        "non_english": 1
+      },
+      "rows_in": 37165,
+      "rows_out": 37159
+    },
+    "personalfinance_pre_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 2
+      },
+      "rows_in": 23440,
+      "rows_out": 23438
+    },
+    "relationships_post_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 9
+      },
+      "rows_in": 20767,
+      "rows_out": 20758
+    },
+    "relationships_pre_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 12
+      },
+      "rows_in": 15037,
+      "rows_out": 15025
+    },
+    "teaching_post_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {},
+      "rows_in": 1063,
+      "rows_out": 1063
+    },
+    "teaching_pre_features_tfidf_256.csv": {
+      "balanced": true,
+      "drops": {
+        "exact_duplicate_text": 1,
+        "non_english": 1
+      },
+      "rows_in": 2350,
+      "rows_out": 2348
+    }
+  },
+  "privacy": {
+    "author_fields": "never kept (reddit adapter reads `author` only to match bot accounts)",
+    "k_min": 50
+  },
+  "rows_in": 170257,
+  "rows_out": 170199,
+  "schema": {
+    "community": "string",
+    "created_at": "timestamp[us, tz=UTC]",
+    "lang": "string",
+    "n_chars": "int32",
+    "n_tokens_est": "int32",
+    "record_id": "string",
+    "source": "string",
+    "text_clean": "string"
+  },
+  "seed": 42,
+  "source": "zenodo_pilot"
+}
