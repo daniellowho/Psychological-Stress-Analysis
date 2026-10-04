@@ -17,6 +17,7 @@ and writing the final report.
 - Step 9: the Spark scoring job. It works and was checked against the plain pipeline (differences below 0.000003).
 - Step 10: the analytics code is written and its tests pass. Its first tables were made from only a small slice of the data.
 - Everything is pushed to GitHub on the branch `steps-5-10-inference-spark-analytics` (nothing is merged into `main`).
+- The three trained bundles are on Hugging Face in the private org `Amrita-Vishwa-Ghopeetham`: `stress-roberta-base`, `emotion-roberta-base`, `stressor-distilroberta-base`. A fresh clone gets them automatically when the notebook starts (needs `hf auth login` once). To publish a new version: `python -m stress_signals.hf_sync push emotion` (or `stressor`, `stress`; add `--dry-run` first).
 
 ## Your to-do list, in order
 

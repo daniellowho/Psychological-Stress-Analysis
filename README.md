@@ -136,7 +136,8 @@ anything containing Reddit text, so these must be fetched or rebuilt:
 |---|---|
 | Trained stress model (`model.safetensors`, tokenizer, config; ~480 MB) | Hugging Face: [`Amrita-Vishwa-Ghopeetham/stress-roberta-base`](https://huggingface.co/Amrita-Vishwa-Ghopeetham/stress-roberta-base) (currently private; ask the owner for access or to make it public) |
 | Per-seed `best_model/` weights and checkpoints (`trained_models/*/runs/*/seed*/best_model/`, `data/outputs/checkpoints/`) | Not published. Retrain by running the notebook (Step 3). |
-| Emotion model weights | Not published. Retrain by running the notebook. |
+| Trained emotion model (`model.safetensors`, tokenizer, thresholds; ~500 MB) | Hugging Face (private): [`Amrita-Vishwa-Ghopeetham/emotion-roberta-base`](https://huggingface.co/Amrita-Vishwa-Ghopeetham/emotion-roberta-base) |
+| Trained stressor model (fine-tuned DistilRoBERTa, thresholds, zero-shot prototypes; ~330 MB) | Hugging Face (private): [`Amrita-Vishwa-Ghopeetham/stressor-distilroberta-base`](https://huggingface.co/Amrita-Vishwa-Ghopeetham/stressor-distilroberta-base) |
 | `data/raw/` and `data/processed/*.parquet` | Private Hugging Face dataset [`Amrita-Vishwa-Ghopeetham/stress-signals-data`](https://huggingface.co/datasets/Amrita-Vishwa-Ghopeetham/stress-signals-data) (see below), or rebuilt by Steps 1-2. Dreaddit and GoEmotions download automatically; SAD, Mendeley, SenticNet and Zenodo are manual downloads. |
 
 ### Using the published stress model
@@ -162,6 +163,21 @@ The repo also contains `stress_config.json` (temperature-scaling calibration and
 `manifest.json` and the model card (shown as the repo's README). Apply the calibration from `stress_config.json` before using raw
 probabilities. The model is for aggregate, population-level signals only, never for diagnosing or scoring individuals.
 
+### The emotion and stressor bundles
+
+Each bundle is published **byte for byte** as saved in `trained_models/<component>/v20261004/`, so the SHA-256 `manifest.json` inside it still verifies
+after a download, plus a `README.md` model card. They are meant to be loaded through the project, not on their own: the stressor tagger also needs
+`stressor_config.json`, `thresholds.json`, `prototypes.npy` and the public embedding model `sentence-transformers/all-MiniLM-L6-v2`.
+
+```
+.venv\Scripts\hf download Amrita-Vishwa-Ghopeetham/emotion-roberta-base --local-dir trained_models/emotion/v20261004
+.venv\Scripts\hf download Amrita-Vishwa-Ghopeetham/stressor-distilroberta-base --local-dir trained_models/stressor/v20261004
+```
+
+After downloading, re-run notebook cell 7.2 to write `trained_models/bundle_manifest.json` (it pins the exact versions and hashes). The stressor
+bundle is **provisional**: its Reddit evaluation labels were made by a machine, not by people (see its model card). To publish a new bundle version:
+`python -m stress_signals.hf_sync push emotion` (or `stressor`, `stress`; add `--dry-run` first; repos are private unless you pass `--public`).
+
 ### Datasets (private)
 
 `Amrita-Vishwa-Ghopeetham/stress-signals-data` is a **private** Hugging Face dataset repo holding `data/raw/` and `data/processed/`
@@ -180,8 +196,8 @@ This recreates `data/raw/` and `data/processed/` in place, so Steps 1-2 are then
 ### Automatic download
 
 Cell 0.1 of the notebook calls `stress_signals.hf_sync.pull_missing`, configured in the `huggingface:` section of
-`code/config.yaml`. On every start it downloads, from the two private repos above, only the files that are **missing** locally
-(`data/raw/`, `data/processed/` and `trained_models/stress/v20261004/`). Existing files are never overwritten. So on a fresh
+`code/config.yaml`. On every start it downloads, from the private repos above, only the files that are **missing** locally
+(`data/raw/`, `data/processed/` and the three bundles `trained_models/{stress,emotion,stressor}/v20261004/`). Existing files are never overwritten. So on a fresh
 clone you only need to run `hf auth login` once and Run All; no manual download commands. If the repos cannot be reached (not
 logged in, no access, offline) it prints a `SKIPPED` note and the notebook carries on as before (Dreaddit downloads from
-Hugging Face and Step 3 trains from scratch). Set `huggingface.enabled: false` to turn it off.
+Hugging Face and Steps 3 to 5 can train from scratch). Set `huggingface.enabled: false` to turn it off.

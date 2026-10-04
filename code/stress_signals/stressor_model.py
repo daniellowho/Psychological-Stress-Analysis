@@ -1520,7 +1520,7 @@ over windows; per-category thresholds tuned on the Reddit gold-dev set; no categ
 Categories without SAD training labels ({', '.join(zs)}) are scored by zero-shot embedding similarity and are
 **lower confidence**. Embedding model: {(sc['embedding_model'] or {}).get('hf_id', 'n/a')}.
 
-**Data.** Training: SAD v1 (MIT; crowd-written and LiveJournal sentences, no Reddit). Evaluation: hand-labelled gold set
+**Data.** Training: SAD v1 (MIT; crowd-written and LiveJournal sentences, no Reddit). Evaluation: {'machine-labelled' if metrics.get('label_source') == 'machine' else 'hand-labelled'} gold set
 of Dreaddit stress-positive segments (train/validation splits only), split 50/50 into dev (tuning) and test (scored once).
 
 **Gold-test (n = {t.get('n', 'n/a')}).** macro-F1 over categories with test positives {_f(t.get('f1_macro_supported'))}

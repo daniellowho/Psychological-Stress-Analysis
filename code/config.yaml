@@ -577,10 +577,14 @@ logging:
   level: INFO
 
 huggingface:
-  # Missing datasets / the trained stress model are pulled from these (private) Hugging Face repos when the notebook starts
+  # Missing datasets / the three trained bundles (stress, emotion, stressor) are pulled from these (private) Hugging Face repos when the notebook starts
   # (cell 0.1). Needs `hf auth login` on this laptop. Existing local files are never overwritten. Set enabled: false to disable.
   enabled: true
   data_repo: Amrita-Vishwa-Ghopeetham/stress-signals-data           # dataset repo: data/raw + data/processed
   data_paths: [data/raw, data/processed]
   model_repo: Amrita-Vishwa-Ghopeetham/stress-roberta-base          # model repo: the stress bundle
   model_dir: trained_models/stress/v20261004
+  emotion_repo: Amrita-Vishwa-Ghopeetham/emotion-roberta-base       # model repo: the emotion bundle (private)
+  emotion_dir: trained_models/emotion/v20261004
+  stressor_repo: Amrita-Vishwa-Ghopeetham/stressor-distilroberta-base   # model repo: the stressor bundle (private)
+  stressor_dir: trained_models/stressor/v20261004
