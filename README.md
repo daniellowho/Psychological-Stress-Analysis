@@ -12,7 +12,9 @@ and reports only aggregate counts. Any aggregate cell with n < `privacy.k_min` (
 code/
   notebook.ipynb        the whole pipeline in one notebook: open it and Run All
   config.yaml           single configuration; every path in it is relative to the project root
-  stress_signals/       package (audit, preprocess, privacy, config, utils, stress_model, metrics, handoff)
+  stress_signals/       package (audit, preprocess, privacy, config, utils, stress_model, emotion_model, stressor_model,
+                        metrics, handoff, hf_sync)
+  taxonomy/             stressor taxonomy (stressors_v1.yaml)
   tests/                pytest suite
   pyproject.toml        package + pytest settings
   _deferred/            placeholders for the Postgres step (docker-compose.yml, .env.example)
@@ -27,7 +29,63 @@ requirements.txt
 The project root is the folder that contains `code/` and `data/`. `stress_signals.config.load_config()` finds it by walking up from the
 current directory until it reaches `code/config.yaml`.
 
-## Run it on any Windows laptop
+## Quick start (step by step)
+
+Pick the path that matches what you want. Everything below is Windows / PowerShell.
+
+**Prerequisites (all paths):** Python 3.11 (python.org) and Git. VS Code with the Python + Jupyter extensions is needed for the notebook.
+
+### Path A: just use the trained stress model
+
+1. Get access to the model repo [`dannyyyyellooo/stress-roberta-base`](https://huggingface.co/dannyyyyellooo/stress-roberta-base)
+   (private for now; ask the owner to add you or to make it public).
+2. Create a Hugging Face account, make a **read** token at <https://huggingface.co/settings/tokens>, then:
+   ```
+   pip install transformers torch huggingface_hub
+   hf auth login
+   ```
+3. Load it (downloads and caches ~480 MB on first use):
+   ```python
+   from transformers import AutoTokenizer, AutoModelForSequenceClassification
+   repo = "dannyyyyellooo/stress-roberta-base"
+   tok = AutoTokenizer.from_pretrained(repo)
+   model = AutoModelForSequenceClassification.from_pretrained(repo)
+   ```
+4. Apply the temperature and threshold in the repo's `stress_config.json` before using probabilities (see below).
+
+### Path B: run the whole project (notebook, data, models)
+
+1. Clone and enter the project:
+   ```
+   git clone https://github.com/daniellowho/Psychological-Stress-Analysis
+   cd Psychological-Stress-Analysis
+   ```
+2. Create the virtual environment:
+   ```
+   python -m venv .venv
+   ```
+3. Log in to Hugging Face once, so the private datasets and model can be fetched (you need access to the two repos listed under
+   "What is on GitHub vs Hugging Face"; use a read token):
+   ```
+   .venv\Scripts\python -m pip install huggingface_hub
+   .venv\Scripts\hf auth login
+   ```
+4. Open `code/notebook.ipynb` in VS Code, *Select Kernel* > *Python Environments* > `.venv`, then **Run All**.
+   - Cell 0.0 installs the libraries (and the right torch build for your GPU; restart the kernel if it asks, then Run All again).
+   - Cell 0.1 **downloads whatever is missing** from Hugging Face (datasets into `data/raw/` and `data/processed/`, the stress model
+     into `trained_models/stress/v20261004/`). Existing files are never overwritten.
+   - Steps 1-2 then audit and preprocess the data, Step 3 uses the downloaded stress model results or trains, Step 4 trains the
+     emotion model. Already-finished steps print `SKIP ...`.
+5. If step 3 says `SKIPPED (...)` for Hugging Face, you are not logged in or have no access. The notebook still works: it
+   downloads Dreaddit from Hugging Face itself and trains from scratch, but SAD, Mendeley, SenticNet and Zenodo then need manual
+   downloads into `data/raw/` (Steps 1-2 print `NOT RUN ...` without them).
+
+### Path C: no Hugging Face access
+
+Skip step 3 above (or set `huggingface.enabled: false` in `code/config.yaml`). Run the notebook as in Path B; Step 3 trains the
+stress model from Dreaddit alone. Nothing else is required for it.
+
+## Run it on any Windows laptop (details)
 
 1. Install **Python 3.11** (python.org) and VS Code with the Python + Jupyter extensions.
 2. Get the project (`git clone https://github.com/daniellowho/Psychological-Stress-Analysis`) and create a virtual environment in it:
@@ -50,7 +108,7 @@ add its number to `FORCE_RERUN` in cell 0.1, e.g. `{"3C.1"}`. To retrain a seed,
 
 **Raw datasets are optional for training.** Steps 1–2 audit and build all datasets only when the manual downloads (SAD_v1, Mendeley,
 SenticNet, Zenodo) are in `data/raw/`. Without them those cells print `NOT RUN …`. Step 3 needs only Dreaddit, which is downloaded from
-Hugging Face, and the fixed split file, which is in git.
+Hugging Face, and the fixed split file, which is in git. If you have access to the private dataset repo they are fetched for you (see below).
 
 **Optional:** leave-one-subreddit-out (3E.2, about 10 extra trainings) runs only with `RUN_LOSO = True` in that cell.
 
