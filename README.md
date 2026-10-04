@@ -67,3 +67,39 @@ Every step writes a manifest to `data/outputs/manifests/`. It records library ve
 hashes of the artifacts. `relocation_map.json` in the same folder records the move from the old layout to this one. Nothing in this project
 deletes files; a test enforces that the package has no delete calls. Epoch checkpoints, which the Trainer rotates, live in
 `data/outputs/checkpoints/`, outside `trained_models/`.
+
+## What is on GitHub vs Hugging Face
+
+GitHub holds the code, config, tests, taxonomy, fixed split indices, manifests/reports and the small run records
+(`train_summary.json`, evaluation/calibration JSONs, logs, predictions without text). It does **not** hold anything large or
+anything containing Reddit text, so these must be fetched or rebuilt:
+
+| Missing from a fresh clone | Where it comes from |
+|---|---|
+| Trained stress model (`model.safetensors`, tokenizer, config; ~480 MB) | Hugging Face: [`dannyyyyellooo/stress-roberta-base`](https://huggingface.co/dannyyyyellooo/stress-roberta-base) (currently private; ask the owner for access or to make it public) |
+| Per-seed `best_model/` weights and checkpoints (`trained_models/*/runs/*/seed*/best_model/`, `data/outputs/checkpoints/`) | Not published. Retrain by running the notebook (Step 3). |
+| Emotion model weights | Not published. Retrain by running the notebook. |
+| `data/raw/` and `data/processed/*.parquet` | Rebuilt by Steps 1-2. Dreaddit and GoEmotions download automatically; SAD, Mendeley, SenticNet and Zenodo are manual downloads. |
+
+### Using the published stress model
+
+The Hugging Face repo is a standard `transformers` checkpoint (roberta-base, binary stress / no-stress), so it downloads and caches
+itself on first use. While the repo is private, log in first with `hf auth login` (a read token is enough).
+
+```python
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+repo = "dannyyyyellooo/stress-roberta-base"
+tok = AutoTokenizer.from_pretrained(repo)
+model = AutoModelForSequenceClassification.from_pretrained(repo)
+```
+
+Or download the whole folder to `trained_models/stress/v20261004/`, where the project code expects it:
+
+```
+.venv\Scripts\hf download dannyyyyellooo/stress-roberta-base --local-dir trained_models/stress/v20261004
+```
+
+The repo also contains `stress_config.json` (temperature-scaling calibration and the decision threshold), `metrics.json`,
+`manifest.json` and the model card (shown as the repo's README). Apply the calibration from `stress_config.json` before using raw
+probabilities. The model is for aggregate, population-level signals only, never for diagnosing or scoring individuals.
