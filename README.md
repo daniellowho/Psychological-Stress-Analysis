@@ -79,7 +79,7 @@ anything containing Reddit text, so these must be fetched or rebuilt:
 | Trained stress model (`model.safetensors`, tokenizer, config; ~480 MB) | Hugging Face: [`dannyyyyellooo/stress-roberta-base`](https://huggingface.co/dannyyyyellooo/stress-roberta-base) (currently private; ask the owner for access or to make it public) |
 | Per-seed `best_model/` weights and checkpoints (`trained_models/*/runs/*/seed*/best_model/`, `data/outputs/checkpoints/`) | Not published. Retrain by running the notebook (Step 3). |
 | Emotion model weights | Not published. Retrain by running the notebook. |
-| `data/raw/` and `data/processed/*.parquet` | Rebuilt by Steps 1-2. Dreaddit and GoEmotions download automatically; SAD, Mendeley, SenticNet and Zenodo are manual downloads. |
+| `data/raw/` and `data/processed/*.parquet` | Private Hugging Face dataset [`dannyyyyellooo/stress-signals-data`](https://huggingface.co/datasets/dannyyyyellooo/stress-signals-data) (see below), or rebuilt by Steps 1-2. Dreaddit and GoEmotions download automatically; SAD, Mendeley, SenticNet and Zenodo are manual downloads. |
 
 ### Using the published stress model
 
@@ -103,3 +103,18 @@ Or download the whole folder to `trained_models/stress/v20261004/`, where the pr
 The repo also contains `stress_config.json` (temperature-scaling calibration and the decision threshold), `metrics.json`,
 `manifest.json` and the model card (shown as the repo's README). Apply the calibration from `stress_config.json` before using raw
 probabilities. The model is for aggregate, population-level signals only, never for diagnosing or scoring individuals.
+
+### Datasets (private)
+
+`dannyyyyellooo/stress-signals-data` is a **private** Hugging Face dataset repo holding `data/raw/` and `data/processed/`
+(including `_cache/` and the fixed splits), laid out under the same `data/` paths as the project. It is private on purpose:
+the files contain real Reddit text, the raw Zenodo files still have `author`, and some source licences (TensiStrength,
+Dreaddit) are restricted or unverified. Do not make it public or redistribute it. To restore it into a fresh clone (needs
+access to the repo and `hf auth login`):
+
+```
+.venv\Scripts\hf download dannyyyyellooo/stress-signals-data --repo-type dataset --local-dir .
+```
+
+This recreates `data/raw/` and `data/processed/` in place, so Steps 1-2 are then skipped. Compare file hashes against
+`data/outputs/manifests/` to confirm they match.
