@@ -1,0 +1,260 @@
+{
+  "activation": "sigmoid (one independent probability per label)",
+  "base_model": "roberta-base",
+  "calibration": {
+    "fitted_on": "validation",
+    "formula": "p = sigmoid(a * logit + b), per label",
+    "method": "platt",
+    "params": {
+      "admiration": {
+        "a": 0.9167468214526032,
+        "b": -0.4934181234579897
+      },
+      "amusement": {
+        "a": 1.0149357025001606,
+        "b": -0.13042176734596375
+      },
+      "anger": {
+        "a": 0.8850981967543882,
+        "b": -0.462617257390605
+      },
+      "annoyance": {
+        "a": 0.963015848995298,
+        "b": -0.191319579440268
+      },
+      "approval": {
+        "a": 0.8216981624521468,
+        "b": -0.4060742455524392
+      },
+      "caring": {
+        "a": 0.9444400944421315,
+        "b": -0.248983627946732
+      },
+      "confusion": {
+        "a": 0.9595635799913005,
+        "b": -0.23521441539312624
+      },
+      "curiosity": {
+        "a": 0.9200627051640745,
+        "b": -0.30254352046341015
+      },
+      "desire": {
+        "a": 1.0962414960293139,
+        "b": 0.015297458623842373
+      },
+      "disappointment": {
+        "a": 0.9427462122671522,
+        "b": -0.14237633444576317
+      },
+      "disapproval": {
+        "a": 0.8441796648545724,
+        "b": -0.2555164692537237
+      },
+      "disgust": {
+        "a": 1.019185395080131,
+        "b": -0.26191115113024005
+      },
+      "embarrassment": {
+        "a": 1.3634960820911182,
+        "b": 0.8921805174502925
+      },
+      "excitement": {
+        "a": 0.9386272905592575,
+        "b": -0.46604748004221613
+      },
+      "fear": {
+        "a": 1.0739574871102608,
+        "b": 0.16031581143950305
+      },
+      "gratitude": {
+        "a": 1.0955448511198869,
+        "b": -0.05302413809883626
+      },
+      "grief": {
+        "a": 1.4707497145099468,
+        "b": 2.1939534508867817
+      },
+      "joy": {
+        "a": 1.0630079801245662,
+        "b": 0.030397816364756722
+      },
+      "love": {
+        "a": 0.9862220704013751,
+        "b": -0.5089162899740463
+      },
+      "nervousness": {
+        "a": 1.2837729199571826,
+        "b": 0.8101780517501629
+      },
+      "neutral": {
+        "a": 0.758053852753967,
+        "b": 0.12120890568400243
+      },
+      "optimism": {
+        "a": 0.9784219188447622,
+        "b": -0.22282677317530786
+      },
+      "pride": {
+        "a": 2.317416482902901,
+        "b": 6.100384400246642
+      },
+      "realization": {
+        "a": 0.9352129345665996,
+        "b": -0.4189314651287073
+      },
+      "relief": {
+        "a": 1.5155660510775983,
+        "b": 2.1369319379569593
+      },
+      "remorse": {
+        "a": 1.224074873383535,
+        "b": 0.4427426111890646
+      },
+      "sadness": {
+        "a": 0.8596581367098953,
+        "b": -0.7293151878888412
+      },
+      "surprise": {
+        "a": 0.9410005999988692,
+        "b": -0.3357061075037357
+      }
+    }
+  },
+  "chunking": {
+    "aggregation": "mean",
+    "max_chunks_per_doc": 8,
+    "max_tokens": 128,
+    "rule": "sentence-aligned windows (preprocess.chunk_text); record = mean of calibrated chunk probabilities",
+    "stride": 63
+  },
+  "component": "emotion",
+  "created_utc": "2026-10-04T09:40:49.644201+00:00",
+  "data": {
+    "dataset": "GoEmotions (official google-research files; HF go_emotions/simplified identical, Step 1)",
+    "split_counts": {
+      "test": 5427,
+      "train": 43410,
+      "validation": 5426
+    },
+    "split_file": "goemotions_split_v1.json",
+    "split_fingerprint": "02339a74866b1fa37b851caf8bc76d6909d1019f6b140be9aad7f2021348e816"
+  },
+  "ekman": {
+    "combine": "max",
+    "groups": [
+      "anger",
+      "disgust",
+      "fear",
+      "joy",
+      "sadness",
+      "surprise",
+      "neutral"
+    ],
+    "mapping_file": "ekman_mapping.json",
+    "rule": "group probability = max of member calibrated probabilities (lower bound of P(any member), no independence assumption); group predicted = any member above its own threshold; group gold = any member labelled"
+  },
+  "epochs_completed": 4.0,
+  "gradient_accumulation": {
+    "loss_divided_by_ga_in_compute_loss": true,
+    "note": "log_history `loss` is the Trainer's report (divided by GA once more when ga_divide); train_log.csv has it rescaled to the true mean loss",
+    "steps": 2
+  },
+  "inference_defaults": {
+    "half_precision": false,
+    "precision": "fp32"
+  },
+  "input": "text_clean produced by stress_signals.preprocess.clean_text (Step 2)",
+  "label_map": {
+    "0": "admiration",
+    "1": "amusement",
+    "2": "anger",
+    "3": "annoyance",
+    "4": "approval",
+    "5": "caring",
+    "6": "confusion",
+    "7": "curiosity",
+    "8": "desire",
+    "9": "disappointment",
+    "10": "disapproval",
+    "11": "disgust",
+    "12": "embarrassment",
+    "13": "excitement",
+    "14": "fear",
+    "15": "gratitude",
+    "16": "grief",
+    "17": "joy",
+    "18": "love",
+    "19": "nervousness",
+    "20": "optimism",
+    "21": "pride",
+    "22": "realization",
+    "23": "relief",
+    "24": "remorse",
+    "25": "sadness",
+    "26": "surprise",
+    "27": "neutral"
+  },
+  "max_length": 128,
+  "model_choice": "roberta-base",
+  "num_labels": 28,
+  "problem_type": "multi_label_classification",
+  "seed": 13,
+  "thresholds": {
+    "criterion": "max F1 per label; ties -> closest to 0.5",
+    "fitted_on": "validation (calibrated probabilities)",
+    "low_support_labels": [
+      "grief",
+      "nervousness",
+      "pride",
+      "relief"
+    ],
+    "low_support_rule": "keep_0.5",
+    "values": {
+      "admiration": 0.3,
+      "amusement": 0.24,
+      "anger": 0.24,
+      "annoyance": 0.2,
+      "approval": 0.25,
+      "caring": 0.21,
+      "confusion": 0.22,
+      "curiosity": 0.32,
+      "desire": 0.37,
+      "disappointment": 0.18,
+      "disapproval": 0.2,
+      "disgust": 0.17,
+      "embarrassment": 0.24,
+      "excitement": 0.27,
+      "fear": 0.21,
+      "gratitude": 0.73,
+      "grief": 0.5,
+      "joy": 0.29,
+      "love": 0.22,
+      "nervousness": 0.5,
+      "neutral": 0.27,
+      "optimism": 0.27,
+      "pride": 0.5,
+      "realization": 0.28,
+      "relief": 0.5,
+      "remorse": 0.29,
+      "sadness": 0.15,
+      "surprise": 0.21
+    }
+  },
+  "training": {
+    "class_weighting": {
+      "enabled": false,
+      "max_pos_weight": 10.0,
+      "method": "inverse_sqrt"
+    },
+    "early_stopping_patience": 2,
+    "epochs": 4,
+    "gradient_accumulation_steps": 2,
+    "learning_rate": 3e-05,
+    "metric_for_best_model": "macro_ap",
+    "mixed_precision": "auto",
+    "train_batch_size": 16,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "transformers_used_for_training": "4.46.3"
+}

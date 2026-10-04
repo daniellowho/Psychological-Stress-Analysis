@@ -1,0 +1,152 @@
+{
+  "by_subreddit": [
+    {
+      "community": "almosthomeless",
+      "n": 33,
+      "suppressed": true
+    },
+    {
+      "community": "anxiety",
+      "n": 341,
+      "rate__academic_workload": 0.0967741935483871,
+      "rate__financial_concerns": 0.16422287390029325,
+      "rate__health_concerns": 0.9794721407624634,
+      "rate__other_unclear": 1.0,
+      "rate__overload": 0.9970674486803519,
+      "rate__relationship_issues": 1.0,
+      "rate__societal_problems": 0.9941348973607038,
+      "rate__uncertainty": 0.9970674486803519,
+      "rate__workplace_pressure": 0.9970674486803519,
+      "suppressed": false
+    },
+    {
+      "community": "assistance",
+      "n": 91,
+      "rate__academic_workload": 0.054945054945054944,
+      "rate__financial_concerns": 0.6923076923076923,
+      "rate__health_concerns": 0.9120879120879121,
+      "rate__other_unclear": 1.0,
+      "rate__overload": 1.0,
+      "rate__relationship_issues": 0.989010989010989,
+      "rate__societal_problems": 0.978021978021978,
+      "rate__uncertainty": 0.967032967032967,
+      "rate__workplace_pressure": 0.989010989010989,
+      "suppressed": false
+    },
+    {
+      "community": "domesticviolence",
+      "n": 200,
+      "rate__academic_workload": 0.01,
+      "rate__financial_concerns": 0.12,
+      "rate__health_concerns": 0.825,
+      "rate__other_unclear": 0.995,
+      "rate__overload": 0.995,
+      "rate__relationship_issues": 1.0,
+      "rate__societal_problems": 0.985,
+      "rate__uncertainty": 0.935,
+      "rate__workplace_pressure": 0.98,
+      "suppressed": false
+    },
+    {
+      "community": "food_pantry",
+      "n": 6,
+      "suppressed": true
+    },
+    {
+      "community": "homeless",
+      "n": 55,
+      "rate__academic_workload": 0.01818181818181818,
+      "rate__financial_concerns": 0.6909090909090909,
+      "rate__health_concerns": 0.9454545454545454,
+      "rate__other_unclear": 1.0,
+      "rate__overload": 1.0,
+      "rate__relationship_issues": 1.0,
+      "rate__societal_problems": 1.0,
+      "rate__uncertainty": 0.9818181818181818,
+      "rate__workplace_pressure": 1.0,
+      "suppressed": false
+    },
+    {
+      "community": "ptsd",
+      "n": 341,
+      "rate__academic_workload": 0.04105571847507331,
+      "rate__financial_concerns": 0.11730205278592376,
+      "rate__health_concerns": 0.9706744868035191,
+      "rate__other_unclear": 1.0,
+      "rate__overload": 0.9970674486803519,
+      "rate__relationship_issues": 0.9970674486803519,
+      "rate__societal_problems": 0.9970674486803519,
+      "rate__uncertainty": 0.9853372434017595,
+      "rate__workplace_pressure": 0.9970674486803519,
+      "suppressed": false
+    },
+    {
+      "community": "relationships",
+      "n": 251,
+      "rate__academic_workload": 0.02390438247011952,
+      "rate__financial_concerns": 0.12350597609561753,
+      "rate__health_concerns": 0.7689243027888446,
+      "rate__other_unclear": 0.9880478087649402,
+      "rate__overload": 1.0,
+      "rate__relationship_issues": 1.0,
+      "rate__societal_problems": 0.9760956175298805,
+      "rate__uncertainty": 0.9760956175298805,
+      "rate__workplace_pressure": 0.9880478087649402,
+      "suppressed": false
+    },
+    {
+      "community": "stress",
+      "n": 23,
+      "suppressed": true
+    },
+    {
+      "community": "survivorsofabuse",
+      "n": 109,
+      "rate__academic_workload": 0.027522935779816515,
+      "rate__financial_concerns": 0.12844036697247707,
+      "rate__health_concerns": 0.9174311926605505,
+      "rate__other_unclear": 1.0,
+      "rate__overload": 1.0,
+      "rate__relationship_issues": 1.0,
+      "rate__societal_problems": 0.9908256880733946,
+      "rate__uncertainty": 0.944954128440367,
+      "rate__workplace_pressure": 1.0,
+      "suppressed": false
+    }
+  ],
+  "checks": [
+    {
+      "category": "financial_concerns",
+      "expected": "rate_mapped > rate_other",
+      "mapped_subreddits": [
+        "almosthomeless",
+        "assistance",
+        "food_pantry",
+        "homeless"
+      ],
+      "n_mapped": 185,
+      "n_other": 1265,
+      "rate_mapped": 0.6972972972972973,
+      "rate_other": 0.13517786561264822,
+      "ratio": 5.158368895211001
+    },
+    {
+      "category": "relationship_issues",
+      "expected": "rate_mapped > rate_other",
+      "mapped_subreddits": [
+        "domesticviolence",
+        "relationships",
+        "survivorsofabuse"
+      ],
+      "n_mapped": 560,
+      "n_other": 890,
+      "rate_mapped": 1.0,
+      "rate_other": 0.9977528089887641,
+      "ratio": 1.0022522522522523
+    }
+  ],
+  "k_min": 50,
+  "method": "zero_shot",
+  "n_segments": 1450,
+  "note": "weak sanity check: subreddits are not stressor labels; NOT an accuracy estimate"
+}

@@ -1,0 +1,108 @@
+{
+  "artifacts": {
+    "config.json": {
+      "bytes": 1442,
+      "sha256": "320192e132849f4f8484d3a29221a54234bbff983bf6e8b7e0813752a4bfda6b",
+      "type": "file"
+    },
+    "merges.txt": {
+      "bytes": 456318,
+      "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+      "type": "file"
+    },
+    "metrics.json": {
+      "bytes": 76002,
+      "sha256": "8932d5d344889f0708983686024659fd68a4ca7bb83ea254a085b332cbc46644",
+      "type": "file"
+    },
+    "model.safetensors": {
+      "bytes": 328513812,
+      "sha256": "1fc91dd15ffbea2c2fe1cd915f99e7321a98c6da69eef230eee8f863429ef598",
+      "type": "file"
+    },
+    "model_card.md": {
+      "bytes": 3372,
+      "sha256": "a43630b95afdec28363f276a08bf9ce655ca04c880bb784fd31dc434f1ca66a8",
+      "type": "file"
+    },
+    "prototypes.npy": {
+      "bytes": 13952,
+      "sha256": "6bd3d9648ddfe7a0053ab95836f6282f5fbc25a8851f031ff2bf3fb170d68ea8",
+      "type": "file"
+    },
+    "special_tokens_map.json": {
+      "bytes": 1009,
+      "sha256": "b72f59af007f804a5b6514f6ed8d59b4723349105471bcc3a881591fd586e2d5",
+      "type": "file"
+    },
+    "stressor_config.json": {
+      "bytes": 4021,
+      "sha256": "84b21de15fb4cf9c6a4b61ca32e8562ef3ac9902efc2cdf2b6b40bf3651fb413",
+      "type": "file"
+    },
+    "stressors_v1.yaml": {
+      "bytes": 19119,
+      "sha256": "66bf357c4af952164e60ce66e0a9ef53cee506e7f6914bc3cf7042b1b1f8d29c",
+      "type": "file"
+    },
+    "thresholds.json": {
+      "bytes": 9995,
+      "sha256": "e916b8400f33bc4c9dc301dfb169fe4cf633eea17ea0835a642bc43909aefb77",
+      "type": "file"
+    },
+    "tokenizer.json": {
+      "bytes": 3558741,
+      "sha256": "31d5eaa58f882f7259d27ee12c3adc89a200ae6329ef815dd97c9531e5b8d418",
+      "type": "file"
+    },
+    "tokenizer_config.json": {
+      "bytes": 1385,
+      "sha256": "e819ef2ae85898d461f29fd3c082ded6a754403312834199d5f172de388e32bf",
+      "type": "file"
+    },
+    "vocab.json": {
+      "bytes": 798293,
+      "sha256": "ed19656ea1707df69134c4af35c8ceda2cc9860bf2c3495026153a133670ab5e",
+      "type": "file"
+    }
+  },
+  "created_utc": "2026-10-04T16:53:34+00:00",
+  "dataset_versions": {
+    "gold_split": "stressor_gold_split_v1.json",
+    "gold_split_sha256": "e4d4a8564aa13422e40824d8a77a92db3e24e50c268c03fa4cbdd3d647a974fb",
+    "sad_parquet_sha256": "d507653c192a5d941c9e0406c178be7d49b68cb765956e92e76198f865415a66",
+    "sad_split": "sad_split_v1.json"
+  },
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+  "extra": {
+    "component": "stressor",
+    "method": "finetune"
+  },
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.9",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "platform": {
+    "machine": "AMD64",
+    "release": "10",
+    "system": "Windows"
+  },
+  "seeds": [
+    42,
+    13,
+    2024
+  ]
+}

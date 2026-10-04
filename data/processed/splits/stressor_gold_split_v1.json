@@ -1,0 +1,3643 @@
+{
+  "annotation": "single annotator, no inter-annotator agreement",
+  "counts": {
+    "annotators": 1,
+    "by_community": {
+      "almosthomeless": 24,
+      "anxiety": 74,
+      "assistance": 35,
+      "domesticviolence": 49,
+      "food_pantry": 11,
+      "homeless": 26,
+      "ptsd": 71,
+      "relationships": 56,
+      "stress": 22,
+      "survivorsofabuse": 32
+    },
+    "by_gold_split": {
+      "dev": 200,
+      "test": 200
+    },
+    "total": 400
+  },
+  "created_utc": "2026-10-04T09:41:46.983199+00:00",
+  "leakage": "Gold texts come ONLY from Dreaddit's train and validation splits (stress label 1). Dreaddit's official test split, on which the Step 3 stress model was evaluated once (3D.2, written before this gold set existed), is never sampled, so that evaluation is untouched. Gold labels never train or tune the stress model. The stressor models never train on Dreaddit; gold-dev only tunes stressor thresholds and picks the method; gold-test is scored once. Caveat: the Step 3 model was TRAINED on these segments, so its stress probabilities on gold texts are in-sample and must not be evaluated on the gold set (dreaddit_split is recorded per gold row).",
+  "name": "stressor_gold",
+  "rows": [
+    {
+      "community": "stress",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "validation",
+      "gold_id": "g0001",
+      "gold_split": "test",
+      "record_id": "e6e0867b4db710cbddfb",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "validation",
+      "gold_id": "g0002",
+      "gold_split": "test",
+      "record_id": "2d4e2db129b9e80d294a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0003",
+      "gold_split": "dev",
+      "record_id": "91086f23ddf9dbcae469",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0004",
+      "gold_split": "test",
+      "record_id": "9c5d00370650551bdc61",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0005",
+      "gold_split": "dev",
+      "record_id": "c5a0d263e92933810bb9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0006",
+      "gold_split": "dev",
+      "record_id": "bdcf673c12490e30f0da",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0007",
+      "gold_split": "test",
+      "record_id": "e10c53a39e62c40d8665",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0008",
+      "gold_split": "dev",
+      "record_id": "79343bf5fe9ca475c1de",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0009",
+      "gold_split": "test",
+      "record_id": "d26b51228d60c5f0c5e6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0010",
+      "gold_split": "dev",
+      "record_id": "07b4dd2d9e7145957ee4",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0011",
+      "gold_split": "dev",
+      "record_id": "47a0b9ba4ac436ee757d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0012",
+      "gold_split": "test",
+      "record_id": "ad1f237e42675818914c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0013",
+      "gold_split": "dev",
+      "record_id": "d7bff9fc1a161a288823",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.8571428656578064,
+      "dreaddit_split": "train",
+      "gold_id": "g0014",
+      "gold_split": "dev",
+      "record_id": "c3754fae6c508d8da176",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0015",
+      "gold_split": "dev",
+      "record_id": "17bf2bbc2b1dfead3076",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0016",
+      "gold_split": "dev",
+      "record_id": "cfceaca59b032e2fdad1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0017",
+      "gold_split": "test",
+      "record_id": "52ff021624d439823b80",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0018",
+      "gold_split": "test",
+      "record_id": "ec3106ec47c6e7c045ed",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0019",
+      "gold_split": "test",
+      "record_id": "46a294626ad3972cf063",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0020",
+      "gold_split": "test",
+      "record_id": "045a412c767fe5c2e512",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0021",
+      "gold_split": "dev",
+      "record_id": "78795183dddcfb52d155",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0022",
+      "gold_split": "dev",
+      "record_id": "e8da73ae2c224961fec9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0023",
+      "gold_split": "test",
+      "record_id": "d5de3345b6c29d9bf9d8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0024",
+      "gold_split": "test",
+      "record_id": "7fe6b875c8a182cef563",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0025",
+      "gold_split": "dev",
+      "record_id": "f29133b696acfa84636a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0026",
+      "gold_split": "test",
+      "record_id": "2d34b9d695e1be806c4e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0027",
+      "gold_split": "dev",
+      "record_id": "0c1e3d3b13c6822d6101",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0028",
+      "gold_split": "test",
+      "record_id": "1e275a824601b5dd77fa",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0029",
+      "gold_split": "test",
+      "record_id": "55017701912039f3564a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0030",
+      "gold_split": "dev",
+      "record_id": "f15c801e49e25a8bc4cb",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0031",
+      "gold_split": "test",
+      "record_id": "063cb6cc354f69000d41",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0032",
+      "gold_split": "dev",
+      "record_id": "f95177758eee4b546b54",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0033",
+      "gold_split": "test",
+      "record_id": "8948c89a156cb7c36a31",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0034",
+      "gold_split": "dev",
+      "record_id": "6dd1fd3f47377391bcb3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0035",
+      "gold_split": "test",
+      "record_id": "8bd72aeaeabd6ce33a65",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0036",
+      "gold_split": "dev",
+      "record_id": "b82b349efce6b1640daf",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0037",
+      "gold_split": "dev",
+      "record_id": "1d5c8d7754d3ca031953",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0038",
+      "gold_split": "test",
+      "record_id": "2ae06beea610656a2880",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0039",
+      "gold_split": "dev",
+      "record_id": "f5e141d81b81c25aee97",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0040",
+      "gold_split": "dev",
+      "record_id": "8cf3c40c27ab9792984b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0041",
+      "gold_split": "test",
+      "record_id": "543396a0d8d1ca91fb53",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0042",
+      "gold_split": "dev",
+      "record_id": "3dbcd230c8915b7a0b2c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0043",
+      "gold_split": "dev",
+      "record_id": "07c25119edf535414e50",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0044",
+      "gold_split": "dev",
+      "record_id": "b049c7e1c19743a572b8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0045",
+      "gold_split": "dev",
+      "record_id": "fc4f80558ae8e06bd189",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0046",
+      "gold_split": "test",
+      "record_id": "f90a22fc9d4eb66c01dc",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0047",
+      "gold_split": "dev",
+      "record_id": "b5d5513dd66103993fbe",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0048",
+      "gold_split": "dev",
+      "record_id": "7d59389c8a0cfc44eba5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0049",
+      "gold_split": "dev",
+      "record_id": "8407676e8368076f681a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0050",
+      "gold_split": "dev",
+      "record_id": "7071e396d3bf6c38743b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0051",
+      "gold_split": "dev",
+      "record_id": "a052a03fa05984de8bdd",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0052",
+      "gold_split": "test",
+      "record_id": "12590116e34e8cdfabb2",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0053",
+      "gold_split": "test",
+      "record_id": "933136374b3edd745002",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0054",
+      "gold_split": "dev",
+      "record_id": "25abd31a17b783afc5e5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0055",
+      "gold_split": "test",
+      "record_id": "3753ad53e178d23a9a97",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0056",
+      "gold_split": "dev",
+      "record_id": "8800a6b714a0cd3428cc",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0057",
+      "gold_split": "test",
+      "record_id": "2152380d43984f4fe61e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0058",
+      "gold_split": "dev",
+      "record_id": "bcf1decee89d3b324e41",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0059",
+      "gold_split": "dev",
+      "record_id": "2a666366d182942eaa56",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0060",
+      "gold_split": "dev",
+      "record_id": "4925b82108bd204f26e1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0061",
+      "gold_split": "dev",
+      "record_id": "43cbd2a9c668fabec26c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0062",
+      "gold_split": "test",
+      "record_id": "92ee6ccc87ad91c2b2fd",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0063",
+      "gold_split": "test",
+      "record_id": "4738a766a8e62fbe71a1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0064",
+      "gold_split": "dev",
+      "record_id": "0723872d9664bdb16bdd",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0065",
+      "gold_split": "dev",
+      "record_id": "6e112041314ac2528477",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0066",
+      "gold_split": "dev",
+      "record_id": "9fec47cf41629f9f035b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0067",
+      "gold_split": "test",
+      "record_id": "156d62a8626d2f093597",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0068",
+      "gold_split": "test",
+      "record_id": "946a1cf54c1af84bae05",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0069",
+      "gold_split": "test",
+      "record_id": "3b9ecf3cd07937432f93",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0070",
+      "gold_split": "dev",
+      "record_id": "51756c046d7e311b8bbc",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0071",
+      "gold_split": "test",
+      "record_id": "a4d97c9b952cff23d3fb",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0072",
+      "gold_split": "dev",
+      "record_id": "2f0306dd87f239bec401",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0073",
+      "gold_split": "dev",
+      "record_id": "28d2e7bbb5fc28382a18",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0074",
+      "gold_split": "dev",
+      "record_id": "849e86ede866fffcb573",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0075",
+      "gold_split": "test",
+      "record_id": "7a529a9b0fcc3eb9316d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0076",
+      "gold_split": "test",
+      "record_id": "a5c842fba5a53587368d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0077",
+      "gold_split": "test",
+      "record_id": "be4fdd444044c48318ba",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0078",
+      "gold_split": "test",
+      "record_id": "d10690e463fc141769fc",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0079",
+      "gold_split": "dev",
+      "record_id": "dbdb86567dba0a88a7d3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0080",
+      "gold_split": "test",
+      "record_id": "bdd8fa58564363f02cbc",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0081",
+      "gold_split": "dev",
+      "record_id": "8bbc9c88de71bc6954f3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0082",
+      "gold_split": "dev",
+      "record_id": "a65ca9b054908b441ef7",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0083",
+      "gold_split": "test",
+      "record_id": "bf2d9633c918f5b7343f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0084",
+      "gold_split": "test",
+      "record_id": "bf05692541ccfe5de1aa",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0085",
+      "gold_split": "test",
+      "record_id": "1b62ab6a609cbc7ae453",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0086",
+      "gold_split": "dev",
+      "record_id": "5fe63513007a0921f818",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0087",
+      "gold_split": "test",
+      "record_id": "3493afb8bbcbfead8408",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0088",
+      "gold_split": "test",
+      "record_id": "02d276e620aa5517fa6f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0089",
+      "gold_split": "dev",
+      "record_id": "c09b38fdd2ea09d0e3c5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0090",
+      "gold_split": "dev",
+      "record_id": "909ac0137b1bc8a2e4c5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0091",
+      "gold_split": "test",
+      "record_id": "021829e7f64cc13af4ce",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0092",
+      "gold_split": "test",
+      "record_id": "2b7cee3be2ca28116259",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0093",
+      "gold_split": "dev",
+      "record_id": "ddeff8d60f4f55698c9b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0094",
+      "gold_split": "test",
+      "record_id": "ae6973ff2c68b3ac208d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0095",
+      "gold_split": "dev",
+      "record_id": "558c1e410a62d61d4e42",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0096",
+      "gold_split": "test",
+      "record_id": "ba3631027506e92c2ba9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0097",
+      "gold_split": "test",
+      "record_id": "f09dc70af37688999e8e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0098",
+      "gold_split": "test",
+      "record_id": "9aa4e63748210b203529",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0099",
+      "gold_split": "test",
+      "record_id": "a096341aeeabba07a7c9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0100",
+      "gold_split": "dev",
+      "record_id": "145d1c245958cdf78dd6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0101",
+      "gold_split": "test",
+      "record_id": "d2d4e2f21fd9be6b89eb",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "validation",
+      "gold_id": "g0102",
+      "gold_split": "dev",
+      "record_id": "3ab58a8f51dbf7f7daaa",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0103",
+      "gold_split": "dev",
+      "record_id": "d78ccfb3888b6275638c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0104",
+      "gold_split": "dev",
+      "record_id": "4cabdb19ae404adf0f71",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0105",
+      "gold_split": "dev",
+      "record_id": "0bd7c50047f23bf18cd7",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0106",
+      "gold_split": "dev",
+      "record_id": "b37698c3d89276044e8a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0107",
+      "gold_split": "dev",
+      "record_id": "dbb223961637d6fe4f20",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0108",
+      "gold_split": "dev",
+      "record_id": "1ea01e0ca37ad977a757",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0109",
+      "gold_split": "test",
+      "record_id": "f97c5457d7fab1e4a5d0",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0110",
+      "gold_split": "test",
+      "record_id": "43cedc99eb3cc1a2ff81",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0111",
+      "gold_split": "dev",
+      "record_id": "3b0c296ecbd2013e4688",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0112",
+      "gold_split": "test",
+      "record_id": "b8a41dfac2e675cf6bf8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0113",
+      "gold_split": "test",
+      "record_id": "0e61925b68a1499747e6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0114",
+      "gold_split": "test",
+      "record_id": "a20bb6a610554a2bc045",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0115",
+      "gold_split": "test",
+      "record_id": "f452880ae0fff56edcbf",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "validation",
+      "gold_id": "g0116",
+      "gold_split": "dev",
+      "record_id": "ee890d7dede276225a54",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.7142857313156128,
+      "dreaddit_split": "train",
+      "gold_id": "g0117",
+      "gold_split": "dev",
+      "record_id": "e15cc749c780120e66b8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0118",
+      "gold_split": "test",
+      "record_id": "f26b0ddaf7a0481b8c9e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0119",
+      "gold_split": "test",
+      "record_id": "5e847f862205490aa168",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.7142857313156128,
+      "dreaddit_split": "train",
+      "gold_id": "g0120",
+      "gold_split": "test",
+      "record_id": "19f20061d5d5dff9ecb6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0121",
+      "gold_split": "dev",
+      "record_id": "598e3ccfa2910ffbb55a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0122",
+      "gold_split": "dev",
+      "record_id": "46cce4c7353757e3be8e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0123",
+      "gold_split": "dev",
+      "record_id": "bd06d1fa4c917a6b6706",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0124",
+      "gold_split": "test",
+      "record_id": "5668b01bebd23482447d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0125",
+      "gold_split": "dev",
+      "record_id": "9823e47c33b6f6a5ffd9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0126",
+      "gold_split": "dev",
+      "record_id": "40aee54118032a4aac83",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0127",
+      "gold_split": "test",
+      "record_id": "817ecef72d2d37fbdf7e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0128",
+      "gold_split": "test",
+      "record_id": "e40fbc5d83c8c286091b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0129",
+      "gold_split": "dev",
+      "record_id": "580f83eee9a0d213de77",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.7142857313156128,
+      "dreaddit_split": "validation",
+      "gold_id": "g0130",
+      "gold_split": "test",
+      "record_id": "63fe94824e2b2c89a3b0",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0131",
+      "gold_split": "test",
+      "record_id": "7a6990738409431730c6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0132",
+      "gold_split": "dev",
+      "record_id": "a1092894240723ac15b2",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0133",
+      "gold_split": "test",
+      "record_id": "518c782b27d889e0bc66",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0134",
+      "gold_split": "dev",
+      "record_id": "ac88a33c18c9df365769",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0135",
+      "gold_split": "dev",
+      "record_id": "b0e0679088ff652cfba6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0136",
+      "gold_split": "dev",
+      "record_id": "e3425f701014154c54ba",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0137",
+      "gold_split": "test",
+      "record_id": "ed2807b89d0db91715b6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0138",
+      "gold_split": "test",
+      "record_id": "0e1f3858f086612a3507",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0139",
+      "gold_split": "test",
+      "record_id": "3dec01baaf66dcc9bc46",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0140",
+      "gold_split": "test",
+      "record_id": "22224daef0f3caad769d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0141",
+      "gold_split": "dev",
+      "record_id": "c4d2acd5885c2ec8c911",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0142",
+      "gold_split": "dev",
+      "record_id": "c2633581e26ad806b32a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0143",
+      "gold_split": "test",
+      "record_id": "c793c4a2cc8e844c2529",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0144",
+      "gold_split": "dev",
+      "record_id": "510e733bc9d563e70f4b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0145",
+      "gold_split": "dev",
+      "record_id": "f6b39bbc82e577f82798",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0146",
+      "gold_split": "test",
+      "record_id": "0604d1a0a0b463c9fc60",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0147",
+      "gold_split": "dev",
+      "record_id": "74bc50e685dc761cf7d3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0148",
+      "gold_split": "dev",
+      "record_id": "5fd506cba6d35f93b7c8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0149",
+      "gold_split": "dev",
+      "record_id": "29a8aa73b2953b43f2f1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0150",
+      "gold_split": "test",
+      "record_id": "4a4029017bb2caf50c73",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0151",
+      "gold_split": "dev",
+      "record_id": "577752af495baff9b5c8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0152",
+      "gold_split": "test",
+      "record_id": "a3486726e54ae4415e44",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0153",
+      "gold_split": "test",
+      "record_id": "9076a31bd80fb6e17c4c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0154",
+      "gold_split": "dev",
+      "record_id": "17967044986ca847f60a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0155",
+      "gold_split": "dev",
+      "record_id": "d5ff4c499afa5f18da08",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0156",
+      "gold_split": "dev",
+      "record_id": "304ac1c6cffc673cd71c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0157",
+      "gold_split": "dev",
+      "record_id": "4e108bde57d0b17c84de",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0158",
+      "gold_split": "dev",
+      "record_id": "f311623cb2b36c421f40",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0159",
+      "gold_split": "test",
+      "record_id": "3d29e23551363b58f03f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "validation",
+      "gold_id": "g0160",
+      "gold_split": "test",
+      "record_id": "53505d35924c7067ad43",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0161",
+      "gold_split": "test",
+      "record_id": "95e6fde0c854af0c8bcd",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0162",
+      "gold_split": "test",
+      "record_id": "6c67a25720209523040d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0163",
+      "gold_split": "test",
+      "record_id": "fd5adc5e1227c494412e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0164",
+      "gold_split": "dev",
+      "record_id": "72b97fdbb631e1b64e23",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0165",
+      "gold_split": "test",
+      "record_id": "73fce29c87d8bc1d1f3c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0166",
+      "gold_split": "dev",
+      "record_id": "3756f802800fa956abc5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0167",
+      "gold_split": "test",
+      "record_id": "84e851ce08ec4ff74ede",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0168",
+      "gold_split": "dev",
+      "record_id": "8237617386bf3d459e47",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0169",
+      "gold_split": "dev",
+      "record_id": "d981d5473968cb77cd2c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0170",
+      "gold_split": "test",
+      "record_id": "8ece0cfb04aaae9b966b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0171",
+      "gold_split": "dev",
+      "record_id": "d06b94a3400760a25353",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0172",
+      "gold_split": "dev",
+      "record_id": "efe2ba1376519fe6d6e3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0173",
+      "gold_split": "dev",
+      "record_id": "6ac20a3cdb055150c70a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0174",
+      "gold_split": "dev",
+      "record_id": "134922676f86bcbcd5a9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0175",
+      "gold_split": "dev",
+      "record_id": "dd6406f87427602ad385",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0176",
+      "gold_split": "test",
+      "record_id": "b3a971377a919e6fded1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0177",
+      "gold_split": "dev",
+      "record_id": "317a538b0c89ab357c8d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0178",
+      "gold_split": "test",
+      "record_id": "92fd1a01f1f0bba9fb23",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0179",
+      "gold_split": "dev",
+      "record_id": "d0732ba99f1538e544d7",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0180",
+      "gold_split": "dev",
+      "record_id": "4f0ca14ec8e83b6a16e6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0181",
+      "gold_split": "dev",
+      "record_id": "e49cca7776cf145106e7",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0182",
+      "gold_split": "dev",
+      "record_id": "cbe81324a3b703a09d32",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0183",
+      "gold_split": "dev",
+      "record_id": "55bb981ab5fbed9d556c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0184",
+      "gold_split": "dev",
+      "record_id": "a19c48468352c6e39b3c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0185",
+      "gold_split": "dev",
+      "record_id": "3cf2cd8176d9e9b1b80d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0186",
+      "gold_split": "dev",
+      "record_id": "e024b67d331dd04f8327",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0187",
+      "gold_split": "test",
+      "record_id": "15bc069aa808ca86eb55",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0188",
+      "gold_split": "test",
+      "record_id": "d16dfed3966d3b5f05f3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0189",
+      "gold_split": "test",
+      "record_id": "750bb3583eb419d4ee05",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0190",
+      "gold_split": "dev",
+      "record_id": "728128a649263043a105",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0191",
+      "gold_split": "dev",
+      "record_id": "e220d2924ab15870ced9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0192",
+      "gold_split": "dev",
+      "record_id": "220e7a7a90795e9f62b8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0193",
+      "gold_split": "test",
+      "record_id": "467b98d84ee2349b4b7f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0194",
+      "gold_split": "dev",
+      "record_id": "68599dac8a666f497447",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.8571428656578064,
+      "dreaddit_split": "validation",
+      "gold_id": "g0195",
+      "gold_split": "test",
+      "record_id": "41b8178a9a90051520eb",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0196",
+      "gold_split": "test",
+      "record_id": "8497db67ec3c147b51b5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0197",
+      "gold_split": "test",
+      "record_id": "7ac624c0f7154de968a6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0198",
+      "gold_split": "test",
+      "record_id": "b9999e98fcb64547ec7a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0199",
+      "gold_split": "test",
+      "record_id": "c6086b49ae550a400856",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0200",
+      "gold_split": "test",
+      "record_id": "b9b040eeefd61847f3ab",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0201",
+      "gold_split": "dev",
+      "record_id": "f5712f4d814613dbb1a8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0202",
+      "gold_split": "test",
+      "record_id": "9e233fd7bc9679c5884a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0203",
+      "gold_split": "test",
+      "record_id": "0f2eb963b311e361aa4f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0204",
+      "gold_split": "test",
+      "record_id": "6fa4237b9e1ce3bd799f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0205",
+      "gold_split": "test",
+      "record_id": "703ccb325c4b14aab2de",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0206",
+      "gold_split": "dev",
+      "record_id": "1f0ca66168d98995fb3a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0207",
+      "gold_split": "dev",
+      "record_id": "979a9445b4609c615752",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0208",
+      "gold_split": "dev",
+      "record_id": "13331a6d7799a58acc1b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0209",
+      "gold_split": "test",
+      "record_id": "1bc13eb6697c31c5346c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0210",
+      "gold_split": "dev",
+      "record_id": "adffbdfc5900247d27c6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0211",
+      "gold_split": "test",
+      "record_id": "33e63a8c3ac807d9b1e3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0212",
+      "gold_split": "dev",
+      "record_id": "bbde455f781021f7ee89",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0213",
+      "gold_split": "dev",
+      "record_id": "9ee9f00d7dcc7b774441",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0214",
+      "gold_split": "test",
+      "record_id": "f7408d068919dbb0423c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0215",
+      "gold_split": "test",
+      "record_id": "ec90568a1412a58cc3a6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0216",
+      "gold_split": "dev",
+      "record_id": "74367b35bfac9636e89b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0217",
+      "gold_split": "test",
+      "record_id": "dc8587112e89bb1205cf",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0218",
+      "gold_split": "test",
+      "record_id": "e3265fb69b21036d38e6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0219",
+      "gold_split": "test",
+      "record_id": "5d5ea7bcd45416a7fbcc",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0220",
+      "gold_split": "test",
+      "record_id": "f427a4a1db05866fba25",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0221",
+      "gold_split": "test",
+      "record_id": "0eb86d5b6f471a8cf871",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0222",
+      "gold_split": "dev",
+      "record_id": "dccf513a6fa0e1e2dc08",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0223",
+      "gold_split": "test",
+      "record_id": "860e3de2a8d8de56dde6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0224",
+      "gold_split": "dev",
+      "record_id": "18fb16d21bd548a4b938",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0225",
+      "gold_split": "dev",
+      "record_id": "b7d0d6336810f3a80467",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0226",
+      "gold_split": "dev",
+      "record_id": "ef998c227f62ec38136d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0227",
+      "gold_split": "dev",
+      "record_id": "f8b9054473d7955bfd11",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0228",
+      "gold_split": "test",
+      "record_id": "b135f6c505774aa281b3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0229",
+      "gold_split": "dev",
+      "record_id": "128eab3669baf12c0ef9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0230",
+      "gold_split": "test",
+      "record_id": "ae3d8e5fdb0f59b5e830",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0231",
+      "gold_split": "dev",
+      "record_id": "e6cdb201b01bcef03b18",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0232",
+      "gold_split": "test",
+      "record_id": "44777eae580264eef7b1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0233",
+      "gold_split": "test",
+      "record_id": "5ee1ab03f7e427baa7a9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0234",
+      "gold_split": "dev",
+      "record_id": "62ae4ea284a852a37da9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0235",
+      "gold_split": "dev",
+      "record_id": "60a67971d67ce4ddb089",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0236",
+      "gold_split": "test",
+      "record_id": "16b627b4929f389dab27",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0237",
+      "gold_split": "test",
+      "record_id": "f4738fe51c97bbd4c476",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0238",
+      "gold_split": "test",
+      "record_id": "5fb7f083d1c743e4b7b5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0239",
+      "gold_split": "test",
+      "record_id": "88fbed078abbad0d77b0",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0240",
+      "gold_split": "test",
+      "record_id": "a03cc1dbcd33090a82d8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0241",
+      "gold_split": "test",
+      "record_id": "0b1692924f07a7978ce1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0242",
+      "gold_split": "dev",
+      "record_id": "a6d998057869cf8de54d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0243",
+      "gold_split": "dev",
+      "record_id": "6e8520e9ff7add3f0782",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0244",
+      "gold_split": "test",
+      "record_id": "b896c4c53fc2818b99cc",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0245",
+      "gold_split": "dev",
+      "record_id": "f7f9f3e615cfc8330e9c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0246",
+      "gold_split": "dev",
+      "record_id": "93806abfc1e08bcb3fe0",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0247",
+      "gold_split": "test",
+      "record_id": "f10c65c1facb211ed2db",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0248",
+      "gold_split": "dev",
+      "record_id": "3f2799b1f4ada531219c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0249",
+      "gold_split": "test",
+      "record_id": "b930e96aea1262c90e88",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0250",
+      "gold_split": "test",
+      "record_id": "b7292e22895b7de22ce3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0251",
+      "gold_split": "dev",
+      "record_id": "710c1ed36dbe3ec09d3c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0252",
+      "gold_split": "test",
+      "record_id": "516cc459505cbcc18a70",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0253",
+      "gold_split": "dev",
+      "record_id": "a7c5968453751aa2d936",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0254",
+      "gold_split": "test",
+      "record_id": "0395d7a78578e833f821",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0255",
+      "gold_split": "dev",
+      "record_id": "4a2ff16d896e90c77787",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0256",
+      "gold_split": "test",
+      "record_id": "90f207df534016dd923c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.8571428656578064,
+      "dreaddit_split": "train",
+      "gold_id": "g0257",
+      "gold_split": "dev",
+      "record_id": "9c2aff3f468a2021a128",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0258",
+      "gold_split": "dev",
+      "record_id": "b9144e21649401228592",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0259",
+      "gold_split": "test",
+      "record_id": "d26cc790b10cf80c1d0e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0260",
+      "gold_split": "dev",
+      "record_id": "e3d63905e3289a961190",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0261",
+      "gold_split": "dev",
+      "record_id": "653c33a08e48e7a20c55",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0262",
+      "gold_split": "dev",
+      "record_id": "f15742a0edfcb13c29b4",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0263",
+      "gold_split": "dev",
+      "record_id": "4ade6c753cc74850a906",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0264",
+      "gold_split": "dev",
+      "record_id": "0d8e4e5bd731f52835ec",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0265",
+      "gold_split": "dev",
+      "record_id": "68ff1b2f9204cce04db5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0266",
+      "gold_split": "dev",
+      "record_id": "2a52e1e7b640f62d4ce4",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0267",
+      "gold_split": "test",
+      "record_id": "b00dd939f68e1113d9a1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0268",
+      "gold_split": "test",
+      "record_id": "acdedc7a5555466fee32",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0269",
+      "gold_split": "test",
+      "record_id": "18a655a8df9071d5bbeb",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0270",
+      "gold_split": "dev",
+      "record_id": "691b667783bae180ae81",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0271",
+      "gold_split": "dev",
+      "record_id": "0dc606c37ad68bf77d32",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0272",
+      "gold_split": "test",
+      "record_id": "bd60d56d3c6cac24ea0c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0273",
+      "gold_split": "test",
+      "record_id": "9d7042975cc4d30a635e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0274",
+      "gold_split": "test",
+      "record_id": "ea2abcc5a7af786d6df2",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0275",
+      "gold_split": "dev",
+      "record_id": "1b976ca0338c695acd43",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0276",
+      "gold_split": "dev",
+      "record_id": "191170231f893fc7f82e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0277",
+      "gold_split": "test",
+      "record_id": "9fe7b7f3df524e6ddca3",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0278",
+      "gold_split": "test",
+      "record_id": "0af9b8fb3bacfa315ff9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0279",
+      "gold_split": "test",
+      "record_id": "2ff2f9daa6175689d403",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0280",
+      "gold_split": "test",
+      "record_id": "f300224bd242ec2f1c12",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0281",
+      "gold_split": "dev",
+      "record_id": "f1f3d0619c970f4510ed",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0282",
+      "gold_split": "test",
+      "record_id": "d8260a4eb0b876591a33",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0283",
+      "gold_split": "test",
+      "record_id": "7d84acc27d0f08bab6da",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0284",
+      "gold_split": "dev",
+      "record_id": "2f6e57e197b4e8e72fb4",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0285",
+      "gold_split": "test",
+      "record_id": "a40dfbbc0a096df7320d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0286",
+      "gold_split": "test",
+      "record_id": "5ce885690d7757fcb762",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0287",
+      "gold_split": "test",
+      "record_id": "1eb577375e0aedd9d754",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0288",
+      "gold_split": "dev",
+      "record_id": "b5c6d256a22d1d847084",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0289",
+      "gold_split": "dev",
+      "record_id": "6f9ae9fc118abf835135",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0290",
+      "gold_split": "test",
+      "record_id": "35d4d9152103d5e7ec9d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0291",
+      "gold_split": "dev",
+      "record_id": "3ba7ad8508c8e32cbeb5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0292",
+      "gold_split": "dev",
+      "record_id": "f983f13f179e68bf9a49",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0293",
+      "gold_split": "dev",
+      "record_id": "d4383ab5b0df19790955",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0294",
+      "gold_split": "test",
+      "record_id": "84c971c4b458cb072765",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0295",
+      "gold_split": "test",
+      "record_id": "a60ba78bbece507c243d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0296",
+      "gold_split": "test",
+      "record_id": "55a0d0f7240ffb6c5ff7",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0297",
+      "gold_split": "dev",
+      "record_id": "a4498f105e7a0968e14d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0298",
+      "gold_split": "test",
+      "record_id": "060e4b21ca7407eaeca6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0299",
+      "gold_split": "test",
+      "record_id": "15d0db76b081fc879b43",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0300",
+      "gold_split": "test",
+      "record_id": "2c897a0b3cfa6409df32",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0301",
+      "gold_split": "test",
+      "record_id": "7a12a031a83fffaa630b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0302",
+      "gold_split": "dev",
+      "record_id": "e105fbbef9b854487029",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0303",
+      "gold_split": "test",
+      "record_id": "8da4ec2ca1d58a7fb11c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0304",
+      "gold_split": "dev",
+      "record_id": "7acd31efe03206d156b2",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0305",
+      "gold_split": "dev",
+      "record_id": "78d239cf3fcc44dceb4c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "validation",
+      "gold_id": "g0306",
+      "gold_split": "dev",
+      "record_id": "e4b0a27d975123bd79e8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0307",
+      "gold_split": "dev",
+      "record_id": "30f1220f0fc7edb99e37",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0308",
+      "gold_split": "dev",
+      "record_id": "4082f88d980ec5df66dd",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0309",
+      "gold_split": "dev",
+      "record_id": "d08f8f0d9a2e35bf5c1e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0310",
+      "gold_split": "test",
+      "record_id": "184cd3a6e428ebe4199f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0311",
+      "gold_split": "dev",
+      "record_id": "88ef331e0864b3918902",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0312",
+      "gold_split": "dev",
+      "record_id": "5424b0bb2919c4f29444",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0313",
+      "gold_split": "dev",
+      "record_id": "6824b995190bc9a504ae",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0314",
+      "gold_split": "test",
+      "record_id": "e7527d882b8c9bf3ee33",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.8571428656578064,
+      "dreaddit_split": "train",
+      "gold_id": "g0315",
+      "gold_split": "test",
+      "record_id": "78d810e09510e18ba97c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0316",
+      "gold_split": "test",
+      "record_id": "9d9b73aee6b83280c29e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0317",
+      "gold_split": "test",
+      "record_id": "56501c46e5588b796851",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0318",
+      "gold_split": "test",
+      "record_id": "973194d87afb8563c372",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0319",
+      "gold_split": "test",
+      "record_id": "494f9d0b8de932859250",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0320",
+      "gold_split": "test",
+      "record_id": "682f63d21dab5b72d18e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0321",
+      "gold_split": "test",
+      "record_id": "10e3dfb2b3c407264cad",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0322",
+      "gold_split": "test",
+      "record_id": "aae65a70f3ff185fc066",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0323",
+      "gold_split": "test",
+      "record_id": "191b4c092069f2029081",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0324",
+      "gold_split": "test",
+      "record_id": "057f09ce59cb318eee09",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0325",
+      "gold_split": "test",
+      "record_id": "3d5508251803cff4df37",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0326",
+      "gold_split": "test",
+      "record_id": "a1dde6ff136f6467635e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0327",
+      "gold_split": "test",
+      "record_id": "a78c456e9e04d772c791",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0328",
+      "gold_split": "test",
+      "record_id": "1e2625abefd5f49b1511",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0329",
+      "gold_split": "test",
+      "record_id": "4cc0d3d7e2a6307c4eb4",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.8571428656578064,
+      "dreaddit_split": "train",
+      "gold_id": "g0330",
+      "gold_split": "dev",
+      "record_id": "a98c123e0114b5b0cee6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0331",
+      "gold_split": "dev",
+      "record_id": "96076e3a966ce8f69ce5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0332",
+      "gold_split": "test",
+      "record_id": "745e815e345850ce4ff1",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0333",
+      "gold_split": "dev",
+      "record_id": "55b6f884706ebeaf88ee",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0334",
+      "gold_split": "test",
+      "record_id": "0db18c69c343da5a55b7",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0335",
+      "gold_split": "test",
+      "record_id": "9ada445dd35b10414b96",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0336",
+      "gold_split": "dev",
+      "record_id": "15cdff0cf59d160408ea",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0337",
+      "gold_split": "dev",
+      "record_id": "6d0f3dc0e903cb951e71",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0338",
+      "gold_split": "dev",
+      "record_id": "43a32db6b3a6b171b46b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0339",
+      "gold_split": "dev",
+      "record_id": "61c9452f931fe6248f90",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0340",
+      "gold_split": "dev",
+      "record_id": "2b877b76c9e571a9921f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0341",
+      "gold_split": "test",
+      "record_id": "ec0fc101e764d24c647d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0342",
+      "gold_split": "dev",
+      "record_id": "a087e05bf8991737d8e6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0343",
+      "gold_split": "test",
+      "record_id": "d4078e7c1135061385f0",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0344",
+      "gold_split": "dev",
+      "record_id": "c6210f7c8d205ae7ece5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0345",
+      "gold_split": "test",
+      "record_id": "476301d66769acec827e",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0346",
+      "gold_split": "dev",
+      "record_id": "e1f81bdaeb4d101be12c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0347",
+      "gold_split": "test",
+      "record_id": "75a2f161fff2ca96ca81",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0348",
+      "gold_split": "test",
+      "record_id": "79264279d519e167e9f9",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0349",
+      "gold_split": "test",
+      "record_id": "a72bf1ece7071671f50d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0350",
+      "gold_split": "dev",
+      "record_id": "62b7ada5eefa5c65a7de",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "validation",
+      "gold_id": "g0351",
+      "gold_split": "test",
+      "record_id": "2ab427a3edbd4b6c6337",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "validation",
+      "gold_id": "g0352",
+      "gold_split": "dev",
+      "record_id": "1646467db88a95abd184",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0353",
+      "gold_split": "test",
+      "record_id": "fe734210e8ead9df4aea",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0354",
+      "gold_split": "dev",
+      "record_id": "6933219bc5c970395d0d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0355",
+      "gold_split": "test",
+      "record_id": "d77b2768970f6b79415f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0356",
+      "gold_split": "test",
+      "record_id": "6d8c282558ad030e4dd6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0357",
+      "gold_split": "dev",
+      "record_id": "87c98877021aeca42e93",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 0.7142857313156128,
+      "dreaddit_split": "train",
+      "gold_id": "g0358",
+      "gold_split": "test",
+      "record_id": "23452430aae924f2422c",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0359",
+      "gold_split": "test",
+      "record_id": "7166a5994e7a5caecc92",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0360",
+      "gold_split": "test",
+      "record_id": "361aee29c7e569039867",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0361",
+      "gold_split": "test",
+      "record_id": "e9cd59233185f49bbd5f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0362",
+      "gold_split": "dev",
+      "record_id": "8fe0c5a6de5d7f60221a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0363",
+      "gold_split": "dev",
+      "record_id": "cf5c37e3d833bdd637b7",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0364",
+      "gold_split": "dev",
+      "record_id": "c5cab335de15742b07be",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0365",
+      "gold_split": "dev",
+      "record_id": "6a39c3496a46ed2fc9e8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0366",
+      "gold_split": "test",
+      "record_id": "b433c7e9b210735e75d4",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0367",
+      "gold_split": "dev",
+      "record_id": "be357a935a01878512ae",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0368",
+      "gold_split": "dev",
+      "record_id": "df6a1c4056f2c12f54f2",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0369",
+      "gold_split": "dev",
+      "record_id": "fc3bba6ed06f22ac7908",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.8571428656578064,
+      "dreaddit_split": "train",
+      "gold_id": "g0370",
+      "gold_split": "dev",
+      "record_id": "48fca7a6ea16dfa4058a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0371",
+      "gold_split": "test",
+      "record_id": "23f07669aef571024b94",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0372",
+      "gold_split": "test",
+      "record_id": "87fe8dd6322400e27ad2",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0373",
+      "gold_split": "test",
+      "record_id": "1d937b10c992a30d4223",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0374",
+      "gold_split": "dev",
+      "record_id": "ec4f4126f350e29808f8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0375",
+      "gold_split": "test",
+      "record_id": "00a23a5406863f58a3aa",
+      "source": "dreaddit"
+    },
+    {
+      "community": "food_pantry",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0376",
+      "gold_split": "dev",
+      "record_id": "b9f3762cab425797481a",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0377",
+      "gold_split": "test",
+      "record_id": "71a50e8dcfb2d26507df",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0378",
+      "gold_split": "dev",
+      "record_id": "a13f53ec0d40b1f8a5a8",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "validation",
+      "gold_id": "g0379",
+      "gold_split": "test",
+      "record_id": "f032bb7bbcc1cda8333d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0380",
+      "gold_split": "test",
+      "record_id": "81dbfc2b7621a1303045",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0381",
+      "gold_split": "test",
+      "record_id": "f23d3ce026a3beb022b5",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0382",
+      "gold_split": "test",
+      "record_id": "f233776fe6951aca6dac",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0383",
+      "gold_split": "dev",
+      "record_id": "8d0fdae0a68eb6788bb6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "stress",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0384",
+      "gold_split": "dev",
+      "record_id": "0b306eff8b2eaa5bba70",
+      "source": "dreaddit"
+    },
+    {
+      "community": "ptsd",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0385",
+      "gold_split": "dev",
+      "record_id": "dcc7229d677612a68b6d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0386",
+      "gold_split": "test",
+      "record_id": "f9ae1523145cbbee983b",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0387",
+      "gold_split": "dev",
+      "record_id": "e9d5ef4209ae24a00c79",
+      "source": "dreaddit"
+    },
+    {
+      "community": "domesticviolence",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0388",
+      "gold_split": "test",
+      "record_id": "4550fd3ac84c11957333",
+      "source": "dreaddit"
+    },
+    {
+      "community": "assistance",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0389",
+      "gold_split": "dev",
+      "record_id": "5871c83bad44586a2447",
+      "source": "dreaddit"
+    },
+    {
+      "community": "homeless",
+      "confidence": 0.6666666865348816,
+      "dreaddit_split": "train",
+      "gold_id": "g0390",
+      "gold_split": "test",
+      "record_id": "f889f74f345583fbd6c6",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0391",
+      "gold_split": "test",
+      "record_id": "2643e261c0720376f0bd",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0392",
+      "gold_split": "dev",
+      "record_id": "1af3f052000551eb1469",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 0.800000011920929,
+      "dreaddit_split": "train",
+      "gold_id": "g0393",
+      "gold_split": "test",
+      "record_id": "7c04c84bc381d3d03826",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0394",
+      "gold_split": "dev",
+      "record_id": "405b99b95a2111cc4122",
+      "source": "dreaddit"
+    },
+    {
+      "community": "survivorsofabuse",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0395",
+      "gold_split": "dev",
+      "record_id": "8ecb22dff4a3244f259f",
+      "source": "dreaddit"
+    },
+    {
+      "community": "almosthomeless",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0396",
+      "gold_split": "dev",
+      "record_id": "75cd8ba2888038695756",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.8333333134651184,
+      "dreaddit_split": "train",
+      "gold_id": "g0397",
+      "gold_split": "dev",
+      "record_id": "218bf7d8c5507116598d",
+      "source": "dreaddit"
+    },
+    {
+      "community": "anxiety",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0398",
+      "gold_split": "test",
+      "record_id": "c4df54cbfca36029a9a2",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 0.6000000238418579,
+      "dreaddit_split": "train",
+      "gold_id": "g0399",
+      "gold_split": "test",
+      "record_id": "1f729205419236f8ed03",
+      "source": "dreaddit"
+    },
+    {
+      "community": "relationships",
+      "confidence": 1.0,
+      "dreaddit_split": "train",
+      "gold_id": "g0400",
+      "gold_split": "dev",
+      "record_id": "e2be1d796d02ece1cb1c",
+      "source": "dreaddit"
+    }
+  ],
+  "rule": "Dreaddit HUMAN label 1 (stress), confidence >= min_confidence; one segment per post; stratified by subreddit (floor, rest proportional); dev/test stratified by subreddit; test never used for tuning",
+  "sampling": {
+    "annotators": 1,
+    "dev_fraction": 0.5,
+    "dreaddit_splits": [
+      "train",
+      "validation"
+    ],
+    "floor_per_subreddit": 20,
+    "min_confidence": 0.6,
+    "n_total": 400,
+    "one_segment_per_post": true
+  },
+  "seed": 42,
+  "version": 1
+}

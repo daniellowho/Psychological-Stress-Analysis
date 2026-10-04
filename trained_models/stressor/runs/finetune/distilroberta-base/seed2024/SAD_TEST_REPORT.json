@@ -1,0 +1,151 @@
+{
+  "calibration": {
+    "method": "temperature (one scalar, SAD-validation)",
+    "temperature": 1.180722130778797,
+    "validation_nll_after": 0.7440406841223433,
+    "validation_nll_before": 0.7615378940256768,
+    "validation_top_label_ece_after": 0.04621907330274336,
+    "validation_top_label_ece_before": 0.07149217985719741
+  },
+  "category_rule": "argmax over merged groups (stressor categories + non-stressor classes); one-vs-rest F1 per SAD-covered stressor category, macro over them",
+  "classes": [
+    "workplace_pressure",
+    "academic_workload",
+    "financial_concerns",
+    "relationship_issues/family",
+    "relationship_issues/social",
+    "health_concerns",
+    "overload",
+    "other_unclear",
+    "emotional_turmoil"
+  ],
+  "created_utc": "2026-10-04T09:45:36.553472+00:00",
+  "method": "finetune",
+  "n_test": 1027,
+  "run_dir": "C:/Visual_studio/TA-BDA Project/Psychological-Stress-Analysis/trained_models/stressor/runs/finetune/distilroberta-base/seed2024",
+  "test_accuracy": 0.7380720545277507,
+  "test_category_f1": {
+    "academic_workload": 0.8687782805429864,
+    "financial_concerns": 0.8736842105263158,
+    "health_concerns": 0.7510204081632653,
+    "other_unclear": 0.4835164835164835,
+    "overload": 0.3953488372093023,
+    "relationship_issues": 0.8226950354609929,
+    "workplace_pressure": 0.8817733990147784
+  },
+  "test_category_macro_f1_sad_covered": 0.7252595220620178,
+  "test_confusion": [
+    [
+      180,
+      2,
+      3,
+      4,
+      2,
+      0,
+      3,
+      7,
+      0
+    ],
+    [
+      5,
+      96,
+      3,
+      2,
+      2,
+      1,
+      0,
+      1,
+      1
+    ],
+    [
+      6,
+      0,
+      83,
+      1,
+      0,
+      0,
+      0,
+      2,
+      3
+    ],
+    [
+      0,
+      0,
+      2,
+      100,
+      3,
+      3,
+      0,
+      2,
+      1
+    ],
+    [
+      2,
+      2,
+      0,
+      6,
+      62,
+      1,
+      1,
+      14,
+      7
+    ],
+    [
+      3,
+      2,
+      1,
+      3,
+      1,
+      92,
+      1,
+      7,
+      7
+    ],
+    [
+      0,
+      0,
+      1,
+      0,
+      0,
+      2,
+      17,
+      19,
+      12
+    ],
+    [
+      9,
+      8,
+      2,
+      3,
+      11,
+      20,
+      7,
+      66,
+      20
+    ],
+    [
+      1,
+      0,
+      0,
+      3,
+      7,
+      9,
+      6,
+      12,
+      62
+    ]
+  ],
+  "test_macro_f1_classes": 0.7077486491187628,
+  "test_per_class_f1": {
+    "academic_workload": 0.8687782805429864,
+    "emotional_turmoil": 0.5821596244131455,
+    "financial_concerns": 0.8736842105263158,
+    "health_concerns": 0.7510204081632653,
+    "other_unclear": 0.4782608695652174,
+    "overload": 0.3953488372093023,
+    "relationship_issues/family": 0.8583690987124464,
+    "relationship_issues/social": 0.6775956284153005,
+    "workplace_pressure": 0.8845208845208845
+  },
+  "test_top_label_ece": 0.05264098407857395
+}

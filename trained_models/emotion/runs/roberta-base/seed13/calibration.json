@@ -1,0 +1,582 @@
+{
+  "caveat": "fitted and evaluated on the same validation set; the test ECE in FINAL_TEST_REPORT.json is the honest check",
+  "ece_bins": 15,
+  "fitted_on": "validation",
+  "formula": "p = sigmoid(a * logit + b), per label",
+  "method": "platt",
+  "model_choice": "roberta-base",
+  "n_validation": 5426,
+  "params": [
+    {
+      "a": 0.9167468214526032,
+      "b": -0.4934181234579897,
+      "converged": true,
+      "label": "admiration",
+      "method": "platt"
+    },
+    {
+      "a": 1.0149357025001606,
+      "b": -0.13042176734596375,
+      "converged": true,
+      "label": "amusement",
+      "method": "platt"
+    },
+    {
+      "a": 0.8850981967543882,
+      "b": -0.462617257390605,
+      "converged": true,
+      "label": "anger",
+      "method": "platt"
+    },
+    {
+      "a": 0.963015848995298,
+      "b": -0.191319579440268,
+      "converged": true,
+      "label": "annoyance",
+      "method": "platt"
+    },
+    {
+      "a": 0.8216981624521468,
+      "b": -0.4060742455524392,
+      "converged": true,
+      "label": "approval",
+      "method": "platt"
+    },
+    {
+      "a": 0.9444400944421315,
+      "b": -0.248983627946732,
+      "converged": true,
+      "label": "caring",
+      "method": "platt"
+    },
+    {
+      "a": 0.9595635799913005,
+      "b": -0.23521441539312624,
+      "converged": true,
+      "label": "confusion",
+      "method": "platt"
+    },
+    {
+      "a": 0.9200627051640745,
+      "b": -0.30254352046341015,
+      "converged": true,
+      "label": "curiosity",
+      "method": "platt"
+    },
+    {
+      "a": 1.0962414960293139,
+      "b": 0.015297458623842373,
+      "converged": true,
+      "label": "desire",
+      "method": "platt"
+    },
+    {
+      "a": 0.9427462122671522,
+      "b": -0.14237633444576317,
+      "converged": true,
+      "label": "disappointment",
+      "method": "platt"
+    },
+    {
+      "a": 0.8441796648545724,
+      "b": -0.2555164692537237,
+      "converged": true,
+      "label": "disapproval",
+      "method": "platt"
+    },
+    {
+      "a": 1.019185395080131,
+      "b": -0.26191115113024005,
+      "converged": true,
+      "label": "disgust",
+      "method": "platt"
+    },
+    {
+      "a": 1.3634960820911182,
+      "b": 0.8921805174502925,
+      "converged": true,
+      "label": "embarrassment",
+      "method": "platt"
+    },
+    {
+      "a": 0.9386272905592575,
+      "b": -0.46604748004221613,
+      "converged": true,
+      "label": "excitement",
+      "method": "platt"
+    },
+    {
+      "a": 1.0739574871102608,
+      "b": 0.16031581143950305,
+      "converged": true,
+      "label": "fear",
+      "method": "platt"
+    },
+    {
+      "a": 1.0955448511198869,
+      "b": -0.05302413809883626,
+      "converged": true,
+      "label": "gratitude",
+      "method": "platt"
+    },
+    {
+      "a": 1.4707497145099468,
+      "b": 2.1939534508867817,
+      "converged": true,
+      "label": "grief",
+      "method": "platt"
+    },
+    {
+      "a": 1.0630079801245662,
+      "b": 0.030397816364756722,
+      "converged": true,
+      "label": "joy",
+      "method": "platt"
+    },
+    {
+      "a": 0.9862220704013751,
+      "b": -0.5089162899740463,
+      "converged": true,
+      "label": "love",
+      "method": "platt"
+    },
+    {
+      "a": 1.2837729199571826,
+      "b": 0.8101780517501629,
+      "converged": true,
+      "label": "nervousness",
+      "method": "platt"
+    },
+    {
+      "a": 0.9784219188447622,
+      "b": -0.22282677317530786,
+      "converged": true,
+      "label": "optimism",
+      "method": "platt"
+    },
+    {
+      "a": 2.317416482902901,
+      "b": 6.100384400246642,
+      "converged": true,
+      "label": "pride",
+      "method": "platt"
+    },
+    {
+      "a": 0.9352129345665996,
+      "b": -0.4189314651287073,
+      "converged": true,
+      "label": "realization",
+      "method": "platt"
+    },
+    {
+      "a": 1.5155660510775983,
+      "b": 2.1369319379569593,
+      "converged": true,
+      "label": "relief",
+      "method": "platt"
+    },
+    {
+      "a": 1.224074873383535,
+      "b": 0.4427426111890646,
+      "converged": true,
+      "label": "remorse",
+      "method": "platt"
+    },
+    {
+      "a": 0.8596581367098953,
+      "b": -0.7293151878888412,
+      "converged": true,
+      "label": "sadness",
+      "method": "platt"
+    },
+    {
+      "a": 0.9410005999988692,
+      "b": -0.3357061075037357,
+      "converged": true,
+      "label": "surprise",
+      "method": "platt"
+    },
+    {
+      "a": 0.758053852753967,
+      "b": 0.12120890568400243,
+      "converged": true,
+      "label": "neutral",
+      "method": "platt"
+    }
+  ],
+  "per_label": [
+    {
+      "a": 0.9167468214526032,
+      "b": -0.4934181234579897,
+      "converged": true,
+      "ece_after": 0.007718396682818275,
+      "ece_before": 0.015204735311796143,
+      "label": "admiration",
+      "mean_p_after": 0.0899376895771406,
+      "mean_p_before": 0.10436292523441874,
+      "method": "platt",
+      "n_pos_validation": 488,
+      "observed_rate": 0.08993733873940288
+    },
+    {
+      "a": 1.0149357025001606,
+      "b": -0.13042176734596375,
+      "converged": true,
+      "ece_after": 0.005122894905206602,
+      "ece_before": 0.0070917785474915555,
+      "label": "amusement",
+      "mean_p_after": 0.05584325761079368,
+      "mean_p_before": 0.058235164270233945,
+      "method": "platt",
+      "n_pos_validation": 303,
+      "observed_rate": 0.05584224106155548
+    },
+    {
+      "a": 0.8850981967543882,
+      "b": -0.462617257390605,
+      "converged": true,
+      "ece_after": 0.006260904850426249,
+      "ece_before": 0.008777322260460409,
+      "label": "anger",
+      "mean_p_after": 0.03593964594935664,
+      "mean_p_before": 0.04244764506687368,
+      "method": "platt",
+      "n_pos_validation": 195,
+      "observed_rate": 0.03593807593070402
+    },
+    {
+      "a": 0.963015848995298,
+      "b": -0.191319579440268,
+      "converged": true,
+      "ece_after": 0.003888471402696986,
+      "ece_before": 0.005986013833799009,
+      "label": "annoyance",
+      "mean_p_after": 0.05584266378472301,
+      "mean_p_before": 0.06124071487402499,
+      "method": "platt",
+      "n_pos_validation": 303,
+      "observed_rate": 0.05584224106155548
+    },
+    {
+      "a": 0.8216981624521468,
+      "b": -0.4060742455524392,
+      "converged": true,
+      "ece_after": 0.010825673130960813,
+      "ece_before": 0.016179156991717857,
+      "label": "approval",
+      "mean_p_after": 0.07316704946548828,
+      "mean_p_before": 0.07654611266722099,
+      "method": "platt",
+      "n_pos_validation": 397,
+      "observed_rate": 0.07316623663840767
+    },
+    {
+      "a": 0.9444400944421315,
+      "b": -0.248983627946732,
+      "converged": true,
+      "ece_after": 0.005216939542410662,
+      "ece_before": 0.005959357660532363,
+      "label": "caring",
+      "mean_p_after": 0.028199984043944606,
+      "mean_p_before": 0.03071799842807049,
+      "method": "platt",
+      "n_pos_validation": 153,
+      "observed_rate": 0.02819756726870623
+    },
+    {
+      "a": 0.9595635799913005,
+      "b": -0.23521441539312624,
+      "converged": true,
+      "ece_after": 0.003964012989666279,
+      "ece_before": 0.004641533184644639,
+      "label": "confusion",
+      "mean_p_after": 0.028014244768366232,
+      "mean_p_before": 0.03090391585534104,
+      "method": "platt",
+      "n_pos_validation": 152,
+      "observed_rate": 0.028013269443420568
+    },
+    {
+      "a": 0.9200627051640745,
+      "b": -0.30254352046341015,
+      "converged": true,
+      "ece_after": 0.010008436084425998,
+      "ece_before": 0.009728804281757215,
+      "label": "curiosity",
+      "mean_p_after": 0.04570304553243097,
+      "mean_p_before": 0.051266561958422524,
+      "method": "platt",
+      "n_pos_validation": 248,
+      "observed_rate": 0.04570586067084408
+    },
+    {
+      "a": 1.0962414960293139,
+      "b": 0.015297458623842373,
+      "converged": true,
+      "ece_after": 0.0021457466045816972,
+      "ece_before": 0.003171454503372086,
+      "label": "desire",
+      "mean_p_after": 0.014195766064248726,
+      "mean_p_before": 0.0165201054353018,
+      "method": "platt",
+      "n_pos_validation": 77,
+      "observed_rate": 0.014190932546995945
+    },
+    {
+      "a": 0.9427462122671522,
+      "b": -0.14237633444576317,
+      "converged": true,
+      "ece_after": 0.0027528897697402916,
+      "ece_before": 0.0036911691245834297,
+      "label": "disappointment",
+      "mean_p_after": 0.03004219420362027,
+      "mean_p_before": 0.030020936374201276,
+      "method": "platt",
+      "n_pos_validation": 163,
+      "observed_rate": 0.030040545521562847
+    },
+    {
+      "a": 0.8441796648545724,
+      "b": -0.2555164692537237,
+      "converged": true,
+      "ece_after": 0.007845670799693434,
+      "ece_before": 0.01417730317749784,
+      "label": "disapproval",
+      "mean_p_after": 0.05381611565677509,
+      "mean_p_before": 0.052168239897225986,
+      "method": "platt",
+      "n_pos_validation": 292,
+      "observed_rate": 0.0538149649834132
+    },
+    {
+      "a": 1.019185395080131,
+      "b": -0.26191115113024005,
+      "converged": true,
+      "ece_after": 0.004694859784967547,
+      "ece_before": 0.006709144690413136,
+      "label": "disgust",
+      "mean_p_after": 0.017876320897798864,
+      "mean_p_before": 0.02204935516122628,
+      "method": "platt",
+      "n_pos_validation": 97,
+      "observed_rate": 0.017876889052709177
+    },
+    {
+      "a": 1.3634960820911182,
+      "b": 0.8921805174502925,
+      "converged": true,
+      "ece_after": 0.0012602385019000173,
+      "ece_before": 0.003993522200731602,
+      "label": "embarrassment",
+      "mean_p_after": 0.006451076033252965,
+      "mean_p_before": 0.00807919696789269,
+      "method": "platt",
+      "n_pos_validation": 35,
+      "observed_rate": 0.006450423884998157
+    },
+    {
+      "a": 0.9386272905592575,
+      "b": -0.46604748004221613,
+      "converged": true,
+      "ece_after": 0.0037606564787974394,
+      "ece_before": 0.006391577815959399,
+      "label": "excitement",
+      "mean_p_after": 0.01769631931857175,
+      "mean_p_before": 0.0223267095241834,
+      "method": "platt",
+      "n_pos_validation": 96,
+      "observed_rate": 0.017692591227423518
+    },
+    {
+      "a": 1.0739574871102608,
+      "b": 0.16031581143950305,
+      "converged": true,
+      "ece_after": 0.002336787954242632,
+      "ece_before": 0.004065038530272611,
+      "label": "fear",
+      "mean_p_after": 0.016591552740881373,
+      "mean_p_before": 0.016665049162671246,
+      "method": "platt",
+      "n_pos_validation": 90,
+      "observed_rate": 0.016586804275709546
+    },
+    {
+      "a": 1.0955448511198869,
+      "b": -0.05302413809883626,
+      "converged": true,
+      "ece_after": 0.003281586222976272,
+      "ece_before": 0.006189569931823651,
+      "label": "gratitude",
+      "mean_p_after": 0.0659777526236844,
+      "mean_p_before": 0.0683896621596599,
+      "method": "platt",
+      "n_pos_validation": 358,
+      "observed_rate": 0.06597862145226686
+    },
+    {
+      "a": 1.4707497145099468,
+      "b": 2.1939534508867817,
+      "converged": true,
+      "ece_after": 0.00012339954350513673,
+      "ece_before": 0.00033468568852741774,
+      "label": "grief",
+      "mean_p_after": 0.0024178669746456704,
+      "mean_p_before": 0.002730557417241019,
+      "method": "platt",
+      "n_pos_validation": 13,
+      "observed_rate": 0.002395871728713601
+    },
+    {
+      "a": 1.0630079801245662,
+      "b": 0.030397816364756722,
+      "converged": true,
+      "ece_after": 0.00340143635451359,
+      "ece_before": 0.0072428859410835445,
+      "label": "joy",
+      "mean_p_after": 0.03170174816529762,
+      "mean_p_before": 0.03360236837213961,
+      "method": "platt",
+      "n_pos_validation": 172,
+      "observed_rate": 0.0316992259491338
+    },
+    {
+      "a": 0.9862220704013751,
+      "b": -0.5089162899740463,
+      "converged": true,
+      "ece_after": 0.004610839934418147,
+      "ece_before": 0.008958017862789174,
+      "label": "love",
+      "mean_p_after": 0.046448725297385626,
+      "mean_p_before": 0.05383628885217484,
+      "method": "platt",
+      "n_pos_validation": 252,
+      "observed_rate": 0.04644305197198673
+    },
+    {
+      "a": 1.2837729199571826,
+      "b": 0.8101780517501629,
+      "converged": true,
+      "ece_after": 0.0012710340625835162,
+      "ece_before": 0.0020939257764347324,
+      "label": "nervousness",
+      "mean_p_after": 0.003886444893212146,
+      "mean_p_before": 0.004942885138096849,
+      "method": "platt",
+      "n_pos_validation": 21,
+      "observed_rate": 0.003870254330998894
+    },
+    {
+      "a": 0.9784219188447622,
+      "b": -0.22282677317530786,
+      "converged": true,
+      "ece_after": 0.006175877299718162,
+      "ece_before": 0.006948570608573779,
+      "label": "optimism",
+      "mean_p_after": 0.03851373781052204,
+      "mean_p_before": 0.04253150220492467,
+      "method": "platt",
+      "n_pos_validation": 209,
+      "observed_rate": 0.03851824548470328
+    },
+    {
+      "a": 2.317416482902901,
+      "b": 6.100384400246642,
+      "converged": true,
+      "ece_after": 0.0016917841591877405,
+      "ece_before": 0.0018167345926957067,
+      "label": "pride",
+      "mean_p_after": 0.0027859850786827634,
+      "mean_p_before": 0.0032668638932726642,
+      "method": "platt",
+      "n_pos_validation": 15,
+      "observed_rate": 0.0027644673792849243
+    },
+    {
+      "a": 0.9352129345665996,
+      "b": -0.4189314651287073,
+      "converged": true,
+      "ece_after": 0.005150659611669111,
+      "ece_before": 0.006330172742962933,
+      "label": "realization",
+      "mean_p_after": 0.02340810918812702,
+      "mean_p_before": 0.028459134320078225,
+      "method": "platt",
+      "n_pos_validation": 127,
+      "observed_rate": 0.023405823811279026
+    },
+    {
+      "a": 1.5155660510775983,
+      "b": 2.1369319379569593,
+      "converged": true,
+      "ece_after": 0.0005636540779712971,
+      "ece_before": 0.0013083996999466896,
+      "label": "relief",
+      "mean_p_after": 0.003335697602591185,
+      "mean_p_before": 0.0043133945314429165,
+      "method": "platt",
+      "n_pos_validation": 18,
+      "observed_rate": 0.003317360855141909
+    },
+    {
+      "a": 1.224074873383535,
+      "b": 0.4427426111890646,
+      "converged": true,
+      "ece_after": 0.0032856182318158466,
+      "ece_before": 0.005780537074908811,
+      "label": "remorse",
+      "mean_p_after": 0.01253741901430002,
+      "mean_p_before": 0.01272005048779372,
+      "method": "platt",
+      "n_pos_validation": 68,
+      "observed_rate": 0.012532252119424991
+    },
+    {
+      "a": 0.8596581367098953,
+      "b": -0.7293151878888412,
+      "converged": true,
+      "ece_after": 0.006566536364859044,
+      "ece_before": 0.009620855997958555,
+      "label": "sadness",
+      "mean_p_after": 0.02635701745296593,
+      "mean_p_before": 0.03463773045235195,
+      "method": "platt",
+      "n_pos_validation": 143,
+      "observed_rate": 0.026354589015849614
+    },
+    {
+      "a": 0.9410005999988692,
+      "b": -0.3357061075037357,
+      "converged": true,
+      "ece_after": 0.006795669573591201,
+      "ece_before": 0.007052039109486314,
+      "label": "surprise",
+      "mean_p_after": 0.023777393174524198,
+      "mean_p_before": 0.026845491272716338,
+      "method": "platt",
+      "n_pos_validation": 129,
+      "observed_rate": 0.02377441946185035
+    },
+    {
+      "a": 0.758053852753967,
+      "b": 0.12120890568400243,
+      "converged": true,
+      "ece_after": 0.029943039714794843,
+      "ece_before": 0.06429447304997861,
+      "label": "neutral",
+      "mean_p_after": 0.32547100857684835,
+      "mean_p_before": 0.2876211379210509,
+      "method": "platt",
+      "n_pos_validation": 1766,
+      "observed_rate": 0.32546995945447843
+    }
+  ],
+  "seed": 13,
+  "validation_ece_after": {
+    "mean_over_labels": 0.005380846951219244,
+    "pooled": 0.00240461482116989
+  },
+  "validation_ece_before": {
+    "mean_over_labels": 0.008704956435435686,
+    "pooled": 0.004777831932215609
+  }
+}

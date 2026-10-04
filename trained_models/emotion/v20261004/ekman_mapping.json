@@ -1,0 +1,49 @@
+{
+  "combine": "max",
+  "groups": {
+    "anger": [
+      "anger",
+      "annoyance",
+      "disapproval"
+    ],
+    "disgust": [
+      "disgust"
+    ],
+    "fear": [
+      "fear",
+      "nervousness"
+    ],
+    "joy": [
+      "joy",
+      "amusement",
+      "approval",
+      "excitement",
+      "gratitude",
+      "love",
+      "optimism",
+      "relief",
+      "pride",
+      "admiration",
+      "desire",
+      "caring"
+    ],
+    "neutral": [
+      "neutral"
+    ],
+    "sadness": [
+      "sadness",
+      "disappointment",
+      "embarrassment",
+      "grief",
+      "remorse"
+    ],
+    "surprise": [
+      "surprise",
+      "realization",
+      "confusion",
+      "curiosity"
+    ]
+  },
+  "rule": "group probability = max of member calibrated probabilities (lower bound of P(any member), no independence assumption); group predicted = any member above its own threshold; group gold = any member labelled",
+  "source": "data/raw/goemotions_official/ekman_mapping.json"
+}

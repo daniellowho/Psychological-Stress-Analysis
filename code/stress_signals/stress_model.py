@@ -288,6 +288,28 @@ def predict_logits(model, tokenizer, texts: Sequence[str], max_length: int, batc
     return out
 
 
+def predict_chunked_proba(model, tokenizer, texts: Sequence[str], max_length: int, stride: int, max_chunks: int,
+                          temperature: float = 1.0, aggregation: str = "mean", batch_size: int = 16,
+                          device: str = "cpu", half: bool = False) -> tuple[np.ndarray, np.ndarray]:
+    """Calibrated P(stress) per text (n,): sentence-aligned chunks (preprocess.chunk_text), temperature-scaled
+    probability per chunk, combined with preprocess.aggregate_chunk_scores (the rule stored in the bundle's
+    stress_config.json). Returns (p, chunks used per text). Inference only."""
+    from .preprocess import aggregate_chunk_scores, chunk_text
+    budget = max_length - tokenizer.num_special_tokens_to_add(pair=False)
+    stride = min(int(stride), budget // 2)
+    chunks = [chunk_text(t, tokenizer, max_length, stride, max_chunks) for t in texts]
+    if any(len(c) == 0 for c in chunks):
+        raise ValueError("a text produced no chunks (empty text); filter empty texts first")
+    flat = [c.text for cs in chunks for c in cs]
+    owner = np.repeat(np.arange(len(texts)), [len(cs) for cs in chunks])
+    pc = positive_proba(predict_logits(model, tokenizer, flat, max_length, batch_size, device, half), temperature)
+    p = np.empty(len(texts))
+    for i, cs in enumerate(chunks):
+        w = [c.n_tokens for c in cs] if aggregation == "weighted_mean" else None
+        p[i] = float(aggregate_chunk_scores(pc[owner == i], aggregation, w))
+    return p, np.array([len(cs) for cs in chunks])
+
+
 def _save_predictions(df: pd.DataFrame, logits: np.ndarray, path: Path) -> None:
     out = df[["record_id", "label", "confidence", "community", "post_id", "split"]].copy()
     out["logit_0"], out["logit_1"] = logits[:, 0], logits[:, 1]

@@ -1,0 +1,21 @@
+{
+  "aggregation": "max",
+  "kinds": {
+    "academic_workload": "cosine",
+    "financial_concerns": "cosine",
+    "health_concerns": "cosine",
+    "other_unclear": "cosine",
+    "overload": "cosine",
+    "relationship_issues": "cosine",
+    "societal_problems": "cosine",
+    "uncertainty": "cosine",
+    "workplace_pressure": "cosine"
+  },
+  "method": "zero_shot",
+  "method_key": "zero_shot__all-MiniLM-L6-v2",
+  "windows": {
+    "max_windows": 32,
+    "min_words": 4,
+    "sentences_per_window": 1
+  }
+}

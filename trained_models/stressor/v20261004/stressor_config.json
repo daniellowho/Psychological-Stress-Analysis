@@ -1,0 +1,131 @@
+{
+  "aggregation": "max",
+  "calibration": {
+    "method": "temperature (one scalar, SAD-validation)",
+    "temperature": 1.180722130778797,
+    "validation_nll_after": 0.7440406841223433,
+    "validation_nll_before": 0.7615378940256768,
+    "validation_top_label_ece_after": 0.04621907330274336,
+    "validation_top_label_ece_before": 0.07149217985719741
+  },
+  "categories": [
+    {
+      "coverage": "sad",
+      "id": "workplace_pressure",
+      "lower_confidence": false,
+      "score_kind": "probability"
+    },
+    {
+      "coverage": "sad",
+      "id": "academic_workload",
+      "lower_confidence": false,
+      "score_kind": "probability"
+    },
+    {
+      "coverage": "sad",
+      "id": "financial_concerns",
+      "lower_confidence": false,
+      "score_kind": "probability"
+    },
+    {
+      "coverage": "sad",
+      "id": "relationship_issues",
+      "lower_confidence": false,
+      "score_kind": "probability"
+    },
+    {
+      "coverage": "sad",
+      "id": "health_concerns",
+      "lower_confidence": false,
+      "score_kind": "probability"
+    },
+    {
+      "coverage": "zero_shot",
+      "id": "uncertainty",
+      "lower_confidence": true,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "overload",
+      "lower_confidence": false,
+      "score_kind": "probability"
+    },
+    {
+      "coverage": "zero_shot",
+      "id": "societal_problems",
+      "lower_confidence": true,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "other_unclear",
+      "lower_confidence": false,
+      "score_kind": "probability"
+    }
+  ],
+  "class_to_category": {
+    "academic_workload": "academic_workload",
+    "emotional_turmoil": null,
+    "financial_concerns": "financial_concerns",
+    "health_concerns": "health_concerns",
+    "other_unclear": "other_unclear",
+    "overload": "overload",
+    "relationship_issues/family": "relationship_issues",
+    "relationship_issues/social": "relationship_issues",
+    "workplace_pressure": "workplace_pressure"
+  },
+  "classifier_classes": [
+    "workplace_pressure",
+    "academic_workload",
+    "financial_concerns",
+    "relationship_issues/family",
+    "relationship_issues/social",
+    "health_concerns",
+    "overload",
+    "other_unclear",
+    "emotional_turmoil"
+  ],
+  "component": "stressor",
+  "created_utc": "2026-10-04T16:53:34.114202+00:00",
+  "embedding_model": {
+    "hf_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "lowercase": false,
+    "max_length": 256,
+    "normalize": true,
+    "pooling": "mean",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "finetune_max_length": 128,
+  "inference_unit": {
+    "rule": "sentence windows (stressor_model.sentence_windows)",
+    "windows": {
+      "max_windows": 32,
+      "min_words": 4,
+      "sentences_per_window": 1
+    }
+  },
+  "method": "finetune",
+  "method_key": "finetune__distilroberta-base",
+  "none_rule": "none_unclear when no category score reaches its threshold",
+  "scope": "Stressor labels are a RESEARCH taxonomy of what a text names as a cause of pressure. They are not a clinical assessment, say nothing about any person, and feed aggregate signals only.",
+  "taxonomy_file": "stressors_v1.yaml",
+  "taxonomy_version": 1,
+  "thresholds": {
+    "academic_workload": 0.07,
+    "financial_concerns": 0.06,
+    "health_concerns": 0.5,
+    "other_unclear": 0.5,
+    "overload": 0.5,
+    "relationship_issues": 0.5,
+    "societal_problems": 1.01,
+    "uncertainty": 1.01,
+    "workplace_pressure": 0.5
+  },
+  "thresholds_fitted_on": "gold-dev",
+  "weights": {
+    "classifier": "model.safetensors + config.json + tokenizer files (fine-tuned)",
+    "run_dir": "C:/Visual_studio/TA-BDA Project/Psychological-Stress-Analysis/trained_models/stressor/runs/finetune/distilroberta-base/seed2024",
+    "zero_shot": "prototypes.npy (one unit vector per category, taxonomy order)"
+  }
+}

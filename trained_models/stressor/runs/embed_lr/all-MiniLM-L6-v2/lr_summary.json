@@ -1,0 +1,62 @@
+{
+  "C_grid": [
+    {
+      "C": 0.1,
+      "n_iter": 26,
+      "validation_macro_f1": 0.6625166638267277
+    },
+    {
+      "C": 0.3,
+      "n_iter": 37,
+      "validation_macro_f1": 0.698696933306289
+    },
+    {
+      "C": 1.0,
+      "n_iter": 51,
+      "validation_macro_f1": 0.7029632657755489
+    },
+    {
+      "C": 3.0,
+      "n_iter": 56,
+      "validation_macro_f1": 0.6961417965106286
+    },
+    {
+      "C": 10.0,
+      "n_iter": 127,
+      "validation_macro_f1": 0.6903695820597767
+    },
+    {
+      "C": 30.0,
+      "n_iter": 183,
+      "validation_macro_f1": 0.6733153195239506
+    }
+  ],
+  "best_C": 1.0,
+  "best_validation_macro_f1": 0.7029632657755489,
+  "classes": [
+    "workplace_pressure",
+    "academic_workload",
+    "financial_concerns",
+    "relationship_issues/family",
+    "relationship_issues/social",
+    "health_concerns",
+    "overload",
+    "other_unclear",
+    "emotional_turmoil"
+  ],
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+  "embedding": {
+    "hf_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "lowercase": false,
+    "max_length": 256,
+    "normalize": true,
+    "pooling": "mean",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "method": "embed_lr",
+  "n_train": 4789,
+  "n_validation": 1027,
+  "seed": 42,
+  "selection": "max SAD-validation macro-F1 over classes; ties -> smaller C",
+  "sklearn": "1.5.2"
+}

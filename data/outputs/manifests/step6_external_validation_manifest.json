@@ -1,0 +1,97 @@
+{
+  "artifacts": {
+    "data/outputs/external_validation/senticnet_noise.json": {
+      "bytes": 3401,
+      "sha256": "15366e89c913ea4327d82f6875e07d90cd4592f62ec48652e03b214522e3850c",
+      "type": "file"
+    },
+    "data/outputs/external_validation/senticnet_result.json": {
+      "bytes": 26577,
+      "sha256": "858f62c41c2d35ecb2a9bdab0d87e06abb8674bbbfc77403fdf8b9902f5788e3",
+      "type": "file"
+    },
+    "data/outputs/external_validation/senticnet_scores_v20261004.parquet": {
+      "bytes": 558548,
+      "sha256": "cb3090a1aba2a9dd0493dde13bab99ae1558ce16a4747fdc8ef324824f3a3e18",
+      "type": "file"
+    },
+    "data/outputs/external_validation/tensistrength_result.json": {
+      "bytes": 3266,
+      "sha256": "175207f2738fcac18d1285ac4dce9e1aeed0934fa501e16a361f9de58d6696a3",
+      "type": "file"
+    },
+    "data/outputs/external_validation/tensistrength_run.json": {
+      "bytes": 2829,
+      "sha256": "3dbc707e9646d9346373512708bb3f6cde74141c23ecd19886d30f68def8ff8f",
+      "type": "file"
+    },
+    "data/outputs/external_validation/tensistrength_scores.parquet": {
+      "bytes": 67806,
+      "sha256": "91f34940e53b70b0b8144c79388fb6318665ede7beff8bc03dea2d363046965b",
+      "type": "file"
+    },
+    "data/outputs/reports/external_validation.json": {
+      "bytes": 44413,
+      "sha256": "599f6d73d56af77706c64bfc6e13dd543bbbd724cff050826413e11e24d3f124",
+      "type": "file"
+    },
+    "data/outputs/reports/external_validation.md": {
+      "bytes": 8337,
+      "sha256": "d8963d49cf0b6be71dcca75ef8057f0aa8b2c27de4b842f8eb80badb2baa6eee",
+      "type": "file"
+    }
+  },
+  "created_utc": "2026-10-04T17:02:33+00:00",
+  "dataset_versions": {
+    "senticnet_validation_sha256": "32dfa7a11bf366e813be8741cb72b74d34c0e9af688ea679b88906fa4ee4859a",
+    "stress_bundle_manifest_sha256": "a7d32aaa0e5d2934e214ee464180cd95bc5ca9e71e01f45a48716dbbe8e843ae"
+  },
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+  "extra": {
+    "bundle": "v20261004",
+    "libraries": {
+      "accelerate": "1.1.1",
+      "datasets": "3.1.0",
+      "numpy": "1.26.4",
+      "openpyxl": "3.1.5",
+      "pandas": "2.2.3",
+      "psycopg": "3.2.3",
+      "pyarrow": "17.0.0",
+      "pyspark": "3.5.3",
+      "python": "3.11.9",
+      "sklearn": "1.5.2",
+      "streamlit": "1.40.1",
+      "tokenizers": "0.20.3",
+      "torch": "2.5.1+cu121",
+      "transformers": "4.46.3",
+      "yaml": "6.0.2"
+    },
+    "step": 6,
+    "verdict": "ship with caveats"
+  },
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.9",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "platform": {
+    "machine": "AMD64",
+    "release": "10",
+    "system": "Windows"
+  },
+  "seeds": [
+    42
+  ]
+}
