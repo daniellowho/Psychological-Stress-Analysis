@@ -48,3 +48,6 @@ nbformat==5.10.4
 # dev / tests (merged from requirements-dev.txt)
 pytest==8.3.3
 nbclient==0.10.0          # executes notebook cells in tests/CI
+
+# topic modelling (Step 10, USER-RUN; versions UNVERIFIED, pin after you install and test):
+#   bertopic, umap-learn, hdbscan
