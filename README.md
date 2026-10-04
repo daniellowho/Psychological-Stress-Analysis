@@ -118,3 +118,12 @@ access to the repo and `hf auth login`):
 
 This recreates `data/raw/` and `data/processed/` in place, so Steps 1-2 are then skipped. Compare file hashes against
 `data/outputs/manifests/` to confirm they match.
+
+### Automatic download
+
+Cell 0.1 of the notebook calls `stress_signals.hf_sync.pull_missing`, configured in the `huggingface:` section of
+`code/config.yaml`. On every start it downloads, from the two private repos above, only the files that are **missing** locally
+(`data/raw/`, `data/processed/` and `trained_models/stress/v20261004/`). Existing files are never overwritten. So on a fresh
+clone you only need to run `hf auth login` once and Run All; no manual download commands. If the repos cannot be reached (not
+logged in, no access, offline) it prints a `SKIPPED` note and the notebook carries on as before (Dreaddit downloads from
+Hugging Face and Step 3 trains from scratch). Set `huggingface.enabled: false` to turn it off.

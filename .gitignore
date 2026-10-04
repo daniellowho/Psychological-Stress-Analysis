@@ -62,3 +62,6 @@ venv/
 spark-warehouse/
 metastore_db/
 derby.log
+
+# Hugging Face download metadata
+.cache/
