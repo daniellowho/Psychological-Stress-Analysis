@@ -37,6 +37,13 @@ trained_models/**
 !trained_models/**/GOLD_TEST_REPORT.json
 !trained_models/**/kappa.json
 !trained_models/**/kinds.json
+!trained_models/**/DONE.json
+!trained_models/**/train_log.csv
+!trained_models/**/c_selection_validation.csv
+!trained_models/**/threshold_curve_*.csv
+!trained_models/**/reliability_*.png
+!trained_models/**/predictions_*.parquet
+!trained_models/stress/v*/config.json
 !trained_models/**/dreaddit_crosscheck.json
 .env
 code/_deferred/.env

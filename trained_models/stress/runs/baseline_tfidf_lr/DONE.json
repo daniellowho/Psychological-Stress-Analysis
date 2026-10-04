@@ -1,0 +1,27 @@
+{
+  "C": 1.0,
+  "finished_utc": "2026-10-03T11:11:03.240321+00:00",
+  "seed": 42,
+  "settings": {
+    "C_grid": [
+      0.1,
+      0.3,
+      1.0,
+      3.0,
+      10.0
+    ],
+    "char_ngrams": [
+      2,
+      5
+    ],
+    "max_features_char": 100000,
+    "max_features_word": 50000,
+    "max_iter": 2000,
+    "min_df": 2,
+    "top_k_ngrams": 30,
+    "word_ngrams": [
+      1,
+      2
+    ]
+  }
+}
