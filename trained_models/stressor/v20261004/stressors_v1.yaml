@@ -1,0 +1,280 @@
+# Stressor taxonomy v1 (Step 5A). A RESEARCH taxonomy of stressor LANGUAGE (what a text names as a cause of pressure).
+# It is not a clinical instrument and says nothing about any person. Hand-written; versioned in git.
+#
+# Sources:
+#   SAD v1 (9 rater categories, top_label)    -> supervised classes (one SAD label -> exactly one classifier class)
+#   Mendeley Stress Indicators (26 columns)   -> STRUCTURE only: which constructs are causes vs symptoms/responses
+#   Dreaddit subreddits                        -> weak sanity cross-check only, never accuracy
+# Seed keywords and paraphrase descriptions are AUTHOR-CHOSEN (not derived from any gold text) and UNVALIDATED.
+# Keywords: case-insensitive, whole words; a trailing * matches any word ending; spaces match any whitespace.
+
+version: 1
+created: "2026-10-04"
+status: "v1 for Step 5; changes need user approval (no extra categories without approval)"
+
+decisions:
+  everyday_decision_making: >-
+    SAD 'Everyday Decision Making' -> overload (USER DECISION, Step 5). Inspection of SAD sentences showed mostly
+    planning/logistics load (packing for a trip, planning meals, sorting out a schedule) plus some general
+    'too much on my mind' text; uncertainty-about-the-future sentences also occur in it, so the overload head
+    will absorb some uncertainty language (documented limitation). Uncertainty itself has no SAD label.
+  emotional_turmoil: >-
+    SAD 'Emotional Turmoil' is an emotional RESPONSE, not a cause, so it is NEVER a stressor output. It is KEPT as a
+    separate non-stressor class in the supervised classifiers (not dropped). Why: Reddit stress posts are full of
+    feelings-only sentences ('I just had a breakdown'); a classifier trained without that class must spread every such
+    sentence over the stressor classes (softmax sums to 1), producing false stressors. With the class kept, that
+    probability mass goes to a non-stressor output that is discarded at post level. Dropping its 667 rows would also
+    remove SAD's best 'no identifiable cause' examples. Emotion language is measured by the Step 4 model instead.
+  sleep_problems: >-
+    NOT split from health_concerns. SAD has no sleep label: a sleep sub-label would have to be created by keyword
+    matching (105 of 780 'Health, Fatigue, or Physical Pain' sentences match sleep|slept|insomnia|awake|nightmare*,
+    Step 5 inspection), i.e. a keyword-derived label rather than a human one, and Mendeley's authors list
+    sleep_problems as a SYMPTOM, not a stressor. Kept combined; sleep language is part of health_concerns.
+  sad_non_stressor_rows: >-
+    SAD's 373 rows with is_stressor = 0 (365 of them top_label 'Other') keep their rater category; they are few and
+    the 'Other' class is mapped to other_unclear, which is a low-information class anyway.
+  severity: "SAD avg/median severity is NOT used as a label (optional auxiliary information only, unused in v1)."
+
+# ---------------------------------------------------------------- categories (order = output order)
+# coverage: sad -> supervised (SAD classes) | zero_shot -> embedding similarity to the descriptions only (lower confidence)
+categories:
+  - id: workplace_pressure
+    name: Workplace pressure
+    coverage: sad
+    definition: >-
+      Pressure that comes from paid work or job seeking: workload, deadlines, shifts, bosses or co-workers, job
+      insecurity, losing a job, looking for work, or the work environment.
+    include:
+      - demands, conflict or insecurity at a current or past job
+      - unemployment or job hunting described as a source of pressure
+      - unpaid caring work only when the writer frames it as their job
+    exclude:
+      - money problems caused by job loss when the text is about money (also tag financial_concerns)
+      - school or university assignments (academic_workload)
+    keywords: [job, jobs, work, working, boss, manager, coworker*, co-worker*, shift, shifts, overtime, deadline*,
+               fired, laid off, layoff*, unemploy*, hired, interview*, promotion, workplace, office, career, salary]
+    paraphrases:
+      - "My job is stressing me out with too much work and tight deadlines."
+      - "I am worried about getting fired and my boss keeps pressuring me."
+      - "Looking for a job and dealing with problems at work is overwhelming."
+    sad_labels: ["Work"]
+    mendeley_columns: [work_environment]
+    dreaddit_subreddits: []
+
+  - id: academic_workload
+    name: Academic workload
+    coverage: sad
+    definition: >-
+      Pressure from school, college or university: exams, grades, assignments, coursework load, teachers or
+      professors, academic competition, applications or failing a course.
+    include:
+      - exams, grades, homework, theses, applications to programmes
+      - conflict with teachers/professors or classmates about academic matters
+    exclude:
+      - tuition or student-loan money worries (financial_concerns; tag both if both are stated)
+      - teaching as a job (workplace_pressure)
+    keywords: [exam, exams, test, tests, finals, midterm*, grade, grades, gpa, homework, assignment*, essay*, thesis,
+               dissertation, class, classes, course*, semester, school, college, university, uni, professor*,
+               teacher*, lecture*, study, studying, degree]
+    paraphrases:
+      - "I have exams coming up and too many assignments to finish."
+      - "My grades are dropping and I might fail this class."
+      - "University coursework and pressure from professors are getting to me."
+    sad_labels: ["School"]
+    mendeley_columns: [academic_overload, peer_competition, professor_difficulties, academic_conflicts]
+    dreaddit_subreddits: []
+
+  - id: financial_concerns
+    name: Financial concerns
+    coverage: sad
+    definition: >-
+      Pressure from money: bills, rent, debt, income loss, affording food or housing, benefits, eviction or
+      homelessness as an economic problem.
+    include:
+      - not being able to pay rent, bills, debts, food, medical costs
+      - housing loss or homelessness described as a money/housing problem
+    exclude:
+      - job stress that never mentions money (workplace_pressure)
+    keywords: [money, rent, bill, bills, debt, debts, loan, loans, pay, paid, afford, broke, paycheck, income,
+               savings, budget, mortgage, evict*, homeless*, food stamps, benefits, financial*, credit card, cash]
+    paraphrases:
+      - "I can't afford rent this month and the bills keep piling up."
+      - "I am deep in debt and worried about money all the time."
+      - "We might lose our housing because we have no income."
+    sad_labels: ["Financial Problem"]
+    mendeley_columns: []
+    dreaddit_subreddits: [almosthomeless, assistance, food_pantry, homeless]
+
+  - id: relationship_issues
+    name: Relationship issues
+    coverage: sad
+    definition: >-
+      Pressure from relationships with other people: family conflict or family responsibilities, partners,
+      break-ups, friends, social conflict, abuse by someone close, or social isolation described as a circumstance.
+    subcategories:
+      family: "parents, children, siblings, relatives, home/family environment"
+      social: "partners, dating, friends, roommates, peers, social conflict or exclusion"
+    include:
+      - arguments, break-ups, divorce, family illness duties, abuse or violence by a partner or relative
+      - loneliness only when stated as a situation ('I have no friends here'), not as a feeling alone
+    exclude:
+      - feeling lonely or sad with no relationship situation named (emotional response; no stressor)
+      - workplace conflict with colleagues (workplace_pressure)
+    keywords: [mom, mother, dad, father, parent*, family, sister*, brother*, son, daughter, kid, kids, child*,
+               husband, wife, boyfriend, girlfriend, partner*, ex, divorce*, breakup, broke up, relationship*,
+               friend*, roommate*, abuse*, abusive, fight*, argu*]
+    paraphrases:
+      - "My partner and I keep fighting and I think we are breaking up."
+      - "Things at home with my parents are really tense right now."
+      - "My friends have stopped talking to me and I feel left out."
+    sad_labels: ["Family Issues", "Social Relationships"]
+    sad_label_subcategory: {"Family Issues": family, "Social Relationships": social}
+    mendeley_columns: [relationship_stress, home_environment]
+    dreaddit_subreddits: [relationships, domesticviolence, survivorsofabuse]
+
+  - id: health_concerns
+    name: Health concerns
+    coverage: sad
+    definition: >-
+      Pressure from physical or mental health problems as a situation: illness, injury, pain, fatigue, sleep
+      problems, medical tests or treatment, pregnancy complications, or the illness of the writer or of someone
+      close when the health problem itself is the cause.
+    include:
+      - illness, pain, injury, diagnosis, surgery, medication, hospital, sleep problems, exhaustion
+      - a named health condition described as a problem the writer is dealing with
+    exclude:
+      - stress SYMPTOMS reported as the effect of another cause ('work keeps me up at night' -> workplace_pressure)
+      - emotions alone (anxious, sad) with no health situation
+    keywords: [sick, ill, illness, pain, hurt*, injur*, doctor*, hospital, surgery, diagnos*, medication*, meds,
+               therapy, health, cancer, covid, virus, pregnan*, sleep*, slept, insomnia, tired, exhaust*, fatigue*,
+               headache*, migraine*]
+    paraphrases:
+      - "I have been sick for weeks and the doctors can't find out what is wrong."
+      - "My back pain and lack of sleep make every day exhausting."
+      - "Waiting for my medical test results is really stressful."
+    sad_labels: ["Health, Fatigue, or Physical Pain"]
+    mendeley_columns: [health_issues]
+    dreaddit_subreddits: []
+
+  - id: uncertainty
+    name: Uncertainty
+    coverage: zero_shot
+    definition: >-
+      Pressure from not knowing what will happen: an unclear future, waiting for an outcome, unpredictable
+      situations, or not knowing what to do next.
+    include:
+      - waiting for decisions or results, an unknown future, sudden unpredictable change
+    exclude:
+      - the uncertain outcome is about a specific domain AND the domain is the point (tag that domain too)
+    keywords: [uncertain*, unsure, not sure, don't know what, dont know what, unknown, unpredictable, future,
+               what will happen, what if, waiting, limbo]
+    paraphrases:
+      - "I don't know what is going to happen and the uncertainty is killing me."
+      - "Everything about my future feels unclear and I can't plan anything."
+      - "I am stuck waiting to find out and I have no idea what comes next."
+    sad_labels: []
+    mendeley_columns: []
+    dreaddit_subreddits: []
+
+  - id: overload
+    name: Overload
+    coverage: sad
+    definition: >-
+      Pressure from having too much to handle at once: too many tasks, responsibilities or decisions, lack of
+      time to rest, everyday planning and logistics piling up.
+    include:
+      - juggling many demands, no free time, constant planning and decisions
+    exclude:
+      - load from one specific domain only (tag that domain, e.g. academic_workload)
+    keywords: [too much, overwhelm*, so much to do, no time, busy, juggl*, responsibilit*, everything at once,
+               to-do, todo, schedule, plan, planning, organi*, decision*, decide]
+    paraphrases:
+      - "I have way too much going on and no time to rest."
+      - "Every day is a pile of tasks, plans and decisions I can't keep up with."
+      - "Juggling all my responsibilities at once is overwhelming."
+    sad_labels: ["Everyday Decision Making"]
+    mendeley_columns: [lack_relaxation_time]
+    dreaddit_subreddits: []
+
+  - id: societal_problems
+    name: Societal / social problems
+    coverage: zero_shot
+    definition: >-
+      Pressure from events or conditions affecting society: pandemics and lockdowns, politics, war, crime,
+      discrimination, disasters, the economy or news events, as opposed to the writer's personal circumstances.
+    include:
+      - pandemic or lockdown as a public event, politics, elections, war, racism, climate, news
+    exclude:
+      - the writer's own illness (health_concerns), own job loss (workplace_pressure) even if caused by the pandemic
+    keywords: [pandemic, lockdown, quarantine, coronavirus, politic*, government, election, president, war,
+               racism, racist, discrimination, climate, economy, news, society, crime, police, protest*]
+    paraphrases:
+      - "The news about the pandemic and lockdowns is making everyone anxious."
+      - "Politics and what is happening in the country stress me out."
+      - "Discrimination and violence in society make me feel unsafe."
+    sad_labels: []
+    mendeley_columns: []
+    dreaddit_subreddits: []
+
+  - id: other_unclear
+    name: Other / unclear stressor
+    coverage: sad
+    definition: >-
+      A cause of pressure is stated but fits none of the categories above, or is too vague to assign
+      ('everything', 'the holidays', car repairs, travel, legal trouble).
+    include:
+      - identifiable causes outside the categories (car trouble, legal case, moving house, pets, travel)
+      - vague causes ('everything is going wrong') when a cause is clearly implied
+    exclude:
+      - texts with NO cause at all, only feelings or symptoms (gold column none_unclear instead)
+    keywords: [car, cars, legal, lawyer, court, moving, move, pet, pets, dog, cat, travel*, trip, holiday*,
+               christmas, wedding, everything]
+    paraphrases:
+      - "My car broke down again and I have a court date next week."
+      - "Moving house and planning the trip is a lot to deal with."
+      - "So many random things keep going wrong in my life."
+    sad_labels: ["Other"]
+    mendeley_columns: []
+    dreaddit_subreddits: []
+
+# ---------------------------------------------------------------- non-stressor classes (never a stressor output)
+non_stressor_classes:
+  - id: emotional_turmoil
+    name: Emotional turmoil (emotional response, NOT a stressor)
+    sad_labels: ["Emotional Turmoil"]
+    use: "separate class in the supervised classifiers; discarded at post level (see decisions.emotional_turmoil)"
+
+# ---------------------------------------------------------------- Mendeley: cause vs response (structure only)
+# Every one of the 26 columns gets exactly one role. author_group = the dataset authors' grouping (Step 1 audit).
+mendeley:
+  - {column: gender, role: not_used, author_group: demographics, reason: "demographic attribute"}
+  - {column: age, role: not_used, author_group: demographics, reason: "demographic attribute"}
+  - {column: stress_type, role: not_used, author_group: target, reason: "outcome label (distress / eustress / mixed), not a cause"}
+  - {column: stress_experience, role: symptom_response, author_group: symptoms_emotional_responses, reason: "self-rated stress level: an outcome"}
+  - {column: heartbeat_palpitations, role: symptom_response, author_group: symptoms_emotional_responses, reason: "bodily stress reaction"}
+  - {column: anxiety_tension, role: symptom_response, author_group: symptoms_emotional_responses, reason: "emotional reaction"}
+  - {column: sleep_problems, role: symptom_response, author_group: symptoms_emotional_responses, reason: "reaction; supports keeping sleep inside health_concerns rather than a stressor of its own"}
+  - {column: restlessness, role: symptom_response, author_group: symptoms_emotional_responses, reason: "behavioural reaction"}
+  - {column: irritability, role: symptom_response, author_group: symptoms_emotional_responses, reason: "emotional reaction"}
+  - {column: sadness_low_mood, role: symptom_response, author_group: symptoms_emotional_responses, reason: "emotional reaction"}
+  - {column: loneliness_isolation, role: symptom_response, author_group: symptoms_emotional_responses, reason: "a feeling; social isolation stated as a SITUATION is covered by relationship_issues in text"}
+  - {column: concentration_problems, role: symptom_response, author_group: symptoms_emotional_responses, reason: "cognitive reaction"}
+  - {column: headaches, role: symptom_response, author_group: health_indicators, reason: "bodily reaction"}
+  - {column: weight_changes, role: symptom_response, author_group: health_indicators, reason: "bodily reaction"}
+  - {column: health_issues, role: stressor, category: health_concerns, author_group: health_indicators, reason: "a health problem is a situation that causes pressure (AMBIGUOUS: can also be a consequence)"}
+  - {column: academic_overload, role: stressor, category: academic_workload, author_group: stressors_academic_environment, reason: "external academic demand"}
+  - {column: peer_competition, role: stressor, category: academic_workload, author_group: stressors_academic_environment, reason: "external academic pressure"}
+  - {column: professor_difficulties, role: stressor, category: academic_workload, author_group: stressors_academic_environment, reason: "external academic relationship problem"}
+  - {column: academic_conflicts, role: stressor, category: academic_workload, author_group: stressors_academic_environment, reason: "external academic conflict"}
+  - {column: work_environment, role: stressor, category: workplace_pressure, author_group: stressors_academic_environment, reason: "external work condition"}
+  - {column: home_environment, role: stressor, category: relationship_issues, author_group: stressors_academic_environment, reason: "home/family conditions (AMBIGUOUS: could also be housing quality -> financial_concerns)"}
+  - {column: relationship_stress, role: stressor, category: relationship_issues, author_group: stressors_social_relationship, reason: "external relationship problem"}
+  - {column: lack_relaxation_time, role: stressor, category: overload, author_group: stressors_social_relationship, reason: "too many demands for the time available"}
+  - {column: low_academic_confidence, role: appraisal_not_stressor, author_group: stressors_academic_environment, reason: "DISAGREES with the authors' grouping: a self-appraisal (how the student judges themself), i.e. a cognitive response, not an external cause"}
+  - {column: subject_confidence, role: appraisal_not_stressor, author_group: stressors_academic_environment, reason: "DISAGREES with the authors' grouping: self-appraisal, as above"}
+  - {column: class_attendance, role: behaviour_not_stressor, author_group: stressors_academic_environment, reason: "DISAGREES with the authors' grouping: a behaviour that can be a consequence of stress, not its cause"}
+
+# ---------------------------------------------------------------- Reddit gold labels (Step 5B)
+gold:
+  extra_columns:
+    none_unclear: "NO cause of pressure is identifiable in the text (only feelings/symptoms, or unintelligible)"

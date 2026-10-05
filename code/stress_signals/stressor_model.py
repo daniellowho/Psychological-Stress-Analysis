@@ -66,6 +66,11 @@ LEAKAGE_NOTE = (
     "Caveat: the Step 3 model was TRAINED on these segments, so its stress probabilities on gold texts are in-sample "
     "and must not be evaluated on the gold set (dreaddit_split is recorded per gold row).")
 ANNOTATION_NOTE = "single annotator, no inter-annotator agreement"
+MACHINE_ANNOTATION_NOTE = "MACHINE-LABELLED by a zero-shot NLI model (not a human annotation); no inter-annotator agreement"
+MACHINE_ANNOTATION_LIMITATION = (
+    "The 'gold' labels were produced by a zero-shot NLI model (machine_labeler), NOT by a person. Every gold metric is "
+    "AGREEMENT WITH THAT LABELLER, not correctness, and inherits its errors; it cannot show that the stressor classifier "
+    "is right on Reddit. Treat all stressor results as provisional until a human annotates the sheet.")
 ANNOTATION_LIMITATION = (
     "The gold set was labelled by a SINGLE annotator; no inter-annotator agreement (e.g. Cohen's kappa) was measured, "
     "so label reliability is unknown and every gold metric includes annotator error of unknown size.")
@@ -916,11 +921,29 @@ def keyword_sad_report(cfg: dict[str, Any], tax: dict[str, Any], data: dict[str,
 
 
 # ================================================================ 5B gold set
+def label_source(cfg: dict[str, Any]) -> str:
+    """'human' (the annotator sheet) or 'machine' (machine_labeler's sheet). Config stressor_model.gold.label_source."""
+    src = cfg["stressor_model"]["gold"].get("label_source", "human")
+    if src not in ("human", "machine"):
+        raise ValueError(f"stressor_model.gold.label_source must be human or machine, got {src!r}")
+    return src
+
+
+def annotation_note(cfg: dict[str, Any]) -> str:
+    return MACHINE_ANNOTATION_NOTE if label_source(cfg) == "machine" else ANNOTATION_NOTE
+
+
+def annotation_limitation(cfg: dict[str, Any]) -> str:
+    return MACHINE_ANNOTATION_LIMITATION if label_source(cfg) == "machine" else ANNOTATION_LIMITATION
+
+
 def gold_files(cfg: dict[str, Any]) -> dict[str, Path]:
     from .preprocess import split_path
     v = cfg["stressor_model"]["gold"]["version"]
     g = Path(cfg["_paths"]["gold"])
-    return {"sheet1": g / f"stressor_gold_v{v}_annotator1.csv", "split": split_path(cfg, "stressor_gold"),
+    human, machine = g / f"stressor_gold_v{v}_annotator1.csv", g / f"stressor_gold_v{v}_machine.csv"
+    return {"sheet1": machine if label_source(cfg) == "machine" else human, "human_sheet": human, "machine_sheet": machine,
+            "split": split_path(cfg, "stressor_gold"),
             "report": Path(cfg["_paths"]["reports"]) / f"stressor_gold_set_v{v}.md"}
 
 
@@ -996,12 +1019,12 @@ def build_gold_set(cfg: dict[str, Any], tax: dict[str, Any]) -> dict[str, Any]:
                 "counts": {"total": int(len(key)), "by_gold_split": key["gold_split"].value_counts().to_dict(),
                            "by_community": key["community"].value_counts().to_dict(),
                            "annotators": int(g["annotators"])},
-                "annotation": ANNOTATION_NOTE,
+                "annotation": annotation_note(cfg),
                 "rows": key.to_dict(orient="records")}
         write_json(f["split"], meta)
     texts = pd.concat(SM.load_dreaddit(cfg).values(), ignore_index=True).set_index("record_id")["text_clean"]
     cols = gold_columns(tax)
-    for name, rows in (("sheet1", key),):
+    for name, rows in (("human_sheet", key),):
         if f[name].exists():
             continue
         sheet = pd.DataFrame({"gold_id": rows["gold_id"].to_numpy(),
@@ -1012,7 +1035,7 @@ def build_gold_set(cfg: dict[str, Any], tax: dict[str, Any]) -> dict[str, Any]:
         sheet.to_csv(tmp, index=False, encoding="utf-8-sig")
         os.replace(tmp, f[name])
     write_gold_report(cfg, tax)
-    return {"files": f, "counts": meta["counts"], "leakage": meta["leakage"], "annotation": ANNOTATION_NOTE}
+    return {"files": f, "counts": meta["counts"], "leakage": meta["leakage"], "annotation": annotation_note(cfg)}
 
 
 def write_gold_report(cfg: dict[str, Any], tax: dict[str, Any]) -> Path:
@@ -1023,7 +1046,7 @@ def write_gold_report(cfg: dict[str, Any], tax: dict[str, Any]) -> Path:
     key = pd.DataFrame(meta["rows"])
     comm = pd.crosstab(key["community"], key["gold_split"]).reset_index()
     parts = [f"# Stressor gold set v{meta['version']}", "", f"_{SCOPE_NOTE}_", "",
-             f"**Annotation: {ANNOTATION_NOTE}.** {ANNOTATION_LIMITATION}", "",
+             f"**Annotation: {annotation_note(cfg)}.** {annotation_limitation(cfg)}", "",
              f"**Sampling.** {meta['rule']}. Settings: `{json.dumps(meta['sampling'])}`, seed {meta['seed']}.", "",
              f"**Leakage.** {meta['leakage']}", "", f"**Size.** {meta['counts']['total']} segments: "
              f"{meta['counts']['by_gold_split']}.", "", "## Segments per subreddit and split", "", _md_table(comm), ""]
@@ -1085,7 +1108,8 @@ def gold_status(cfg: dict[str, Any], tax: dict[str, Any]) -> dict[str, Any]:
                      "positives": {c: int(m.loc[m["annotated"], c].sum()) for c in cols}}
     s1 = out.get("sheet1", {})
     out["complete"] = bool(s1.get("exists") and s1["annotated"] == s1["rows"] and s1["n_problems"] == 0)
-    out["annotation"] = ANNOTATION_NOTE
+    out["annotation"] = annotation_note(cfg)
+    out["label_source"] = label_source(cfg)
     return out
 
 
@@ -1169,6 +1193,9 @@ def post_scores(cfg: dict[str, Any], tax: dict[str, Any], method: str, aggregati
                          "n_windows": np.bincount(owner, minlength=len(ids)), **{c: S[:, j] for j, c in enumerate(cols)}})
 
 
+NEVER_COSINE = 1.01   # above the largest possible cosine (unit vectors): a threshold that never flags
+
+
 def _grid(kind: str, tcfg: dict[str, Any]) -> list[float]:
     return {"probability": tcfg["probability_grid"], "cosine": tcfg["cosine_grid"], "count": tcfg["count_grid"]}[kind]
 
@@ -1199,6 +1226,11 @@ def tune_thresholds(Y: np.ndarray, S: np.ndarray, kinds: Sequence[str], cats: Se
         default = {"probability": 0.5, "count": 1.0, "cosine": g}[k]
         rule = ({"probability": "default_0.5", "count": "default_1_window", "cosine": "global_cosine"}[k]
                 if low and keep else "tuned")
+        # Gold labels that are positive for almost every post cannot say where a threshold belongs: the F1 optimum is "flag
+        # everything" (thresholds at the grid floor). Probability -> the SAD-calibrated 0.5; cosine has no natural default and
+        # no human-labelled evidence -> NEVER_COSINE (the raw score is still reported, the category is just never flagged).
+        if k != "count" and r["n_pos"] / max(len(Y), 1) > tcfg.get("degenerate_prevalence", 1.1):
+            rule, default = "degenerate_prevalence", (0.5 if k == "probability" else NEVER_COSINE)
         rows.append({"category": c, "kind": k, "tuned": t, "applied": default if rule != "tuned" else t, "rule": rule,
                      "f1_dev_at_tuned": r["f1_at_threshold"], "n_pos_dev": int(r["n_pos"]), "low_support": bool(low)})
     out = pd.DataFrame(rows)
@@ -1270,6 +1302,24 @@ def _summary(m: dict[str, Any]) -> dict[str, Any]:
     return {k: v for k, v in m.items() if k != "per_label"}
 
 
+def _select_method(s: dict[str, Any], methods: Sequence[str], res: dict[str, Any]) -> None:
+    """Fill selected_method / ranking / selection_rule in `res`: config force_method wins, else the best dev (or test) metric."""
+    sel = s["method_selection"]
+    split, metric = sel["split"], sel["metric"]
+    key = "dev" if split == "dev" else "test"
+    ranking = sorted(methods, key=lambda m: -np.nan_to_num(res["methods"][m][key][metric], nan=-1))
+    forced = sel.get("force_method")
+    if forced and forced not in methods:
+        raise ValueError(f"method_selection.force_method {forced!r} is not one of {list(methods)}")
+    rule = f"max {split} {metric}" + ("" if split == "dev" else " (TEST used for selection: the selected test number is optimistic)")
+    if forced:
+        rule = (f"forced to {forced} by config (method_selection.force_method); highest {split} {metric} was {ranking[0]}. "
+                f"Reason: the gold labels are machine-made (zero-shot labeller, nearly every category positive), so gold scores cannot separate the methods; SAD is the only human-labelled evidence")
+    res.update({"selected_method": forced or ranking[0], "ranking": ranking, "selection_rule": rule,
+                "test_ranking_for_reference": sorted(methods, key=lambda m: -np.nan_to_num(res["methods"][m]["test"][metric], nan=-1)),
+                "created_utc": res.get("created_utc") or _dt.datetime.now(_dt.timezone.utc)})
+
+
 def final_gold_report(cfg: dict[str, Any], tax: dict[str, Any], methods: Sequence[str], gold: pd.DataFrame,
                       sad_reports: dict[str, dict[str, Any]], force: bool = False) -> dict[str, Any]:
     """Gold-TEST evaluation of every method at its dev-tuned thresholds, computed ONCE (GOLD_TEST_REPORT.json).
@@ -1277,12 +1327,19 @@ def final_gold_report(cfg: dict[str, Any], tax: dict[str, Any], methods: Sequenc
     Domain-shift cost = SAD-test category macro-F1 (SAD-covered) - gold-test macro-F1 over the same categories."""
     path = runs_root(cfg) / "gold" / "GOLD_TEST_REPORT.json"
     if path.exists() and not force:
-        return json.loads(path.read_text(encoding="utf-8"))
+        res = json.loads(path.read_text(encoding="utf-8"))
+        before = res.get("selected_method"), res.get("selection_rule")
+        _select_method(settings(cfg), methods, res)         # config may have changed; test numbers are untouched
+        if (res["selected_method"], res["selection_rule"]) != before:
+            write_json(path, res)
+            res = json.loads(path.read_text(encoding="utf-8"))
+        return res
     s = settings(cfg)
     cats, cov = category_ids(tax), coverage(tax)
     ev = s["eval"]
     res: dict[str, Any] = {"methods": {}, "selection": s["method_selection"], "leakage": LEAKAGE_NOTE,
-                           "annotation": ANNOTATION_NOTE, "annotation_limitation": ANNOTATION_LIMITATION}
+                           "annotation": annotation_note(cfg), "annotation_limitation": annotation_limitation(cfg),
+                           "label_source": label_source(cfg)}
     for meth in methods:
         d = gold_run_dir(cfg, meth)
         thr_meta = json.loads((d / "thresholds.json").read_text(encoding="utf-8"))
@@ -1309,14 +1366,7 @@ def final_gold_report(cfg: dict[str, Any], tax: dict[str, Any], methods: Sequenc
                 "categories": sad_cov,
                 "caveat": "SAD-test is single-label argmax on sentences; gold-test is multi-label thresholded on posts, "
                           "so the drop is an approximate measure of the domain shift, not a like-for-like difference"}}
-    split, metric = s["method_selection"]["split"], s["method_selection"]["metric"]
-    key = "dev" if split == "dev" else "test"
-    ranking = sorted(methods, key=lambda m: -np.nan_to_num(res["methods"][m][key][metric], nan=-1))
-    res.update({"selected_method": ranking[0], "ranking": ranking,
-                "selection_rule": f"max {split} {metric}" + ("" if split == "dev" else
-                                                             " (TEST used for selection: the selected test number is optimistic)"),
-                "test_ranking_for_reference": sorted(methods, key=lambda m: -np.nan_to_num(res["methods"][m]["test"][metric], nan=-1)),
-                "created_utc": _dt.datetime.now(_dt.timezone.utc)})
+    _select_method(s, methods, res)
     write_json(path, res)
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -1413,6 +1463,7 @@ def save_bundle(cfg: dict[str, Any], tax: dict[str, Any], method: str, date: _dt
         "classifier_classes": classifier_classes(tax), "class_to_category": {cl: (cl.split("/")[0] if cl.split("/")[0] in cats else None)
                                                                             for cl in classifier_classes(tax)},
         "embedding_model": emb, "weights": weights,
+        "finetune_max_length": s["finetune"]["max_length"] if method == "finetune" else None,
         "calibration": None if cal is None else cal["calibration"],
         "inference_unit": {"windows": s["windows"], "rule": "sentence windows (stressor_model.sentence_windows)"},
         "aggregation": kinds["aggregation"], "thresholds": thr["thresholds"], "thresholds_fitted_on": "gold-dev",
@@ -1421,7 +1472,8 @@ def save_bundle(cfg: dict[str, Any], tax: dict[str, Any], method: str, date: _dt
     write_json(bundle / "stressor_config.json", scfg)
     write_json(bundle / "thresholds.json", thr)
     metrics = {"gold_test_report": gold_rep, "selected": gold_rep["methods"].get(method),
-               "sad_test_report": cal, "annotation": ANNOTATION_NOTE,
+               "sad_test_report": cal, "annotation": annotation_note(cfg), "annotation_limitation": annotation_limitation(cfg),
+               "label_source": label_source(cfg),
                "dreaddit_crosscheck": _read_json(d / "dreaddit_crosscheck.json")}
     write_json(bundle / "metrics.json", metrics)
     (bundle / "model_card.md").write_text(model_card(scfg, metrics), encoding="utf-8")
@@ -1468,7 +1520,7 @@ over windows; per-category thresholds tuned on the Reddit gold-dev set; no categ
 Categories without SAD training labels ({', '.join(zs)}) are scored by zero-shot embedding similarity and are
 **lower confidence**. Embedding model: {(sc['embedding_model'] or {}).get('hf_id', 'n/a')}.
 
-**Data.** Training: SAD v1 (MIT; crowd-written and LiveJournal sentences, no Reddit). Evaluation: hand-labelled gold set
+**Data.** Training: SAD v1 (MIT; crowd-written and LiveJournal sentences, no Reddit). Evaluation: {'machine-labelled' if metrics.get('label_source') == 'machine' else 'hand-labelled'} gold set
 of Dreaddit stress-positive segments (train/validation splits only), split 50/50 into dev (tuning) and test (scored once).
 
 **Gold-test (n = {t.get('n', 'n/a')}).** macro-F1 over categories with test positives {_f(t.get('f1_macro_supported'))}
@@ -1483,10 +1535,10 @@ Low-support categories (< 10 dev positives; default threshold, or one global thr
 
 **Weak sanity check (not accuracy).** Predicted rates in mapped vs other Dreaddit subreddits: {cross or 'not run'}.
 
-**Gold labels: {ANNOTATION_NOTE}.**
+**Gold labels: {metrics.get('annotation', ANNOTATION_NOTE)}.**
 
 **Limitations.**
-- {ANNOTATION_LIMITATION}
+- {metrics.get('annotation_limitation', ANNOTATION_LIMITATION)}
 - SAD is short, mostly non-Reddit, 94.5% stressor-positive text; the gold set is small (~200 test posts) and comes from
   10 Dreaddit subreddits (2017-2018), so per-category F1 has wide CIs and may not transfer to other communities or years.
 - Max aggregation favours long posts (more windows, more chances to pass a threshold).

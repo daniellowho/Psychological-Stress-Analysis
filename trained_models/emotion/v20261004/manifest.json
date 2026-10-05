@@ -1,0 +1,102 @@
+{
+  "artifacts": {
+    "config.json": {
+      "bytes": 2129,
+      "sha256": "d59c3bd13d49e343040fce630068f91316f59e9947f8f7a344998d5a27e4ae5f",
+      "type": "file"
+    },
+    "ekman_mapping.json": {
+      "bytes": 1024,
+      "sha256": "51cbd1caac81292d7da2309732aaf513baff401e1d15a1f07ec08d0bb9b348fa",
+      "type": "file"
+    },
+    "emotion_config.json": {
+      "bytes": 6886,
+      "sha256": "3ccdc54dad223fd94489774bf35cc1f21952f040d5fd5127406ef0e6ad931bbf",
+      "type": "file"
+    },
+    "merges.txt": {
+      "bytes": 456318,
+      "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+      "type": "file"
+    },
+    "metrics.json": {
+      "bytes": 177242,
+      "sha256": "852007e227123e6d904ccd8bd5e94a14bdddaebe11626a4126b6cca8c3ff9e0d",
+      "type": "file"
+    },
+    "model.safetensors": {
+      "bytes": 498692800,
+      "sha256": "8f71c146c1260000e8635bf2e0e20084cf74fbafdaf9542e2dff78251b3c170a",
+      "type": "file"
+    },
+    "model_card.md": {
+      "bytes": 2860,
+      "sha256": "dd3952dd563ec8f4e8fb493ae817aee74838279e1c3c9934d37d4643f01a2ec5",
+      "type": "file"
+    },
+    "special_tokens_map.json": {
+      "bytes": 1009,
+      "sha256": "b72f59af007f804a5b6514f6ed8d59b4723349105471bcc3a881591fd586e2d5",
+      "type": "file"
+    },
+    "thresholds.json": {
+      "bytes": 8369,
+      "sha256": "df36240c4e95bb8fe0c3a350104f83675aaf15d3e3d20d14ba44798dfdeb52ea",
+      "type": "file"
+    },
+    "tokenizer.json": {
+      "bytes": 3558741,
+      "sha256": "31d5eaa58f882f7259d27ee12c3adc89a200ae6329ef815dd97c9531e5b8d418",
+      "type": "file"
+    },
+    "tokenizer_config.json": {
+      "bytes": 1385,
+      "sha256": "e819ef2ae85898d461f29fd3c082ded6a754403312834199d5f172de388e32bf",
+      "type": "file"
+    },
+    "vocab.json": {
+      "bytes": 798293,
+      "sha256": "ed19656ea1707df69134c4af35c8ceda2cc9860bf2c3495026153a133670ab5e",
+      "type": "file"
+    }
+  },
+  "created_utc": "2026-10-04T09:40:50+00:00",
+  "dataset_versions": {
+    "goemotions_parquet_sha256": "8ec7e37ecb72694c59f4b5451095be7a86064dbfea23dee184d0c63f12384d6d",
+    "goemotions_split_fingerprint": "02339a74866b1fa37b851caf8bc76d6909d1019f6b140be9aad7f2021348e816"
+  },
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+  "extra": {
+    "component": "emotion",
+    "final_seed": 13,
+    "run_dir": "C:/Visual_studio/TA-BDA Project/Psychological-Stress-Analysis/trained_models/emotion/runs/roberta-base/seed13"
+  },
+  "library_versions": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "numpy": "1.26.4",
+    "openpyxl": "3.1.5",
+    "pandas": "2.2.3",
+    "psycopg": "3.2.3",
+    "pyarrow": "17.0.0",
+    "pyspark": "3.5.3",
+    "python": "3.11.9",
+    "sklearn": "1.5.2",
+    "streamlit": "1.40.1",
+    "tokenizers": "0.20.3",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3",
+    "yaml": "6.0.2"
+  },
+  "platform": {
+    "machine": "AMD64",
+    "release": "10",
+    "system": "Windows"
+  },
+  "seeds": [
+    42,
+    13,
+    2024
+  ]
+}

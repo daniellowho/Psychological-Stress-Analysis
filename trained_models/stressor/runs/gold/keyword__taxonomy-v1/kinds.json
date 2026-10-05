@@ -1,0 +1,21 @@
+{
+  "aggregation": "sum",
+  "kinds": {
+    "academic_workload": "count",
+    "financial_concerns": "count",
+    "health_concerns": "count",
+    "other_unclear": "count",
+    "overload": "count",
+    "relationship_issues": "count",
+    "societal_problems": "count",
+    "uncertainty": "count",
+    "workplace_pressure": "count"
+  },
+  "method": "keyword",
+  "method_key": "keyword__taxonomy-v1",
+  "windows": {
+    "max_windows": 32,
+    "min_words": 4,
+    "sentences_per_window": 1
+  }
+}

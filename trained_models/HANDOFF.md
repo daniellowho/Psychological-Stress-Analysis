@@ -1,6 +1,6 @@
 # Handoff log: what has been done, where and when
 
-_Regenerated 2026-10-04T06:42:48+00:00 UTC on DESKTOP-GH0P1UM. Times are UTC. Source of truth: `handoff.json`._
+_Regenerated 2026-10-04T19:58:33+00:00 UTC on madhava_laptop. Times are UTC. Source of truth: `handoff.json`._
 
 ## How this works (read first)
 
@@ -14,6 +14,8 @@ _Regenerated 2026-10-04T06:42:48+00:00 UTC on DESKTOP-GH0P1UM. Times are UTC. So
 - **Evaluation** (3C–3F) waits until every seed is trained (`NOT RUN … missing [...]` until then), because the final test report is written only once and must not pick a final seed from a partial set.
 - **The test suite** (2.5) re-runs only after the code changed. **Re-run anything on purpose:** add its step number to `FORCE_RERUN` in cell 0.1, e.g. `FORCE_RERUN = {"3C.1"}`.
 - A step whose saved output was deleted counts as not done and runs again.
+- **Update (Step 7 onwards): `ALLOW_TRAINING` in cell 0.1 is False**, so no cell that fits weights starts; a training step that is not done prints `NOT RUN … ALLOW_TRAINING = False`. Set it True to train what is missing. This overrides the training bullets above.
+- **Spark inference (Step 9)** is a long job and is not part of Run All: use cell 9.6 (`RUN_SPARK_PILOT = True`) or `python -m stress_signals.spark_jobs run --corpus pilot`. It scores one UTC date at a time and writes a `_done` marker last (`data/processed/enriched/<corpus>/_done/`), so a stopped run **resumes by running the same command again**: finished dates (same model bundle and settings) are skipped. Run heavy jobs one at a time; this laptop has little free RAM.
 
 ## Current state per step
 
@@ -37,8 +39,56 @@ _Regenerated 2026-10-04T06:42:48+00:00 UTC on DESKTOP-GH0P1UM. Times are UTC. So
 | `2.5/tests/3d32290f41966c2a` | Unit tests for this code version | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-03T22:36:03+00:00 | 72s |  |
 | `4B.1/emotion/roberta-base/seed42` | Fine-tune emotion roberta-base, seed 42 | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-04T03:16:02+00:00 | 14531s |  |
 | `2.5/tests/74d86a3c84313baa` | Unit tests for this code version | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-03T23:13:49+00:00 | 74s |  |
-| `4B.1/emotion/roberta-base/seed13` | Fine-tune emotion roberta-base, seed 13 | **done** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-04T06:19:02+00:00 | 5494s |  |
-| `4B.1/emotion/roberta-base/seed2024` | Fine-tune emotion roberta-base, seed 2024 | **failed** | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | 2026-10-04T06:42:48+00:00 | 164s | KeyboardInterrupt:  |
+| `4B.1/emotion/roberta-base/seed13` | Fine-tune emotion roberta-base, seed 13 | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:16+00:00 | 757s |  |
+| `4B.1/emotion/roberta-base/seed2024` | Fine-tune emotion roberta-base, seed 2024 | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:22:50+00:00 | 882s |  |
+| `2.2/processed/dreaddit` | Build processed datasets + splits | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T08:29:07+00:00 |  | output found on disk (finished before it was logged) |
+| `2.5/tests/4ef0afd941f00d1c` | Unit tests for this code version | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:08:05+00:00 | 34s |  |
+| `4C.1/emotion_evaluate_seeds/roberta-base` | Evaluate all emotion seeds (uncalibrated) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:22:50+00:00 | 0s |  |
+| `4D.1/emotion_calibrate/roberta-base/seed13` | Calibrate the emotion model per label | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:17+00:00 | 1s |  |
+| `4C.3/emotion_thresholds/roberta-base/seed13` | Tune per-label emotion thresholds | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:17+00:00 | 0s |  |
+| `4C.4/emotion_final_test_report/roberta-base/seed13` | Final emotion test report | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:32+00:00 | 15s |  |
+| `4F.1/emotion_domain_shift/roberta-base/seed13` | Emotion domain-shift check on Dreaddit | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:48+00:00 | 16s |  |
+| `4F.2/emotion_handcheck_sheet/roberta-base/seed13` | Write the emotion hand-check sheet | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:49+00:00 | 0s |  |
+| `4G/emotion_bundle` | Save emotion model bundle (roberta-base, seed 13) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:50+00:00 | 1s |  |
+| `5A.1/taxonomy_report` | Write the stressor taxonomy report | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:50+00:00 | 0s |  |
+| `5A.2/sad_split` | Create the fixed SAD split | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:40:50+00:00 | 0s |  |
+| `5C.0/embedding_check` | Verify the embedding models load | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:41:45+00:00 | 55s |  |
+| `5B.1/gold_sample` | Sample the stressor gold set + annotation sheets | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:41:47+00:00 | 0s |  |
+| `5C.3/stressor_embed_lr` | Fit embedding + logistic regression (all-MiniLM-L6-v2) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:41:49+00:00 | 3s |  |
+| `5C.4/stressor/distilroberta-base/seed42` | Fine-tune stressor distilroberta-base, seed 42 | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:44:03+00:00 | 133s |  |
+| `5C.4/stressor/distilroberta-base/seed13` | Fine-tune stressor distilroberta-base, seed 13 | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:44:50+00:00 | 47s |  |
+| `5C.4/stressor/distilroberta-base/seed2024` | Fine-tune stressor distilroberta-base, seed 2024 | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:45:36+00:00 | 46s |  |
+| `5C.5/sad_report/embed_lr__all-MiniLM-L6-v2` | SAD calibration + test (embed_lr) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:45:36+00:00 | 0s |  |
+| `5C.5/sad_report/finetune__distilroberta-base/seed2024` | SAD calibration + test (finetune) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T09:45:36+00:00 | 0s |  |
+| `2.5/tests/ad861f36908a1cb4` | Unit tests for this code version | **failed** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:06:08+00:00 | 44s | AssertionError: unit tests failed (see the output above) |
+| `2.5/tests/9751651770fba51f` | Unit tests for this code version | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:18:13+00:00 | 44s |  |
+| `6A.1/tensistrength_sample` | TensiStrength on Dreaddit test + SenticNet sample | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:18:23+00:00 | 2s |  |
+| `6B.1/senticnet_scores/v20261004` | Score SenticNet with the Step 3 model (zero-shot) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:19:12+00:00 | 49s |  |
+| `6B.3/senticnet_zero_shot/v20261004` | Zero-shot SenticNet agreement (bootstrap CIs) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:20:26+00:00 | 72s |  |
+| `2.5/tests/3bcaec51fc14fd4a` | Unit tests for this code version | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:27:26+00:00 | 47s |  |
+| `5B.1b/machine_gold_labels` | Machine-label the stressor gold sheet | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:07+00:00 | 557s |  |
+| `5C.6/score_gold/keyword__taxonomy-v1` | Score the gold set (keyword__taxonomy-v1) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:08+00:00 | 0s |  |
+| `5C.6/tune_dev/keyword__taxonomy-v1` | Tune thresholds on gold-dev (keyword__taxonomy-v1) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:08+00:00 | 0s |  |
+| `5C.6/score_gold/zero_shot__all-MiniLM-L6-v2` | Score the gold set (zero_shot__all-MiniLM-L6-v2) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:09+00:00 | 1s |  |
+| `5C.6/tune_dev/zero_shot__all-MiniLM-L6-v2` | Tune thresholds on gold-dev (zero_shot__all-MiniLM-L6-v2) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:09+00:00 | 0s |  |
+| `5C.6/score_gold/embed_lr__all-MiniLM-L6-v2` | Score the gold set (embed_lr__all-MiniLM-L6-v2) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:10+00:00 | 0s |  |
+| `5C.6/tune_dev/embed_lr__all-MiniLM-L6-v2` | Tune thresholds on gold-dev (embed_lr__all-MiniLM-L6-v2) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:10+00:00 | 0s |  |
+| `5C.6/score_gold/finetune__distilroberta-base` | Score the gold set (finetune__distilroberta-base) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:12+00:00 | 2s |  |
+| `5C.6/tune_dev/finetune__distilroberta-base` | Tune thresholds on gold-dev (finetune__distilroberta-base) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:12+00:00 | 0s |  |
+| `5C.7/gold_test_report` | Final stressor gold-test report | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:14+00:00 | 2s |  |
+| `5C.8/crosscheck/zero_shot__all-MiniLM-L6-v2` | Dreaddit subreddit cross-check | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:16+00:00 | 2s |  |
+| `5D/stressor_bundle` | Save stressor bundle (zero_shot) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:18+00:00 | 2s |  |
+| `6B.1b/machine_handcheck` | Machine-label the SenticNet hand-check | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T10:42:25+00:00 | 4s |  |
+| `2.5/tests/e66cf390db7491d4` | Unit tests for this code version | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T16:48:47+00:00 | 54s |  |
+| `2.5/tests/dfaeea6f7f5d3b47` | Unit tests for this code version | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T17:02:21+00:00 | 66s |  |
+| `5C.8/crosscheck/finetune__distilroberta-base` | Dreaddit subreddit cross-check | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T17:02:29+00:00 |  | output found on disk (finished before it was logged) |
+| `8.2/ingest/pilot` | Ingest the pilot corpus into the Parquet lake | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T17:20:18+00:00 |  | output found on disk (finished before it was logged) |
+| `8.4/data_quality/pilot` | Data quality report (pilot) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T17:20:18+00:00 |  | output found on disk (finished before it was logged) |
+| `9.3/spark_parity` | Parity test: Spark job vs local pipeline (1-day sample, real bundle) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:46:33+00:00 |  | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). 1,024 posts (2020-01-06), 67 columns compared, max abs diff 2.1e-6 (tolerance 1e-4); record ids, stage-2 selection, weights, flags and labels identical; 630 posts sent to stage 2. |
+| `9.4/benchmark` | Throughput benchmark on 5,000 pilot posts (RTX 4060 Laptop GPU) | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:46:33+00:00 |  | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). Two runs: 29.8 and 27.1 records/s (batch 8, two-stage, rate 0.15). Linear projection: pilot 1.6-1.7 h; 500k posts 4.7-5.1 h; 1M 9.3-10.2 h; 1.5M 14.0-15.4 h. Assumes similar text and flagged share (56% in the pilot) and nothing else running. |
+| `9.6/spark_pilot_run` | Spark inference over the pilot lake: PAUSED by the user, not finished | **started** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:46:33+00:00 |  | PAUSED 2026-10-05: 252 of 477 dates done (56,372 of 170,199 posts, up to 2019-07-10); no half-written files, no processes left. TO RESUME run from code/: python -m stress_signals.spark_jobs run --corpus pilot (or cell 9.6 with RUN_SPARK_PILOT = True); finished dates are skipped. Do not start other heavy jobs at the same time (about 3.7 GB RAM free on this laptop). Step 10 core tables in data/gold were produced earlier from only the first slice (14,339 posts) and must be re-run after the pilot finishes. |
+| `HF.1/push_emotion` | Publish the emotion bundle to Hugging Face | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:58:33+00:00 |  | Uploaded byte for byte from trained_models/emotion/v20261004 to a PRIVATE repo; weights SHA-256 on the Hub equals the bundle manifest. README.md model card added. Repo: Amrita-Vishwa-Ghopeetham/emotion-roberta-base (12 files verified). |
+| `HF.2/push_stressor` | Publish the stressor bundle to Hugging Face | **done** | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | 2026-10-04T19:58:33+00:00 |  | Uploaded byte for byte from trained_models/stressor/v20261004 to a PRIVATE repo; weights SHA-256 on the Hub equals the bundle manifest. README.md model card added. Repo: Amrita-Vishwa-Ghopeetham/stressor-distilroberta-base (13 files verified). README notes that the evaluation labels are machine-made. |
 
 ## Full history (oldest first)
 
@@ -94,3 +144,106 @@ _Regenerated 2026-10-04T06:42:48+00:00 UTC on DESKTOP-GH0P1UM. Times are UTC. So
 | 2026-10-04T06:39:45+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `4B.1/emotion/roberta-base/seed2024` | failed | KeyboardInterrupt:  |
 | 2026-10-04T06:40:04+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `4B.1/emotion/roberta-base/seed2024` | started |  |
 | 2026-10-04T06:42:48+00:00 | DESKTOP-GH0P1UM (Quadro P1000 (cuda)) | `4B.1/emotion/roberta-base/seed2024` | failed | KeyboardInterrupt:  |
+| 2026-10-04T08:29:07+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.2/processed/dreaddit` | done | output found on disk (finished before it was logged) |
+| 2026-10-04T08:29:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/4ef0afd941f00d1c` | started |  |
+| 2026-10-04T08:29:46+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/4ef0afd941f00d1c` | failed | AssertionError: unit tests failed (see the output above) |
+| 2026-10-04T09:07:30+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/4ef0afd941f00d1c` | started |  |
+| 2026-10-04T09:08:05+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/4ef0afd941f00d1c` | done |  |
+| 2026-10-04T09:08:07+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4B.1/emotion/roberta-base/seed2024` | started |  |
+| 2026-10-04T09:22:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4B.1/emotion/roberta-base/seed2024` | done |  |
+| 2026-10-04T09:22:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.1/emotion_evaluate_seeds/roberta-base` | started |  |
+| 2026-10-04T09:22:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.1/emotion_evaluate_seeds/roberta-base` | done |  |
+| 2026-10-04T09:22:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4D.1/emotion_calibrate/roberta-base/seed13` | started |  |
+| 2026-10-04T09:22:51+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4D.1/emotion_calibrate/roberta-base/seed13` | done |  |
+| 2026-10-04T09:22:51+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.3/emotion_thresholds/roberta-base/seed13` | started |  |
+| 2026-10-04T09:22:51+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.3/emotion_thresholds/roberta-base/seed13` | done |  |
+| 2026-10-04T09:22:51+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.4/emotion_final_test_report/roberta-base/seed13` | started |  |
+| 2026-10-04T09:23:06+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.4/emotion_final_test_report/roberta-base/seed13` | done |  |
+| 2026-10-04T09:23:06+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4F.1/emotion_domain_shift/roberta-base/seed13` | started |  |
+| 2026-10-04T09:23:06+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4F.1/emotion_domain_shift/roberta-base/seed13` | failed | OSError: Incorrect path_or_model_id: 'C:\Visual_studio\TA-BDA Project\Psychological-Stress-Analysis\trained_models\emotion\runs\roberta-base\seed13\best_model'. Please provide either the path to a local folder or the repo_id of a model on the Hub. |
+| 2026-10-04T09:27:39+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4B.1/emotion/roberta-base/seed13` | started |  |
+| 2026-10-04T09:40:16+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4B.1/emotion/roberta-base/seed13` | done |  |
+| 2026-10-04T09:40:16+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4D.1/emotion_calibrate/roberta-base/seed13` | started |  |
+| 2026-10-04T09:40:17+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4D.1/emotion_calibrate/roberta-base/seed13` | done |  |
+| 2026-10-04T09:40:17+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.3/emotion_thresholds/roberta-base/seed13` | started |  |
+| 2026-10-04T09:40:17+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.3/emotion_thresholds/roberta-base/seed13` | done |  |
+| 2026-10-04T09:40:17+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.4/emotion_final_test_report/roberta-base/seed13` | started |  |
+| 2026-10-04T09:40:32+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4C.4/emotion_final_test_report/roberta-base/seed13` | done |  |
+| 2026-10-04T09:40:32+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4F.1/emotion_domain_shift/roberta-base/seed13` | started |  |
+| 2026-10-04T09:40:48+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4F.1/emotion_domain_shift/roberta-base/seed13` | done |  |
+| 2026-10-04T09:40:48+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4F.2/emotion_handcheck_sheet/roberta-base/seed13` | started |  |
+| 2026-10-04T09:40:49+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4F.2/emotion_handcheck_sheet/roberta-base/seed13` | done |  |
+| 2026-10-04T09:40:49+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4G/emotion_bundle` | started |  |
+| 2026-10-04T09:40:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `4G/emotion_bundle` | done |  |
+| 2026-10-04T09:40:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5A.1/taxonomy_report` | started |  |
+| 2026-10-04T09:40:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5A.1/taxonomy_report` | done |  |
+| 2026-10-04T09:40:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5A.2/sad_split` | started |  |
+| 2026-10-04T09:40:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5A.2/sad_split` | done |  |
+| 2026-10-04T09:40:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.0/embedding_check` | started |  |
+| 2026-10-04T09:41:45+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.0/embedding_check` | done |  |
+| 2026-10-04T09:41:46+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5B.1/gold_sample` | started |  |
+| 2026-10-04T09:41:47+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5B.1/gold_sample` | done |  |
+| 2026-10-04T09:41:47+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.3/stressor_embed_lr` | started |  |
+| 2026-10-04T09:41:49+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.3/stressor_embed_lr` | done |  |
+| 2026-10-04T09:41:49+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.4/stressor/distilroberta-base/seed42` | started |  |
+| 2026-10-04T09:44:03+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.4/stressor/distilroberta-base/seed42` | done |  |
+| 2026-10-04T09:44:03+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.4/stressor/distilroberta-base/seed13` | started |  |
+| 2026-10-04T09:44:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.4/stressor/distilroberta-base/seed13` | done |  |
+| 2026-10-04T09:44:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.4/stressor/distilroberta-base/seed2024` | started |  |
+| 2026-10-04T09:45:36+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.4/stressor/distilroberta-base/seed2024` | done |  |
+| 2026-10-04T09:45:36+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.5/sad_report/embed_lr__all-MiniLM-L6-v2` | started |  |
+| 2026-10-04T09:45:36+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.5/sad_report/embed_lr__all-MiniLM-L6-v2` | done |  |
+| 2026-10-04T09:45:36+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.5/sad_report/finetune__distilroberta-base/seed2024` | started |  |
+| 2026-10-04T09:45:36+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.5/sad_report/finetune__distilroberta-base/seed2024` | done |  |
+| 2026-10-04T10:04:19+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/ad861f36908a1cb4` | started |  |
+| 2026-10-04T10:05:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/ad861f36908a1cb4` | failed | AssertionError: unit tests failed (see the output above) |
+| 2026-10-04T10:05:24+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/ad861f36908a1cb4` | started |  |
+| 2026-10-04T10:06:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/ad861f36908a1cb4` | failed | AssertionError: unit tests failed (see the output above) |
+| 2026-10-04T10:17:30+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/9751651770fba51f` | started |  |
+| 2026-10-04T10:18:13+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/9751651770fba51f` | done |  |
+| 2026-10-04T10:18:21+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6A.1/tensistrength_sample` | started |  |
+| 2026-10-04T10:18:23+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6A.1/tensistrength_sample` | done |  |
+| 2026-10-04T10:18:23+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6B.1/senticnet_scores/v20261004` | started |  |
+| 2026-10-04T10:19:12+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6B.1/senticnet_scores/v20261004` | done |  |
+| 2026-10-04T10:19:14+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6B.3/senticnet_zero_shot/v20261004` | started |  |
+| 2026-10-04T10:20:26+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6B.3/senticnet_zero_shot/v20261004` | done |  |
+| 2026-10-04T10:26:39+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/3bcaec51fc14fd4a` | started |  |
+| 2026-10-04T10:27:26+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/3bcaec51fc14fd4a` | done |  |
+| 2026-10-04T10:32:50+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5B.1b/machine_gold_labels` | started |  |
+| 2026-10-04T10:42:07+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5B.1b/machine_gold_labels` | done |  |
+| 2026-10-04T10:42:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/keyword__taxonomy-v1` | started |  |
+| 2026-10-04T10:42:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/keyword__taxonomy-v1` | done |  |
+| 2026-10-04T10:42:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/keyword__taxonomy-v1` | started |  |
+| 2026-10-04T10:42:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/keyword__taxonomy-v1` | done |  |
+| 2026-10-04T10:42:08+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/zero_shot__all-MiniLM-L6-v2` | started |  |
+| 2026-10-04T10:42:09+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/zero_shot__all-MiniLM-L6-v2` | done |  |
+| 2026-10-04T10:42:09+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/zero_shot__all-MiniLM-L6-v2` | started |  |
+| 2026-10-04T10:42:09+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/zero_shot__all-MiniLM-L6-v2` | done |  |
+| 2026-10-04T10:42:09+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/embed_lr__all-MiniLM-L6-v2` | started |  |
+| 2026-10-04T10:42:10+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/embed_lr__all-MiniLM-L6-v2` | done |  |
+| 2026-10-04T10:42:10+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/embed_lr__all-MiniLM-L6-v2` | started |  |
+| 2026-10-04T10:42:10+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/embed_lr__all-MiniLM-L6-v2` | done |  |
+| 2026-10-04T10:42:10+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/finetune__distilroberta-base` | started |  |
+| 2026-10-04T10:42:12+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/score_gold/finetune__distilroberta-base` | done |  |
+| 2026-10-04T10:42:12+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/finetune__distilroberta-base` | started |  |
+| 2026-10-04T10:42:12+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.6/tune_dev/finetune__distilroberta-base` | done |  |
+| 2026-10-04T10:42:13+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.7/gold_test_report` | started |  |
+| 2026-10-04T10:42:14+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.7/gold_test_report` | done |  |
+| 2026-10-04T10:42:14+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.8/crosscheck/zero_shot__all-MiniLM-L6-v2` | started |  |
+| 2026-10-04T10:42:16+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.8/crosscheck/zero_shot__all-MiniLM-L6-v2` | done |  |
+| 2026-10-04T10:42:16+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5D/stressor_bundle` | started |  |
+| 2026-10-04T10:42:18+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5D/stressor_bundle` | done |  |
+| 2026-10-04T10:42:21+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6B.1b/machine_handcheck` | started |  |
+| 2026-10-04T10:42:25+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `6B.1b/machine_handcheck` | done |  |
+| 2026-10-04T16:47:53+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/e66cf390db7491d4` | started |  |
+| 2026-10-04T16:48:47+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/e66cf390db7491d4` | done |  |
+| 2026-10-04T17:01:14+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/dfaeea6f7f5d3b47` | started |  |
+| 2026-10-04T17:02:21+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `2.5/tests/dfaeea6f7f5d3b47` | done |  |
+| 2026-10-04T17:02:29+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `5C.8/crosscheck/finetune__distilroberta-base` | done | output found on disk (finished before it was logged) |
+| 2026-10-04T17:20:18+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `8.2/ingest/pilot` | done | output found on disk (finished before it was logged) |
+| 2026-10-04T17:20:18+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `8.4/data_quality/pilot` | done | output found on disk (finished before it was logged) |
+| 2026-10-04T19:46:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `9.3/spark_parity` | done | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). 1,024 posts (2020-01-06), 67 columns compared, max abs diff 2.1e-6 (tolerance 1e-4); record ids, stage-2 selection, weights, flags and labels identical; 630 posts sent to stage 2. |
+| 2026-10-04T19:46:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `9.4/benchmark` | done | Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). Two runs: 29.8 and 27.1 records/s (batch 8, two-stage, rate 0.15). Linear projection: pilot 1.6-1.7 h; 500k posts 4.7-5.1 h; 1M 9.3-10.2 h; 1.5M 14.0-15.4 h. Assumes similar text and flagged share (56% in the pilot) and nothing else running. |
+| 2026-10-04T19:46:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `9.6/spark_pilot_run` | started | PAUSED 2026-10-05: 252 of 477 dates done (56,372 of 170,199 posts, up to 2019-07-10); no half-written files, no processes left. TO RESUME run from code/: python -m stress_signals.spark_jobs run --corpus pilot (or cell 9.6 with RUN_SPARK_PILOT = True); finished dates are skipped. Do not start other heavy jobs at the same time (about 3.7 GB RAM free on this laptop). Step 10 core tables in data/gold were produced earlier from only the first slice (14,339 posts) and must be re-run after the pilot finishes. |
+| 2026-10-04T19:58:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `HF.1/push_emotion` | done | Uploaded byte for byte from trained_models/emotion/v20261004 to a PRIVATE repo; weights SHA-256 on the Hub equals the bundle manifest. README.md model card added. Repo: Amrita-Vishwa-Ghopeetham/emotion-roberta-base (12 files verified). |
+| 2026-10-04T19:58:33+00:00 | madhava_laptop (NVIDIA GeForce RTX 4060 Laptop GPU (cuda)) | `HF.2/push_stressor` | done | Uploaded byte for byte from trained_models/stressor/v20261004 to a PRIVATE repo; weights SHA-256 on the Hub equals the bundle manifest. README.md model card added. Repo: Amrita-Vishwa-Ghopeetham/stressor-distilroberta-base (13 files verified). README notes that the evaluation labels are machine-made. |

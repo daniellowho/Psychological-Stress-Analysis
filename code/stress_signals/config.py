@@ -106,6 +106,12 @@ def validate_config(cfg: dict[str, Any]) -> list[str]:
     _require(isinstance(sp.get("shuffle_partitions"), int) and sp["shuffle_partitions"] >= 1,
              "spark.shuffle_partitions must be int >= 1", errors)
 
+    ts = sp.get("two_stage") or {}
+    rate = ts.get("sample_rate", 0.15)
+    _require(isinstance(rate, (int, float)) and 0 < rate <= 1, "spark.two_stage.sample_rate must be in (0, 1]", errors)
+    _require(sp.get("inference_mode", "auto") in ("auto", "in_process", "subprocess"),
+             "spark.inference_mode must be auto | in_process | subprocess", errors)
+
     pg = cfg["postgres"]
     for key in ("host_env", "port_env", "db_env", "user_env", "password_env"):
         _require(isinstance(pg.get(key), str) and pg[key].isupper(),

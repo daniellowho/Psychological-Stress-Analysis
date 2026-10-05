@@ -1,0 +1,121 @@
+{
+  "aggregation": "max",
+  "calibration": null,
+  "categories": [
+    {
+      "coverage": "sad",
+      "id": "workplace_pressure",
+      "lower_confidence": false,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "academic_workload",
+      "lower_confidence": false,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "financial_concerns",
+      "lower_confidence": false,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "relationship_issues",
+      "lower_confidence": false,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "health_concerns",
+      "lower_confidence": false,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "zero_shot",
+      "id": "uncertainty",
+      "lower_confidence": true,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "overload",
+      "lower_confidence": false,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "zero_shot",
+      "id": "societal_problems",
+      "lower_confidence": true,
+      "score_kind": "cosine"
+    },
+    {
+      "coverage": "sad",
+      "id": "other_unclear",
+      "lower_confidence": false,
+      "score_kind": "cosine"
+    }
+  ],
+  "class_to_category": {
+    "academic_workload": "academic_workload",
+    "emotional_turmoil": null,
+    "financial_concerns": "financial_concerns",
+    "health_concerns": "health_concerns",
+    "other_unclear": "other_unclear",
+    "overload": "overload",
+    "relationship_issues/family": "relationship_issues",
+    "relationship_issues/social": "relationship_issues",
+    "workplace_pressure": "workplace_pressure"
+  },
+  "classifier_classes": [
+    "workplace_pressure",
+    "academic_workload",
+    "financial_concerns",
+    "relationship_issues/family",
+    "relationship_issues/social",
+    "health_concerns",
+    "overload",
+    "other_unclear",
+    "emotional_turmoil"
+  ],
+  "component": "stressor",
+  "created_utc": "2026-10-04T10:42:18.791218+00:00",
+  "embedding_model": {
+    "hf_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "lowercase": false,
+    "max_length": 256,
+    "normalize": true,
+    "pooling": "mean",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "inference_unit": {
+    "rule": "sentence windows (stressor_model.sentence_windows)",
+    "windows": {
+      "max_windows": 32,
+      "min_words": 4,
+      "sentences_per_window": 1
+    }
+  },
+  "method": "zero_shot",
+  "method_key": "zero_shot__all-MiniLM-L6-v2",
+  "none_rule": "none_unclear when no category score reaches its threshold",
+  "scope": "Stressor labels are a RESEARCH taxonomy of what a text names as a cause of pressure. They are not a clinical assessment, say nothing about any person, and feed aggregate signals only.",
+  "taxonomy_file": "stressors_v1.yaml",
+  "taxonomy_version": 1,
+  "thresholds": {
+    "academic_workload": 0.37,
+    "financial_concerns": 0.28,
+    "health_concerns": 0.14,
+    "other_unclear": 0.09,
+    "overload": 0.05,
+    "relationship_issues": 0.08,
+    "societal_problems": 0.05,
+    "uncertainty": 0.11,
+    "workplace_pressure": 0.03
+  },
+  "thresholds_fitted_on": "gold-dev",
+  "weights": {
+    "zero_shot": "prototypes.npy (one unit vector per category, taxonomy order)"
+  }
+}

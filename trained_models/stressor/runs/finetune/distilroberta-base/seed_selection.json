@@ -1,0 +1,45 @@
+{
+  "final_seed": 2024,
+  "mean_std": {
+    "test_accuracy": {
+      "mean": 0.7393703343070431,
+      "std": 0.004053877311521206
+    },
+    "test_macro_f1": {
+      "mean": 0.7121911494514546,
+      "std": 0.0063835430219756255
+    },
+    "validation_accuracy": {
+      "mean": 0.7585199610516066,
+      "std": 0.006385042380040878
+    },
+    "validation_macro_f1": {
+      "mean": 0.7249929288920521,
+      "std": 0.004207434937929082
+    }
+  },
+  "per_seed": [
+    {
+      "seed": 42,
+      "test_accuracy": 0.7439143135345667,
+      "test_macro_f1": 0.7195062944546555,
+      "validation_accuracy": 0.759493670886076,
+      "validation_macro_f1": 0.7256982620391039
+    },
+    {
+      "seed": 13,
+      "test_accuracy": 0.7361246348588121,
+      "test_macro_f1": 0.7093185047809454,
+      "validation_accuracy": 0.7517039922103214,
+      "validation_macro_f1": 0.7204774042113288
+    },
+    {
+      "seed": 2024,
+      "test_accuracy": 0.7380720545277507,
+      "test_macro_f1": 0.7077486491187628,
+      "validation_accuracy": 0.7643622200584226,
+      "validation_macro_f1": 0.7288031204257235
+    }
+  ],
+  "rule": "best SAD-validation macro-F1 (test never used)"
+}

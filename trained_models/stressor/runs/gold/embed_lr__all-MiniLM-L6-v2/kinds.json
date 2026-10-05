@@ -1,0 +1,21 @@
+{
+  "aggregation": "max",
+  "kinds": {
+    "academic_workload": "probability",
+    "financial_concerns": "probability",
+    "health_concerns": "probability",
+    "other_unclear": "probability",
+    "overload": "probability",
+    "relationship_issues": "probability",
+    "societal_problems": "cosine",
+    "uncertainty": "cosine",
+    "workplace_pressure": "probability"
+  },
+  "method": "embed_lr",
+  "method_key": "embed_lr__all-MiniLM-L6-v2",
+  "windows": {
+    "max_windows": 32,
+    "min_words": 4,
+    "sentences_per_window": 1
+  }
+}

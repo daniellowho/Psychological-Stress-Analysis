@@ -257,3 +257,19 @@ def test_evaluate_split_none_rule(tax):
     assert m["none_unclear"]["predicted_rate"] == 0.5
     assert m["none_unclear"]["precision"] == 0.5 and m["none_unclear"]["recall"] == 0.5
     assert m["f1_macro_supported"] == pytest.approx(0.5)                    # cats 0 (F1 1) and 2 (F1 0) have support
+
+
+def test_degenerate_prevalence_never_flags_cosine_and_defaults_probability(cfg):
+    t = {**cfg["stressor_model"]["thresholds"], "low_support_rule": "tune", "degenerate_prevalence": 0.6}
+    rng = np.random.default_rng(0)
+    Y = np.ones((100, 2), dtype=int)                       # every post positive: the F1 optimum would be "flag everything"
+    Sc = rng.random((100, 2))
+    tab = S.tune_thresholds(Y, Sc, ["probability", "cosine"], ["a", "b"], t)
+    assert tab["rule"].tolist() == ["degenerate_prevalence"] * 2
+    assert tab["applied"].tolist() == [0.5, S.NEVER_COSINE]
+
+
+def test_force_method_overrides_best_dev_score():
+    res = {"methods": {m: {"dev": {"f1": v}, "test": {"f1": v}} for m, v in (("a", 0.9), ("b", 0.1))}}
+    S._select_method({"method_selection": {"split": "dev", "metric": "f1", "force_method": "b"}}, ["a", "b"], res)
+    assert res["selected_method"] == "b" and res["ranking"][0] == "a" and "forced" in res["selection_rule"]

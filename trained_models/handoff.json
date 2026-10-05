@@ -677,6 +677,1429 @@
       "step": "4B.1/emotion/roberta-base/seed2024",
       "title": "Fine-tune emotion roberta-base, seed 2024",
       "utc": "2026-10-04T06:42:48+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "fdbc05c280e94303a1d708f1bdd869eb",
+      "note": "output found on disk (finished before it was logged)",
+      "outputs": [
+        "data/processed"
+      ],
+      "status": "done",
+      "step": "2.2/processed/dreaddit",
+      "title": "Build processed datasets + splits",
+      "utc": "2026-10-04T08:29:07+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "e457c15ecb1d4756919e02ec319c7381",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/4ef0afd941f00d1c",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T08:29:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 38.1,
+      "host": "madhava_laptop",
+      "id": "4bda88fb2bcd443ba4d49711b7319258",
+      "note": "AssertionError: unit tests failed (see the output above)",
+      "outputs": [],
+      "status": "failed",
+      "step": "2.5/tests/4ef0afd941f00d1c",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T08:29:46+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "505fa106c7ab4c7394f95df0eed3ef49",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/4ef0afd941f00d1c",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T09:07:30+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 34.2,
+      "host": "madhava_laptop",
+      "id": "d9ba2197df4d422bb6ddba2df4f5a8c4",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "2.5/tests/4ef0afd941f00d1c",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T09:08:05+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "3b0f729fd8394c75bb8d6e1cbf10d9e2",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4B.1/emotion/roberta-base/seed2024",
+      "title": "Fine-tune emotion roberta-base, seed 2024",
+      "utc": "2026-10-04T09:08:07+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 882.1,
+      "host": "madhava_laptop",
+      "id": "f431005e2dcb41808bbee64100768240",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed2024"
+      ],
+      "status": "done",
+      "step": "4B.1/emotion/roberta-base/seed2024",
+      "title": "Fine-tune emotion roberta-base, seed 2024",
+      "utc": "2026-10-04T09:22:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "de0a27b9f82d42eebd019f853fd5a459",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4C.1/emotion_evaluate_seeds/roberta-base",
+      "title": "Evaluate all emotion seeds (uncalibrated)",
+      "utc": "2026-10-04T09:22:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.4,
+      "host": "madhava_laptop",
+      "id": "1b0ced6684cc4868b04d1cd12b29697e",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base"
+      ],
+      "status": "done",
+      "step": "4C.1/emotion_evaluate_seeds/roberta-base",
+      "title": "Evaluate all emotion seeds (uncalibrated)",
+      "utc": "2026-10-04T09:22:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "93ebf18c253a486f9024a3f904e368e1",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4D.1/emotion_calibrate/roberta-base/seed13",
+      "title": "Calibrate the emotion model per label",
+      "utc": "2026-10-04T09:22:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 1.0,
+      "host": "madhava_laptop",
+      "id": "4ae92629121a40bcb8c1f6204b1171e8",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4D.1/emotion_calibrate/roberta-base/seed13",
+      "title": "Calibrate the emotion model per label",
+      "utc": "2026-10-04T09:22:51+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "04ec62e2bc934286b08127186b194715",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4C.3/emotion_thresholds/roberta-base/seed13",
+      "title": "Tune per-label emotion thresholds",
+      "utc": "2026-10-04T09:22:51+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.2,
+      "host": "madhava_laptop",
+      "id": "36233cff1b9a4a7d8a963796df86bc67",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4C.3/emotion_thresholds/roberta-base/seed13",
+      "title": "Tune per-label emotion thresholds",
+      "utc": "2026-10-04T09:22:51+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "2db597adb2404940aded6ba05abb01bf",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4C.4/emotion_final_test_report/roberta-base/seed13",
+      "title": "Final emotion test report",
+      "utc": "2026-10-04T09:22:51+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 14.6,
+      "host": "madhava_laptop",
+      "id": "b7d20875e4114220bd11121ae4ce881e",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4C.4/emotion_final_test_report/roberta-base/seed13",
+      "title": "Final emotion test report",
+      "utc": "2026-10-04T09:23:06+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "77bf809698954fbd90f27fbf8aa0b7f7",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4F.1/emotion_domain_shift/roberta-base/seed13",
+      "title": "Emotion domain-shift check on Dreaddit",
+      "utc": "2026-10-04T09:23:06+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.0,
+      "host": "madhava_laptop",
+      "id": "2afc30002ae84ca0b8d5fc82031f14d5",
+      "note": "OSError: Incorrect path_or_model_id: 'C:\\Visual_studio\\TA-BDA Project\\Psychological-Stress-Analysis\\trained_models\\emotion\\runs\\roberta-base\\seed13\\best_model'. Please provide either the path to a local folder or the repo_id of a model on the Hub.",
+      "outputs": [],
+      "status": "failed",
+      "step": "4F.1/emotion_domain_shift/roberta-base/seed13",
+      "title": "Emotion domain-shift check on Dreaddit",
+      "utc": "2026-10-04T09:23:06+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "a1f4d3af8cb248af9e670460ff003556",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4B.1/emotion/roberta-base/seed13",
+      "title": "Fine-tune emotion roberta-base, seed 13",
+      "utc": "2026-10-04T09:27:39+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 757.1,
+      "host": "madhava_laptop",
+      "id": "5c61884c41e2493b9e248de058206cfa",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4B.1/emotion/roberta-base/seed13",
+      "title": "Fine-tune emotion roberta-base, seed 13",
+      "utc": "2026-10-04T09:40:16+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "5f471429916148a8be2895217323e6b3",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4D.1/emotion_calibrate/roberta-base/seed13",
+      "title": "Calibrate the emotion model per label",
+      "utc": "2026-10-04T09:40:16+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.6,
+      "host": "madhava_laptop",
+      "id": "404dc1bcb4b54bf1bd951dc68617bc59",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4D.1/emotion_calibrate/roberta-base/seed13",
+      "title": "Calibrate the emotion model per label",
+      "utc": "2026-10-04T09:40:17+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "356c9e177ed14379926fee0f125ba6e4",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4C.3/emotion_thresholds/roberta-base/seed13",
+      "title": "Tune per-label emotion thresholds",
+      "utc": "2026-10-04T09:40:17+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.2,
+      "host": "madhava_laptop",
+      "id": "f456abfada2c429ea2ff0eefaf34b5b8",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4C.3/emotion_thresholds/roberta-base/seed13",
+      "title": "Tune per-label emotion thresholds",
+      "utc": "2026-10-04T09:40:17+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "10cdfa3bbd0c4691a5afb5b2f195cdc7",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4C.4/emotion_final_test_report/roberta-base/seed13",
+      "title": "Final emotion test report",
+      "utc": "2026-10-04T09:40:17+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 15.3,
+      "host": "madhava_laptop",
+      "id": "fad5300cdf2e4f278c932146176c5b85",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4C.4/emotion_final_test_report/roberta-base/seed13",
+      "title": "Final emotion test report",
+      "utc": "2026-10-04T09:40:32+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "1addf537b47e4b4a872a278a46f1ba30",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4F.1/emotion_domain_shift/roberta-base/seed13",
+      "title": "Emotion domain-shift check on Dreaddit",
+      "utc": "2026-10-04T09:40:32+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 15.9,
+      "host": "madhava_laptop",
+      "id": "b7b7a2e9bc53473fa5706f9d37850480",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/runs/roberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "4F.1/emotion_domain_shift/roberta-base/seed13",
+      "title": "Emotion domain-shift check on Dreaddit",
+      "utc": "2026-10-04T09:40:48+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "d776f5970a48422d90ea505417fb1c39",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4F.2/emotion_handcheck_sheet/roberta-base/seed13",
+      "title": "Write the emotion hand-check sheet",
+      "utc": "2026-10-04T09:40:48+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.1,
+      "host": "madhava_laptop",
+      "id": "73c19fab03014984ba20719d028afc3a",
+      "note": "",
+      "outputs": [
+        "data/processed/_cache/emotion_dreaddit_handcheck_roberta-base_seed13.csv"
+      ],
+      "status": "done",
+      "step": "4F.2/emotion_handcheck_sheet/roberta-base/seed13",
+      "title": "Write the emotion hand-check sheet",
+      "utc": "2026-10-04T09:40:49+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "751146af59614d68b5e54e270c52e1b5",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "4G/emotion_bundle",
+      "title": "Save emotion model bundle (roberta-base, seed 13)",
+      "utc": "2026-10-04T09:40:49+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 1.2,
+      "host": "madhava_laptop",
+      "id": "14eaee81d123476f989c06237dae7c54",
+      "note": "",
+      "outputs": [
+        "trained_models/emotion/v20261004"
+      ],
+      "status": "done",
+      "step": "4G/emotion_bundle",
+      "title": "Save emotion model bundle (roberta-base, seed 13)",
+      "utc": "2026-10-04T09:40:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "17fcac4482b1492b9143e28c7d037250",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5A.1/taxonomy_report",
+      "title": "Write the stressor taxonomy report",
+      "utc": "2026-10-04T09:40:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.0,
+      "host": "madhava_laptop",
+      "id": "e28d5a8f049c4da6948073505a612e87",
+      "note": "",
+      "outputs": [
+        "data/outputs/reports/stressor_taxonomy_v1.md"
+      ],
+      "status": "done",
+      "step": "5A.1/taxonomy_report",
+      "title": "Write the stressor taxonomy report",
+      "utc": "2026-10-04T09:40:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "ecea0371900840648d2141b67ce013a2",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5A.2/sad_split",
+      "title": "Create the fixed SAD split",
+      "utc": "2026-10-04T09:40:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.0,
+      "host": "madhava_laptop",
+      "id": "99ce72371fb54f4391040919b5fbe7f1",
+      "note": "",
+      "outputs": [
+        "data/processed/splits/sad_split_v1.json"
+      ],
+      "status": "done",
+      "step": "5A.2/sad_split",
+      "title": "Create the fixed SAD split",
+      "utc": "2026-10-04T09:40:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "b4dbf1a7448643789272102a0d1f2522",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.0/embedding_check",
+      "title": "Verify the embedding models load",
+      "utc": "2026-10-04T09:40:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 54.7,
+      "host": "madhava_laptop",
+      "id": "94c1ec9af170439c811d637a48d2cb6f",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/embedding_check.json"
+      ],
+      "status": "done",
+      "step": "5C.0/embedding_check",
+      "title": "Verify the embedding models load",
+      "utc": "2026-10-04T09:41:45+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "9f399d17199b43fabdfd9010d2e696d9",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5B.1/gold_sample",
+      "title": "Sample the stressor gold set + annotation sheets",
+      "utc": "2026-10-04T09:41:46+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.1,
+      "host": "madhava_laptop",
+      "id": "7d2c8050c4ff4ea2bae740e343e1adee",
+      "note": "",
+      "outputs": [
+        "data/processed/splits"
+      ],
+      "status": "done",
+      "step": "5B.1/gold_sample",
+      "title": "Sample the stressor gold set + annotation sheets",
+      "utc": "2026-10-04T09:41:47+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "01ae10285b0a45a58dec197ee01c2dd4",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.3/stressor_embed_lr",
+      "title": "Fit embedding + logistic regression (all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T09:41:47+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 2.7,
+      "host": "madhava_laptop",
+      "id": "55e5101039be46928bd54a63d61b9d75",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/embed_lr/all-MiniLM-L6-v2"
+      ],
+      "status": "done",
+      "step": "5C.3/stressor_embed_lr",
+      "title": "Fit embedding + logistic regression (all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T09:41:49+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "e5f0abb9be5647e8a52d61736c69d552",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.4/stressor/distilroberta-base/seed42",
+      "title": "Fine-tune stressor distilroberta-base, seed 42",
+      "utc": "2026-10-04T09:41:49+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 133.3,
+      "host": "madhava_laptop",
+      "id": "4fce7f63f52d4259a5600251bb92c0f7",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/finetune/distilroberta-base/seed42"
+      ],
+      "status": "done",
+      "step": "5C.4/stressor/distilroberta-base/seed42",
+      "title": "Fine-tune stressor distilroberta-base, seed 42",
+      "utc": "2026-10-04T09:44:03+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "909f3ede7b434fe9a4b237f86b4f3466",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.4/stressor/distilroberta-base/seed13",
+      "title": "Fine-tune stressor distilroberta-base, seed 13",
+      "utc": "2026-10-04T09:44:03+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 47.2,
+      "host": "madhava_laptop",
+      "id": "a7c9444470af466f94c554e658c7f5cc",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/finetune/distilroberta-base/seed13"
+      ],
+      "status": "done",
+      "step": "5C.4/stressor/distilroberta-base/seed13",
+      "title": "Fine-tune stressor distilroberta-base, seed 13",
+      "utc": "2026-10-04T09:44:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "3cd5b583583b486e876a8339c587db85",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.4/stressor/distilroberta-base/seed2024",
+      "title": "Fine-tune stressor distilroberta-base, seed 2024",
+      "utc": "2026-10-04T09:44:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 45.8,
+      "host": "madhava_laptop",
+      "id": "5836e45c63944bc2b90b7acb7c5ab457",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/finetune/distilroberta-base/seed2024"
+      ],
+      "status": "done",
+      "step": "5C.4/stressor/distilroberta-base/seed2024",
+      "title": "Fine-tune stressor distilroberta-base, seed 2024",
+      "utc": "2026-10-04T09:45:36+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "e18a0c1bcd3144fb94ccad4f3c7af980",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.5/sad_report/embed_lr__all-MiniLM-L6-v2",
+      "title": "SAD calibration + test (embed_lr)",
+      "utc": "2026-10-04T09:45:36+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.0,
+      "host": "madhava_laptop",
+      "id": "ff36f45379304342970fbe0a540f7b6f",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/embed_lr/all-MiniLM-L6-v2"
+      ],
+      "status": "done",
+      "step": "5C.5/sad_report/embed_lr__all-MiniLM-L6-v2",
+      "title": "SAD calibration + test (embed_lr)",
+      "utc": "2026-10-04T09:45:36+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "1acd8564dba345f8b28ccee108fc91fb",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.5/sad_report/finetune__distilroberta-base/seed2024",
+      "title": "SAD calibration + test (finetune)",
+      "utc": "2026-10-04T09:45:36+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.0,
+      "host": "madhava_laptop",
+      "id": "3eb0b568506b4cc1884ceccff82ca2ba",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/finetune/distilroberta-base/seed2024"
+      ],
+      "status": "done",
+      "step": "5C.5/sad_report/finetune__distilroberta-base/seed2024",
+      "title": "SAD calibration + test (finetune)",
+      "utc": "2026-10-04T09:45:36+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "56f8dd9c0e1e4464a355c8f6fec3e42e",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/ad861f36908a1cb4",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:04:19+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 48.8,
+      "host": "madhava_laptop",
+      "id": "a71a9043e01a490eb9af0aa3a03e5bcc",
+      "note": "AssertionError: unit tests failed (see the output above)",
+      "outputs": [],
+      "status": "failed",
+      "step": "2.5/tests/ad861f36908a1cb4",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:05:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "4e1261cdcd254ce59e09f88d561bfca7",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/ad861f36908a1cb4",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:05:24+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 43.8,
+      "host": "madhava_laptop",
+      "id": "f1884b1b3d484b77aeab7f3079719c8d",
+      "note": "AssertionError: unit tests failed (see the output above)",
+      "outputs": [],
+      "status": "failed",
+      "step": "2.5/tests/ad861f36908a1cb4",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:06:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "cb7a52a041154179bdebf96226b7b079",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/9751651770fba51f",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:17:30+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 43.8,
+      "host": "madhava_laptop",
+      "id": "740fc02667a2498e9531e265d096717d",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "2.5/tests/9751651770fba51f",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:18:13+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "282ea0754a2c4217b2c466ae607c93bf",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "6A.1/tensistrength_sample",
+      "title": "TensiStrength on Dreaddit test + SenticNet sample",
+      "utc": "2026-10-04T10:18:21+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 2.2,
+      "host": "madhava_laptop",
+      "id": "e88bb9dcefc64af4a16347cbf7f4e3d3",
+      "note": "",
+      "outputs": [
+        "data/outputs/external_validation"
+      ],
+      "status": "done",
+      "step": "6A.1/tensistrength_sample",
+      "title": "TensiStrength on Dreaddit test + SenticNet sample",
+      "utc": "2026-10-04T10:18:23+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "18b904c5a3c94a3bb27aaec575865657",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "6B.1/senticnet_scores/v20261004",
+      "title": "Score SenticNet with the Step 3 model (zero-shot)",
+      "utc": "2026-10-04T10:18:23+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 48.8,
+      "host": "madhava_laptop",
+      "id": "bf1664043b6d48dfb188a9e33bc39592",
+      "note": "",
+      "outputs": [
+        "data/outputs/external_validation/senticnet_scores_v20261004.parquet"
+      ],
+      "status": "done",
+      "step": "6B.1/senticnet_scores/v20261004",
+      "title": "Score SenticNet with the Step 3 model (zero-shot)",
+      "utc": "2026-10-04T10:19:12+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "d00c80cc0ce44ce49350ea2cb0675b46",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "6B.3/senticnet_zero_shot/v20261004",
+      "title": "Zero-shot SenticNet agreement (bootstrap CIs)",
+      "utc": "2026-10-04T10:19:14+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 71.8,
+      "host": "madhava_laptop",
+      "id": "d670557c01804e8a9fd8b0d537e7e5f4",
+      "note": "",
+      "outputs": [
+        "data/outputs/external_validation"
+      ],
+      "status": "done",
+      "step": "6B.3/senticnet_zero_shot/v20261004",
+      "title": "Zero-shot SenticNet agreement (bootstrap CIs)",
+      "utc": "2026-10-04T10:20:26+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "5d690c98634b4e30b9ec6fb2224d1ee0",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/3bcaec51fc14fd4a",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:26:39+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 46.7,
+      "host": "madhava_laptop",
+      "id": "b4b9803aa16644e1b506ddb10f1e1491",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "2.5/tests/3bcaec51fc14fd4a",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T10:27:26+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "bbbbcb15ead14cb384765c33385a45d6",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5B.1b/machine_gold_labels",
+      "title": "Machine-label the stressor gold sheet",
+      "utc": "2026-10-04T10:32:50+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 557.1,
+      "host": "madhava_laptop",
+      "id": "6a327c6c5a2e4ee0bae4043959b65916",
+      "note": "",
+      "outputs": [
+        "data/outputs/gold/stressor_gold_v1_machine.csv"
+      ],
+      "status": "done",
+      "step": "5B.1b/machine_gold_labels",
+      "title": "Machine-label the stressor gold sheet",
+      "utc": "2026-10-04T10:42:07+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "11f2d18c806c4c76ba27e2464da31949",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/score_gold/keyword__taxonomy-v1",
+      "title": "Score the gold set (keyword__taxonomy-v1)",
+      "utc": "2026-10-04T10:42:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.2,
+      "host": "madhava_laptop",
+      "id": "cd23aee27c2042f7b983b772e3c1131d",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/keyword__taxonomy-v1/window_scores.parquet"
+      ],
+      "status": "done",
+      "step": "5C.6/score_gold/keyword__taxonomy-v1",
+      "title": "Score the gold set (keyword__taxonomy-v1)",
+      "utc": "2026-10-04T10:42:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "c3a221ae00f74bfc8a10d4a197dfbce7",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/tune_dev/keyword__taxonomy-v1",
+      "title": "Tune thresholds on gold-dev (keyword__taxonomy-v1)",
+      "utc": "2026-10-04T10:42:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.2,
+      "host": "madhava_laptop",
+      "id": "9fab0dade2e04543adf89ccfca310fdc",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/keyword__taxonomy-v1"
+      ],
+      "status": "done",
+      "step": "5C.6/tune_dev/keyword__taxonomy-v1",
+      "title": "Tune thresholds on gold-dev (keyword__taxonomy-v1)",
+      "utc": "2026-10-04T10:42:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "39c5a31c62e04aa488c5c66caf46adb0",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/score_gold/zero_shot__all-MiniLM-L6-v2",
+      "title": "Score the gold set (zero_shot__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:08+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.8,
+      "host": "madhava_laptop",
+      "id": "d8d5c0ab6f0c4f5e96527e619120e8df",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/zero_shot__all-MiniLM-L6-v2/window_scores.parquet"
+      ],
+      "status": "done",
+      "step": "5C.6/score_gold/zero_shot__all-MiniLM-L6-v2",
+      "title": "Score the gold set (zero_shot__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:09+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "dee13fb670ae4ab2b73f50864fa87ffe",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/tune_dev/zero_shot__all-MiniLM-L6-v2",
+      "title": "Tune thresholds on gold-dev (zero_shot__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:09+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.4,
+      "host": "madhava_laptop",
+      "id": "b2787c7ac00643d68dc8a3a92fa0656a",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/zero_shot__all-MiniLM-L6-v2"
+      ],
+      "status": "done",
+      "step": "5C.6/tune_dev/zero_shot__all-MiniLM-L6-v2",
+      "title": "Tune thresholds on gold-dev (zero_shot__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:09+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "1b37a4c29aaf40f6ab90faec84f1cd7b",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/score_gold/embed_lr__all-MiniLM-L6-v2",
+      "title": "Score the gold set (embed_lr__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:09+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.2,
+      "host": "madhava_laptop",
+      "id": "9594041a737b403b994c5979b9306643",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/embed_lr__all-MiniLM-L6-v2/window_scores.parquet"
+      ],
+      "status": "done",
+      "step": "5C.6/score_gold/embed_lr__all-MiniLM-L6-v2",
+      "title": "Score the gold set (embed_lr__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:10+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "895b3e8c70a041089cd2e1f7e35cf824",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/tune_dev/embed_lr__all-MiniLM-L6-v2",
+      "title": "Tune thresholds on gold-dev (embed_lr__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:10+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.5,
+      "host": "madhava_laptop",
+      "id": "b62bc06352e44c0fb6bd614df158327e",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/embed_lr__all-MiniLM-L6-v2"
+      ],
+      "status": "done",
+      "step": "5C.6/tune_dev/embed_lr__all-MiniLM-L6-v2",
+      "title": "Tune thresholds on gold-dev (embed_lr__all-MiniLM-L6-v2)",
+      "utc": "2026-10-04T10:42:10+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "b53a7dc8199240d5989dedcb2750de13",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/score_gold/finetune__distilroberta-base",
+      "title": "Score the gold set (finetune__distilroberta-base)",
+      "utc": "2026-10-04T10:42:10+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 1.9,
+      "host": "madhava_laptop",
+      "id": "3c93c5797174445295db7be4a16b5fa0",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/finetune__distilroberta-base/window_scores.parquet"
+      ],
+      "status": "done",
+      "step": "5C.6/score_gold/finetune__distilroberta-base",
+      "title": "Score the gold set (finetune__distilroberta-base)",
+      "utc": "2026-10-04T10:42:12+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "ef3e182c264f420ab62b84fa09f6d0a3",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.6/tune_dev/finetune__distilroberta-base",
+      "title": "Tune thresholds on gold-dev (finetune__distilroberta-base)",
+      "utc": "2026-10-04T10:42:12+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 0.4,
+      "host": "madhava_laptop",
+      "id": "f3ba75ba9b4a42618e8d3eeaab1d71a1",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/finetune__distilroberta-base"
+      ],
+      "status": "done",
+      "step": "5C.6/tune_dev/finetune__distilroberta-base",
+      "title": "Tune thresholds on gold-dev (finetune__distilroberta-base)",
+      "utc": "2026-10-04T10:42:12+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "58883992c8614fa8a78b7fb501dec26b",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.7/gold_test_report",
+      "title": "Final stressor gold-test report",
+      "utc": "2026-10-04T10:42:13+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 1.7,
+      "host": "madhava_laptop",
+      "id": "277efe127f9645549e199a93b032ce87",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold"
+      ],
+      "status": "done",
+      "step": "5C.7/gold_test_report",
+      "title": "Final stressor gold-test report",
+      "utc": "2026-10-04T10:42:14+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "9f256fefa34645868220fcfdc936dc2a",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5C.8/crosscheck/zero_shot__all-MiniLM-L6-v2",
+      "title": "Dreaddit subreddit cross-check",
+      "utc": "2026-10-04T10:42:14+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 1.7,
+      "host": "madhava_laptop",
+      "id": "14be5cb5f5d94a4ba658b8915deb5abf",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/runs/gold/zero_shot__all-MiniLM-L6-v2"
+      ],
+      "status": "done",
+      "step": "5C.8/crosscheck/zero_shot__all-MiniLM-L6-v2",
+      "title": "Dreaddit subreddit cross-check",
+      "utc": "2026-10-04T10:42:16+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "bc28cac8e05f424eb4dab6c26dece895",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "5D/stressor_bundle",
+      "title": "Save stressor bundle (zero_shot)",
+      "utc": "2026-10-04T10:42:16+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 2.3,
+      "host": "madhava_laptop",
+      "id": "510efeaae0bb4bb4ba34a1370cf19391",
+      "note": "",
+      "outputs": [
+        "trained_models/stressor/v20261004"
+      ],
+      "status": "done",
+      "step": "5D/stressor_bundle",
+      "title": "Save stressor bundle (zero_shot)",
+      "utc": "2026-10-04T10:42:18+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "5c48023662ab481180dc5bd8a6f9b065",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "6B.1b/machine_handcheck",
+      "title": "Machine-label the SenticNet hand-check",
+      "utc": "2026-10-04T10:42:21+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 4.4,
+      "host": "madhava_laptop",
+      "id": "38efb726f33c4643864a6d089e45fd97",
+      "note": "",
+      "outputs": [
+        "data/processed/_cache/senticnet_handcheck_machine.csv"
+      ],
+      "status": "done",
+      "step": "6B.1b/machine_handcheck",
+      "title": "Machine-label the SenticNet hand-check",
+      "utc": "2026-10-04T10:42:25+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "46c3599e9f574f189e55983568487563",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/e66cf390db7491d4",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T16:47:53+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 53.9,
+      "host": "madhava_laptop",
+      "id": "5d250fe8c05b4fd6a36a6d5a4a6b5dcb",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "2.5/tests/e66cf390db7491d4",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T16:48:47+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "04ff192de87c4783b4be16182e514bca",
+      "note": "",
+      "outputs": [],
+      "status": "started",
+      "step": "2.5/tests/dfaeea6f7f5d3b47",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T17:01:14+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": 66.4,
+      "host": "madhava_laptop",
+      "id": "db10d56b8a984cb7a9fdf3f581fd8d31",
+      "note": "",
+      "outputs": [],
+      "status": "done",
+      "step": "2.5/tests/dfaeea6f7f5d3b47",
+      "title": "Unit tests for this code version",
+      "utc": "2026-10-04T17:02:21+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "e2019527f3854ca484f3f9d575873390",
+      "note": "output found on disk (finished before it was logged)",
+      "outputs": [
+        "trained_models/stressor/runs/gold/finetune__distilroberta-base"
+      ],
+      "status": "done",
+      "step": "5C.8/crosscheck/finetune__distilroberta-base",
+      "title": "Dreaddit subreddit cross-check",
+      "utc": "2026-10-04T17:02:29+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "1a64fed9526240dfbe155d5d02bf2d5f",
+      "note": "output found on disk (finished before it was logged)",
+      "outputs": [
+        "data/outputs/manifests"
+      ],
+      "status": "done",
+      "step": "8.2/ingest/pilot",
+      "title": "Ingest the pilot corpus into the Parquet lake",
+      "utc": "2026-10-04T17:20:18+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "58504bfff3e345b3b89228227229bff5",
+      "note": "output found on disk (finished before it was logged)",
+      "outputs": [
+        "data/outputs/reports"
+      ],
+      "status": "done",
+      "step": "8.4/data_quality/pilot",
+      "title": "Data quality report (pilot)",
+      "utc": "2026-10-04T17:20:18+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "b2e807a398da4934bbf667ca029456fa",
+      "note": "Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). 1,024 posts (2020-01-06), 67 columns compared, max abs diff 2.1e-6 (tolerance 1e-4); record ids, stage-2 selection, weights, flags and labels identical; 630 posts sent to stage 2.",
+      "outputs": [],
+      "status": "done",
+      "step": "9.3/spark_parity",
+      "title": "Parity test: Spark job vs local pipeline (1-day sample, real bundle)",
+      "utc": "2026-10-04T19:46:33+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "e2565a76f3c94723a7b71a5a6944088c",
+      "note": "Recorded after the fact on 2026-10-05 from a command-line run (not through a notebook cell). Two runs: 29.8 and 27.1 records/s (batch 8, two-stage, rate 0.15). Linear projection: pilot 1.6-1.7 h; 500k posts 4.7-5.1 h; 1M 9.3-10.2 h; 1.5M 14.0-15.4 h. Assumes similar text and flagged share (56% in the pilot) and nothing else running.",
+      "outputs": [],
+      "status": "done",
+      "step": "9.4/benchmark",
+      "title": "Throughput benchmark on 5,000 pilot posts (RTX 4060 Laptop GPU)",
+      "utc": "2026-10-04T19:46:33+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "0192cad83a2748b4a653f27dfc31d134",
+      "note": "PAUSED 2026-10-05: 252 of 477 dates done (56,372 of 170,199 posts, up to 2019-07-10); no half-written files, no processes left. TO RESUME run from code/: python -m stress_signals.spark_jobs run --corpus pilot (or cell 9.6 with RUN_SPARK_PILOT = True); finished dates are skipped. Do not start other heavy jobs at the same time (about 3.7 GB RAM free on this laptop). Step 10 core tables in data/gold were produced earlier from only the first slice (14,339 posts) and must be re-run after the pilot finishes.",
+      "outputs": [],
+      "status": "started",
+      "step": "9.6/spark_pilot_run",
+      "title": "Spark inference over the pilot lake: PAUSED by the user, not finished",
+      "utc": "2026-10-04T19:46:33+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "2453ad2a1c6344fc8199bb6d9f9cd419",
+      "note": "Uploaded byte for byte from trained_models/emotion/v20261004 to a PRIVATE repo; weights SHA-256 on the Hub equals the bundle manifest. README.md model card added. Repo: Amrita-Vishwa-Ghopeetham/emotion-roberta-base (12 files verified).",
+      "outputs": [],
+      "status": "done",
+      "step": "HF.1/push_emotion",
+      "title": "Publish the emotion bundle to Hugging Face",
+      "utc": "2026-10-04T19:58:33+00:00"
+    },
+    {
+      "data_fingerprint": "1eddd5d80029d36e-1bbc01478d80385d",
+      "device": "NVIDIA GeForce RTX 4060 Laptop GPU (cuda)",
+      "duration_s": null,
+      "host": "madhava_laptop",
+      "id": "c3a3a2f6f29e4ffab6542c505e5f43ca",
+      "note": "Uploaded byte for byte from trained_models/stressor/v20261004 to a PRIVATE repo; weights SHA-256 on the Hub equals the bundle manifest. README.md model card added. Repo: Amrita-Vishwa-Ghopeetham/stressor-distilroberta-base (13 files verified). README notes that the evaluation labels are machine-made.",
+      "outputs": [],
+      "status": "done",
+      "step": "HF.2/push_stressor",
+      "title": "Publish the stressor bundle to Hugging Face",
+      "utc": "2026-10-04T19:58:33+00:00"
     }
   ],
   "version": 1
